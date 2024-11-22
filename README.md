@@ -18,7 +18,7 @@ The landing page should feature a clean, engaging layout. The design includes th
 - [ ] Create hero section with visually appealing imagery and text.
 - [ ] Design clubs section with cards or grid view.
 - [ ] Develop session section with upcoming event details.
-- [ ] Design footer with contact info and social media links.
+- [x] Design footer with contact info and social media links.
 - [ ] Implement responsive design for desktop and mobile views.
 - [ ] Implement Arabic and English language support.
 
