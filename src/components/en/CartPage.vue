@@ -1135,7 +1135,7 @@
   font-size: 1.1rem;
   margin-bottom: 3%;
   height: 250px; 
-  overflow-y: auto; 
+  overflow-x: auto; 
 }
 
 .terms-content::-webkit-scrollbar {

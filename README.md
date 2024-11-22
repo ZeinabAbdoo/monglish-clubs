@@ -15,7 +15,7 @@ The landing page should feature a clean, engaging layout. The design includes th
 
 *Tasks:*
 - [x] Design header with navigation, language switcher, and logo.
-- [ ] Create hero section with visually appealing imagery and text.
+- [x] Create hero section with visually appealing imagery and text.
 - [ ] Design clubs section with cards or grid view.
 - [ ] Develop session section with upcoming event details.
 - [x] Design footer with contact info and social media links.

@@ -5,6 +5,8 @@ import axios from 'axios';
 import router from './router';
 import VueTelInput from 'vue3-tel-input'
 import 'vue3-tel-input/dist/vue3-tel-input.css'
+import '@fortawesome/fontawesome-free/css/all.css';
+
 
 // Set the base URL for all Axios requests
 axios.defaults.baseURL = process.env.VUE_APP_BASE_URL;

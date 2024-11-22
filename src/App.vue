@@ -67,8 +67,13 @@ export default {
     src: url('@/assets/fonts/DINNextLTArabic-UltraLight.ttf') format('truetype');
     font-weight: 100;
   }
-  #app2{
-    width : 100%;
-      background-color: blue;
-  }
+#app2 {
+    width: 100%;
+    height: 115vh; /* Ensure the height is 100% of the viewport */
+    background-image: url('@/assets/images/hero.jpg');
+    background-size: auto; /* Ensure the image maintains its size */
+    background-position: center; /* Optionally center the image */
+    background-repeat: repeat; /* This will make the background image repeat */
+}
+
 </style>
