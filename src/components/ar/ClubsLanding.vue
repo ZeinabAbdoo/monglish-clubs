@@ -1,5 +1,5 @@
 <template>
-      <h1>MonglishClubs</h1>
+  <h1>MonglishClubs</h1>
 </template>
 
 <script>
@@ -16,5 +16,8 @@ export default {
 </script>
 
 <style scoped>
-
+h1 {
+  background-color: blue;
+  color: white; 
+}
 </style>

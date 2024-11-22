@@ -14,7 +14,7 @@ The landing page should feature a clean, engaging layout. The design includes th
 - *Languages*: The page should be available in both Arabic and English, with the ability to switch between them seamlessly.
 
 *Tasks:*
-- [ ] Design header with navigation, language switcher, and logo.
+- [x] Design header with navigation, language switcher, and logo.
 - [ ] Create hero section with visually appealing imagery and text.
 - [ ] Design clubs section with cards or grid view.
 - [ ] Develop session section with upcoming event details.

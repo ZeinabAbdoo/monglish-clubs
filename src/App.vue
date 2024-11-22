@@ -69,5 +69,6 @@ export default {
   }
   #app2{
     width : 100%;
+      background-color: blue;
   }
 </style>
