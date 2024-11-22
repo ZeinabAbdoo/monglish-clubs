@@ -16,11 +16,11 @@ The landing page should feature a clean, engaging layout. The design includes th
 *Tasks:*
 - [x] Design header with navigation, language switcher, and logo.
 - [x] Create hero section with visually appealing imagery and text.
+- [x] Create accrediations section.
 - [ ] Design clubs section with cards or grid view.
 - [ ] Develop session section with upcoming event details.
 - [x] Design footer with contact info and social media links.
 - [ ] Implement responsive design for desktop and mobile views.
-- [ ] Implement Arabic and English language support.
 
 ### 1.2 *Cart*
 The cart system should allow users to easily view and manage their selected items, along with registration options.
@@ -30,7 +30,6 @@ The cart system should allow users to easily view and manage their selected item
   - WhatsApp button for instant inquiries.
   - Display cart items with clear descriptions and prices.
   - Popup to register student data when checking out.
-- [ ] Ensure the design works in both Arabic and English versions.
 - [ ] Make the cart responsive for both desktop and mobile views.
 
 ---
