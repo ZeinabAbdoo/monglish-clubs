@@ -17,11 +17,11 @@ The landing page should feature a clean, engaging layout. The design includes th
 - [x] Design header with navigation, language switcher, and logo.
 - [x] Create hero section with visually appealing imagery and text.
 - [x] Create accrediations section.
-- [ ] Design clubs section with cards or grid view.
+- [x] Design clubs section with cards or grid view.
 - [x] Develop session section with upcoming event details.
 - [x] Design footer with contact info and social media links.
 - [x] Implement CTA for smooth scrolling to the ClubsSection.
-- [ ] Implement responsive design for desktop and mobile views.
+- [x] Implement responsive design for desktop and mobile views.
 
 ### 1.2 *Cart*
 The cart system should allow users to easily view and manage their selected items, along with registration options.
