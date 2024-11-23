@@ -10,7 +10,7 @@
         خطط أسعار مرنة تناسب احتياجاتك.
       </p>
       <h4>لا تفوت فرصتك! انضم الآن وابدأ رحلتك اللغوية الممتعة:</h4>
-      <button class="cta-btn">سجل الآن</button>
+      <button class="cta-btn" @click="scrollToClubs">سجل الآن</button>
     </div>
     <div class="left-half">
       <img src="@/assets/images/last.png" alt="Educational Image">
@@ -21,6 +21,11 @@
 <script>
 export default {
   name: 'SessionSection',
+  methods: {
+    scrollToClubs() {
+      this.$emit('scroll-to-clubs');
+    }
+  }
 };
 </script>
 

@@ -10,7 +10,7 @@
         Flexible pricing plans that suit your needs.
       </p>
       <h4>Don't miss your chance! Join now and start your exciting language journey:</h4>
-      <button class="cta-btn">Sign Up Now</button>
+      <button class="cta-btn" @click="scrollToClubs">Sign Up Now</button>
     </div>
     <div class="left-half">
       <img src="@/assets/images/last.png" alt="Educational Image">
@@ -21,6 +21,11 @@
 <script>
 export default {
   name: 'SessionSection',
+  methods: {
+    scrollToClubs() {
+      this.$emit('scroll-to-clubs');
+    }
+  }
 };
 </script>
 

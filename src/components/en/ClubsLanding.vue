@@ -1,9 +1,9 @@
 <template>
   <div>
-    <HeroSection />
+    <HeroSection @scroll-to-clubs="scrollToClubs" />
     <AccreditationsSection />
-    <ClubsSection />
-    <SessionSection />
+    <ClubsSection ref="clubsSection" />
+    <SessionSection @scroll-to-clubs="scrollToClubs" />
   </div>
 </template>
 
@@ -19,11 +19,17 @@ export default {
     HeroSection,
     AccreditationsSection,
     ClubsSection,
-    SessionSection
+    SessionSection,
   },
-  data() {
-    return {
-
+  methods: {
+    scrollToClubs() {
+      const clubsSection = this.$refs.clubsSection.$el;  
+      if (clubsSection) {
+        clubsSection.scrollIntoView({
+          behavior: 'smooth',
+          block: 'start'
+        });
+      }
     }
   }
 }

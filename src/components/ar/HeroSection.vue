@@ -8,7 +8,7 @@
         نحن هنا لنقدم لك تجربة تعليمية مميزة ومليئة بالإبداع والمرح.
       </p>
       <div class="one-line from-row-to-column">
-        <Button class="cta-btn">أشترك معنا الآن</Button>
+        <Button class="cta-btn" @click="scrollToClubs">أشترك معنا الآن</Button>
         <div class="info-btn one-line">
           نحن هنا لنساعدك
         </div>
@@ -31,6 +31,11 @@
 <script>
 export default {
   name: 'HeroSection',
+  methods: {
+    scrollToClubs() {
+      this.$emit('scroll-to-clubs');
+    }
+  }
 };
 </script>
 

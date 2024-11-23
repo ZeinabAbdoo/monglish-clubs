@@ -20,6 +20,7 @@ The landing page should feature a clean, engaging layout. The design includes th
 - [ ] Design clubs section with cards or grid view.
 - [x] Develop session section with upcoming event details.
 - [x] Design footer with contact info and social media links.
+- [x] Implement CTA for smooth scrolling to the ClubsSection.
 - [ ] Implement responsive design for desktop and mobile views.
 
 ### 1.2 *Cart*

@@ -18,7 +18,7 @@
         "Enhance your reading, speaking, and overall language skills with personalized support for the best results in a creative and engaging learning environment.
       </p>
       <div class="one-line from-row-to-column">
-        <Button class="cta-btn">Join Us Now</Button>
+        <Button class="cta-btn" @click="scrollToClubs">Join Us Now</Button>
         <div class="info-btn one-line">
           We're here to help you
         </div>
@@ -30,6 +30,11 @@
 <script>
 export default {
   name: 'HeroSection',
+  methods: {
+    scrollToClubs() {
+      this.$emit('scroll-to-clubs');
+    }
+  }
 };
 </script>
 
