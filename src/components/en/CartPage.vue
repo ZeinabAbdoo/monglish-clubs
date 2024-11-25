@@ -35,20 +35,20 @@
                   <td class="quantity">
                     <button
                       class="quantity-button decrease-btn"
-                      @click="decreaseQuantity(item.id)"
+                      @click="decreaseQuantity(studentId, item.id)"
                     >-</button>
                     <label class="quantity-label">{{ item.quantity }}</label>
                     <input type="hidden" v-model="item.quantity" readonly />
                     <button
                       class="quantity-button increase-btn"
-                      @click="increaseQuantity(item.id)"
+                      @click="increaseQuantity(studentId, item.id)"
                     >+</button>
                   </td>
                   <td
                     class="price"
                   >{{ (cartSummary.total_price / cartSummary.total_items_count).toFixed(2) }} {{ cartSummary.currency_en }}</td>
                   <td>
-                    <button class="remove-button" type="button" @click="removeItem(item.id)">
+                    <button class="remove-button" type="button" @click="removeItem(item.student_id)">
                       <i class="fa-regular fa-trash-can"></i>
                     </button>
                   </td>
@@ -63,13 +63,13 @@
                   <td class="quantity">
                     <button
                       class="quantity-button decrease-btn"
-                      @click="decreaseQuantity(item.id)"
+                      @click="decreaseQuantity(studentId, item.id)"
                     >-</button>
                     <label class="quantity-label">{{ item.quantity }}</label>
                     <input type="hidden" v-model="item.quantity" readonly />
                     <button
                       class="quantity-button increase-btn"
-                      @click="increaseQuantity(item.id)"
+                      @click="increaseQuantity(studentId, item.id)"
                     >+</button>
                   </td>
                   <td
