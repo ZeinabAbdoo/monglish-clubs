@@ -477,18 +477,25 @@
         </div>
       </div>
     </div>
+    <!-- Conditionally render the StudentPopup if showPopup is true -->
+    <StudentPopup v-if="showPopup" @close="closePopup" />
   </section>
 </template>
 
 <script>
 import axios from "axios";
+import StudentPopup from "./StudentPopup.vue";
 
 export default {
   name: "ClubsSection",
+  components: {
+    StudentPopup,
+  },
   data() {
     return {
       selectedClub: "Foreign Teachers",
       selectedClub2: "Foreign Teachers",
+      showPopup: false,
       prices: [],
     };
   },
@@ -506,11 +513,16 @@ export default {
           console.error("Error fetching session group prices:", error);
         });
     },
-
     addToCart(clubType, price) {
       console.log(`Added ${clubType} with price ${price} to cart`);
+      const students = JSON.parse(localStorage.getItem("students")) || [];
+      if (students.length === 0) {
+        this.showPopup = true;
+      }
     },
-
+    closePopup() {
+      this.showPopup = false;
+    },
     formatPrice(price) {
       const numericPrice = Number(price);
       return Number.isInteger(numericPrice)

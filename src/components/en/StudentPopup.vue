@@ -2,31 +2,31 @@
   <div class="student-popup">
     <div class="popup-content">
       <button class="close-btn" @click="closePopup">&times;</button>
-      <h2>إضافة كود الطالب</h2>
+      <h2>Add Student Code</h2>
       <form @submit.prevent="handleSubmit">
         <div class="form-group">
           <div class="form-item">
-            <label for="student-code">كود الطالب</label>
+            <label for="student-code">Student Code</label>
             <input
               type="text"
               id="student-code"
               v-model="student.code"
-              placeholder="أدخل كود الطالب"
+              placeholder="Enter student code"
               required
             />
           </div>
           <div class="form-item">
-            <label for="student-name">اسم الطالب</label>
+            <label for="student-name">Student Name</label>
             <input
               type="text"
               id="student-name"
               v-model="student.name"
-              placeholder="أدخل اسم الطالب"
+              placeholder="Enter student name"
               required
             />
           </div>
         </div>
-        <button type="submit">إضافة</button>
+        <button type="submit">Add</button>
       </form>
     </div>
   </div>
@@ -82,14 +82,14 @@ export default {
   align-items: center;
   backdrop-filter: blur(10px);
   z-index: 999;
+  transform: scaleX(-1);
 }
 
 .popup-content {
   background: #ffffff;
   width: 60%;
   border-radius: 25px;
-  direction: rtl;
-  text-align: right;
+  text-align: left;
   padding: 20px;
   position: relative;
 }
