@@ -516,7 +516,6 @@ export default {
           }
         });
         localStorage.setItem("userInfo", JSON.stringify(userInfo));
-        localStorage.setItem("userInfo", JSON.stringify(userInfo));
         this.showPopup = false;
       }
       console.log(
