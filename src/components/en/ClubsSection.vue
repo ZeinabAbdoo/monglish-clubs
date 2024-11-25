@@ -516,8 +516,34 @@ export default {
     },
     addToCart(clubType, price, sessionGroupId) {
       console.log(`Added ${clubType} with price ${price} to cart`);
-      this.selectedSessionGroupId = sessionGroupId;
-      this.showPopup = true;
+
+      const students = JSON.parse(localStorage.getItem("students")) || [];
+
+      if (students.length === 0) {
+        this.showPopup = true;
+      } else {
+        students.forEach(student => {
+          if (!Array.isArray(student.session_group_data)) {
+            student.session_group_data = [];
+          }
+          const existingSessionGroup = student.session_group_data.find(
+            group => group.session_group_id === sessionGroupId
+          );
+
+          if (existingSessionGroup) {
+            existingSessionGroup.quantity += 1;
+          } else {
+            student.session_group_data.push({
+              session_group_id: sessionGroupId,
+              quantity: 1
+            });
+          }
+        });
+        sessionStorage.setItem("students", JSON.stringify(students));
+        localStorage.setItem("students", JSON.stringify(students));
+        this.showPopup = false; 
+      }
+      this.selectedSessionGroupId = sessionGroupId; 
     },
     closePopup() {
       this.showPopup = false;
