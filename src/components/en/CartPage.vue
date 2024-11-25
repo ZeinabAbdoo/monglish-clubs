@@ -468,34 +468,9 @@
 
 <script>
   import axios from "axios";
-  import { countries } from "countries-list";
   export default {
     data() {
       return {
-        preferredCountries: [
-          "SA",
-          "KW",
-          "AE",
-          "QA",
-          "EG",
-          "JO",
-          "OM",
-          "YE",
-          "BH",
-          "IQ",
-        ],
-        countryCodes: {
-          SA: "+966 ",
-          KW: "+965 ",
-          AE: "+971 ",
-          QA: "+974 ",
-          EG: "+20 ",
-          JO: "+962 ",
-          OM: "+968 ",
-          YE: "+967 ",
-          BH: "+973 ",
-          IQ: "+964 ",
-        },
         isChecked: false,
         orderUpdated: false,
         showModal: false,
@@ -503,17 +478,11 @@
         cartSummary: {
           total_price: 0,
           total_price_discount: 0,
-          family_or_friend_discount: 0,
-          currency: "",
+          currency_en: "",
           total_items_count: 0,
           coupon_code: null, // Ensure coupon_code is defined
           discount: 0, // Add discount to cartSummary
         },
-        firstname: "",
-        lastname: "",
-        country: "",
-        phone: "",
-        email: "",
         couponCode: "", // Holds the coupon code input
         successMessage: "", // Holds success message
         errors: {}, // To store form errors
@@ -524,9 +493,7 @@
     },
     methods: {
       async fetchCartItems() {
-        let url = sessionStorage.getItem("userInfo")
-          ? "/api/user/cart"
-          : "/api/session/cart";
+        let url = "/api/session/club-session-cart";
 
         const userInfo = sessionStorage.getItem("userInfo");
         let headers = {};
@@ -746,40 +713,10 @@
       goToCourses() {
         this.$router.push("/en/");
       },
-      validateForm() {
-        this.errors = {};
-
-        if (!this.firstname) {
-          this.errors.firstname = "Firstname is required";
-        }
-
-        if (!this.lastname) {
-          this.errors.lastname = "Lastname is required";
-        }
-
-        if (!this.country) {
-          this.errors.country = "Country / Region is required";
-        }
-
-        if (!this.phone) {
-          this.errors.phone = "Phone is required";
-        }
-
-        if (!this.email) {
-          this.errors.email = "Email address is required";
-        } else if (!this.isValidEmail(this.email)) {
-          this.errors.email = "Email address is invalid";
-        }
-      },
-      isValidEmail(email) {
-        const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-        return re.test(email);
-      },
       goToCheckout() {
-        let url = sessionStorage.getItem("userInfo")
-          ? "/api/user/checkout"
-          : "/api/session/checkout";
+        let url = "/api/session/club-session-checkout";
 
+        // replace with your storage 
         const userInfo = sessionStorage.getItem("userInfo");
         let headers = {};
         let formData = {};
@@ -794,15 +731,6 @@
           } catch (error) {
             console.error("Error parsing userInfo from sessionStorage:", error);
           }
-        } else {
-          formData = {
-            firstname: this.firstname,
-            lastname: this.lastname,
-            country: this.country,
-            phone: this.phone,
-            email: this.email,
-          };
-          this.validateForm();
         }
 
         // If there are no errors, submit the form
@@ -814,7 +742,7 @@
               console.log("Order checkout successfully:", response.data);
               if (response.data.success) {
                 // Redirect to the URL in the response data
-                window.location.href = response.data.data;
+                window.location.href = response.data.data.stripeUrl;
               } else {
                 console.error("Error:", response.data.message);
                 // Optionally, display an error message to the user
@@ -833,42 +761,10 @@
         }
       },
       showAuthModal() {
-        if (sessionStorage.getItem("userInfo")) {
-          this.goToCheckout();
-        } else {
-          this.showModal = true;
-        }
+        this.goToCheckout();
       },
       closeModal() {
         this.showModal = false;
-      },
-      updatePhoneNumber() {
-        // Get the selected country code and set it to the phone input
-        const countryCode = this.country;
-
-        // Set phone to the country code only if it exists
-        if (this.countryCodes[countryCode]) {
-          this.phone = this.countryCodes[countryCode]; // Set phone to country code
-        } else {
-          this.phone = ""; // Clear if no valid country is selected
-        }
-      },
-    },
-    computed: {
-      sortedCountries() {
-        // Create an array of countries from the countries-list package
-        const countryArray = Object.keys(countries).map((code) => ({
-          code: code,
-          name: countries[code].name,
-        }));
-
-        const preferred = this.preferredCountries
-          .map((code) => countryArray.find((c) => c.code === code))
-          .filter(Boolean);
-        const others = countryArray.filter(
-          (country) => !this.preferredCountries.includes(country.code)
-        );
-        return [...preferred, ...others]; // Combine preferred and other countries
       },
     },
     mounted() {
