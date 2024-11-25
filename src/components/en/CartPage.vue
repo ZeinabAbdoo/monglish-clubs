@@ -35,13 +35,13 @@
                   <td class="quantity">
                     <button
                       class="quantity-button decrease-btn"
-                      @click="decreaseQuantity(studentId, item.id)"
+                      @click="decreaseQuantity(item.student_id, item.id)"
                     >-</button>
                     <label class="quantity-label">{{ item.quantity }}</label>
                     <input type="hidden" v-model="item.quantity" readonly />
                     <button
                       class="quantity-button increase-btn"
-                      @click="increaseQuantity(studentId, item.id)"
+                      @click="increaseQuantity(item.student_id, item.id)"
                     >+</button>
                   </td>
                   <td
@@ -63,13 +63,13 @@
                   <td class="quantity">
                     <button
                       class="quantity-button decrease-btn"
-                      @click="decreaseQuantity(studentId, item.id)"
+                      @click="decreaseQuantity(item.student_id, item.id)"
                     >-</button>
                     <label class="quantity-label">{{ item.quantity }}</label>
                     <input type="hidden" v-model="item.quantity" readonly />
                     <button
                       class="quantity-button increase-btn"
-                      @click="increaseQuantity(studentId, item.id)"
+                      @click="increaseQuantity(item.student_id, item.id)"
                     >+</button>
                   </td>
                   <td
@@ -264,7 +264,7 @@ export default {
         .get(url, { headers })
         .then(() => {
           this.fetchCartItems();
-          window.location.reload();
+          // window.location.reload();
         }) // Refresh cart items
         .catch(error => {
           console.error("Error increasing item quantity:", error);
