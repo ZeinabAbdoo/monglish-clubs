@@ -507,17 +507,15 @@ export default {
     fetchClubsPrices() {
       axios
         .get("/api/session/get-session-groups")
-        .then((response) => {
+        .then(response => {
           this.prices = response.data.data;
         })
-        .catch((error) => {
+        .catch(error => {
           console.error("Error fetching session group prices:", error);
         });
     },
     addToCart(clubType, price, sessionGroupId) {
-      console.log(`Added ${clubType} with price ${price} to cart`);
-
-      const students = JSON.parse(localStorage.getItem("students")) || [];
+      let students = JSON.parse(localStorage.getItem("students")) || [];
 
       if (students.length === 0) {
         this.showPopup = true;
@@ -541,12 +539,75 @@ export default {
         });
         sessionStorage.setItem("students", JSON.stringify(students));
         localStorage.setItem("students", JSON.stringify(students));
-        this.showPopup = false; 
+        this.showPopup = false;
       }
-      this.selectedSessionGroupId = sessionGroupId; 
+      console.log(
+        "Updated students saved to localStorage:",
+        localStorage.getItem("students")
+      );
+
+      // Handle popup closure
+      if (!this.showPopup) {
+        students = JSON.parse(localStorage.getItem("students")) || [];
+        if (students.length !== 0) {
+          const lastStudent = students[students.length - 1];
+          // Prepare payload for POST request
+          const payload = {
+            name: lastStudent.name,
+            code: lastStudent.code,
+            session_group_data: lastStudent.session_group_data
+          };
+
+          console.log("Payload for POST request:", payload);
+
+          // Make POST request
+          axios
+            .post("/api/session/club-session-cart", payload)
+            .then(response => {
+              console.log("Cart updated successfully:", response.data);
+            })
+            .catch(error => {
+              console.error(
+                "Error updating cart:",
+                error.response?.data || error.message
+              );
+            });
+        }
+      }
+
+      this.selectedSessionGroupId = sessionGroupId;
     },
     closePopup() {
       this.showPopup = false;
+
+      // Check and proceed with the POST request if conditions are met
+      let students = JSON.parse(localStorage.getItem("students")) || [];
+      if (students.length !== 0) {
+
+        const lastStudent = students[students.length - 1];
+        const payload = {
+          name: lastStudent.name,
+          code: lastStudent.code,
+          session_group_data: lastStudent.session_group_data
+        };
+
+        console.log("Payload for POST request (after popup close):", payload);
+
+        axios
+          .post("/api/session/club-session-cart", payload)
+          .then(response => {
+            console.log(
+              "Cart updated successfully after popup close:",
+              response.data
+            );
+          })
+          .catch(error => {
+            console.error(
+              "Error updating cart after popup close:",
+              error.response?.data || error.message
+            );
+          });
+      }
     },
     formatPrice(price) {
       const numericPrice = Number(price);
@@ -554,7 +615,7 @@ export default {
         ? numericPrice
         : numericPrice.toFixed(2);
     },
-  },
+  }
 };
 </script>
 
