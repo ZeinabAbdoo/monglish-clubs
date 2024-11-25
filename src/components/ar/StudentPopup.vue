@@ -49,7 +49,7 @@
           const sessionGroupId = this.$parent.selectedSessionGroupId;
           const quantity = 1;
 
-          const students = JSON.parse(sessionStorage.getItem("students")) || [];
+          const userInfo = JSON.parse(sessionStorage.getItem("userInfo")) || [];
           const studentData = {
             name: this.student.name,
             code: this.student.code,
@@ -60,9 +60,9 @@
               },
             ],
           };
-          students.push(studentData);
-          sessionStorage.setItem("students", JSON.stringify(students));
-          localStorage.setItem("students", JSON.stringify(students));
+          userInfo.push(studentData);
+          sessionStorage.setItem("userInfo", JSON.stringify(userInfo));
+          localStorage.setItem("userInfo", JSON.stringify(userInfo));
           console.log(
             `Student added successfully! Name: ${this.student.name}, Code: ${this.student.code}`
           );

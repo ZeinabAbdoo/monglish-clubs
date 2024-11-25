@@ -1,10 +1,10 @@
 import { createApp } from 'vue';
 import App from './App.vue';
-import store from './store'; // Import your store
+// import store from './store'; // Import your store
 import axios from 'axios';
 import router from './router';
-import VueTelInput from 'vue3-tel-input'
-import 'vue3-tel-input/dist/vue3-tel-input.css'
+// import VueTelInput from 'vue3-tel-input'
+// import 'vue3-tel-input/dist/vue3-tel-input.css'
 import '@fortawesome/fontawesome-free/css/all.css';
 
 
@@ -22,21 +22,21 @@ axios.get('/api/csrf-token')
   });
 
 // Add a request interceptor to include the Authorization token
-axios.interceptors.request.use(
-  (config) => {
-    const token = sessionStorage.getItem('token');
-    if (token) {
-      config.headers.Authorization = `Bearer ${token}`;
-    }
-    return config;
-  },
-  (error) => {
-    return Promise.reject(error);
-  }
-);
+// axios.interceptors.request.use(
+//   (config) => {
+//     const token = sessionStorage.getItem('token');
+//     if (token) {
+//       config.headers.Authorization = `Bearer ${token}`;
+//     }
+//     return config;
+//   },
+//   (error) => {
+//     return Promise.reject(error);
+//   }
+// );
 
 createApp(App)
   .use(router)
-  .use(store)
-  .use(VueTelInput)
+  // .use(store)
+  // .use(VueTelInput)
   .mount('#app');
