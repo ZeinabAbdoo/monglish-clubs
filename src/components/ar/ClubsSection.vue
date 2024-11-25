@@ -515,7 +515,7 @@ export default {
             });
           }
         });
-        sessionStorage.setItem("userInfo", JSON.stringify(userInfo));
+        localStorage.setItem("userInfo", JSON.stringify(userInfo));
         localStorage.setItem("userInfo", JSON.stringify(userInfo));
         this.showPopup = false;
       }
