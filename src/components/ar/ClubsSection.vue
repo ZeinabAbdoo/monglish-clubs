@@ -80,7 +80,7 @@
                   <span>{{ formatPrice(prices[1].price) }}</span>
                   {{ prices[1].currency_ar }}
                 </p>
-                <button @click="addToCart('مدرسين اجانب', prices[1].price)">
+                <button @click="addToCart('مدرسين اجانب', prices[1].price, 1)">
                   <i class="fa-solid fa-plus"></i> أضف
                 </button>
               </div>
@@ -94,7 +94,7 @@
                   <span>{{ formatPrice(prices[2].price) }}</span>
                   {{ prices[2].currency_ar }}
                 </p>
-                <button @click="addToCart('مدرسين اجانب', prices[2].price)">
+                <button @click="addToCart('مدرسين اجانب', prices[2].price, 2)">
                   <i class="fa-solid fa-plus"></i> أضف
                 </button>
               </div>
@@ -110,7 +110,7 @@
                   <span>{{ formatPrice(prices[3].price) }}</span>
                   {{ prices[3].currency_ar }}
                 </p>
-                <button @click="addToCart('مدرسين اجانب', prices[3].price)">
+                <button @click="addToCart('مدرسين اجانب', prices[3].price, 3)">
                   <i class="fa-solid fa-plus"></i> أضف
                 </button>
               </div>
@@ -124,7 +124,7 @@
                   <span>{{ formatPrice(prices[4].price) }}</span>
                   {{ prices[4].currency_ar }}
                 </p>
-                <button @click="addToCart('مدرسين اجانب', prices[4].price)">
+                <button @click="addToCart('مدرسين اجانب', prices[4].price, 4)">
                   <i class="fa-solid fa-plus"></i> أضف
                 </button>
               </div>
@@ -138,7 +138,7 @@
                   <span>{{ formatPrice(prices[5].price) }}</span>
                   {{ prices[5].currency_ar }}
                 </p>
-                <button @click="addToCart('مدرسين اجانب', prices[5].price)">
+                <button @click="addToCart('مدرسين اجانب', prices[5].price, 5)">
                   <i class="fa-solid fa-plus"></i> أضف
                 </button>
               </div>
@@ -244,7 +244,7 @@
                   <span>{{ formatPrice(prices[6].price) }}</span>
                   {{ prices[6].currency_ar }}
                 </p>
-                <button @click="addToCart('مدرسين اجانب', prices[6].price)">
+                <button @click="addToCart('مدرسين اجانب', prices[6].price, 6)">
                   <i class="fa-solid fa-plus"></i> أضف
                 </button>
               </div>
@@ -258,7 +258,7 @@
                   <span>{{ formatPrice(prices[7].price) }}</span>
                   {{ prices[7].currency_ar }}
                 </p>
-                <button @click="addToCart('مدرسين اجانب', prices[7].price)">
+                <button @click="addToCart('مدرسين اجانب', prices[7].price, 7)">
                   <i class="fa-solid fa-plus"></i> أضف
                 </button>
               </div>
@@ -272,7 +272,7 @@
                   <span>{{ formatPrice(prices[8].price) }}</span>
                   {{ prices[8].currency_ar }}
                 </p>
-                <button @click="addToCart('مدرسين اجانب', prices[8].price)">
+                <button @click="addToCart('مدرسين اجانب', prices[8].price, 8)">
                   <i class="fa-solid fa-plus"></i> أضف
                 </button>
               </div>
@@ -288,7 +288,7 @@
                   <span>{{ formatPrice(prices[9].price) }}</span>
                   {{ prices[9].currency_ar }}
                 </p>
-                <button @click="addToCart('مدرسين اجانب', prices[9].price)">
+                <button @click="addToCart('مدرسين اجانب', prices[9].price, 9)">
                   <i class="fa-solid fa-plus"></i> أضف
                 </button>
               </div>
@@ -302,7 +302,9 @@
                   <span>{{ formatPrice(prices[10].price) }}</span>
                   {{ prices[10].currency_ar }}
                 </p>
-                <button @click="addToCart('مدرسين اجانب', prices[10].price)">
+                <button
+                  @click="addToCart('مدرسين اجانب', prices[10].price, 10)"
+                >
                   <i class="fa-solid fa-plus"></i> أضف
                 </button>
               </div>
@@ -316,7 +318,9 @@
                   <span>{{ formatPrice(prices[11].price) }}</span>
                   {{ prices[11].currency_ar }}
                 </p>
-                <button @click="addToCart('مدرسين اجانب', prices[11].price)">
+                <button
+                  @click="addToCart('مدرسين اجانب', prices[11].price, 11)"
+                >
                   <i class="fa-solid fa-plus"></i> أضف
                 </button>
               </div>
@@ -461,8 +465,11 @@
       </div>
     </div>
 
-    <!-- Conditionally render the StudentPopup if showPopup is true -->
-    <StudentPopup v-if="showPopup" @close="closePopup" />
+    <StudentPopup
+      v-if="showPopup"
+      @close="closePopup"
+      :selectedSessionGroupId="selectedSessionGroupId"
+    />
   </section>
 </template>
 
@@ -480,6 +487,7 @@ export default {
       selectedClub: "مدرسين اجانب",
       selectedClub2: "مدرسين اجانب",
       showPopup: false,
+      selectedSessionGroupId: null,
       prices: [],
     };
   },
@@ -497,12 +505,10 @@ export default {
           console.error("Error fetching session group prices:", error);
         });
     },
-    addToCart(clubType, price) {
+    addToCart(clubType, price, sessionGroupId) {
       console.log(`Added ${clubType} with price ${price} to cart`);
-      const students = JSON.parse(localStorage.getItem("students")) || [];
-      if (students.length === 0) {
-        this.showPopup = true;
-      }
+      this.selectedSessionGroupId = sessionGroupId;
+      this.showPopup = true;
     },
     closePopup() {
       this.showPopup = false;

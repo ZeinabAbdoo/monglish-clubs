@@ -46,10 +46,24 @@ export default {
   methods: {
     handleSubmit() {
       if (this.student.code && this.student.name) {
+        const sessionGroupId = this.$parent.selectedSessionGroupId;
+        const quantity = 1;
+
         const students = JSON.parse(sessionStorage.getItem("students")) || [];
-        students.push(this.student);
+        const studentData = {
+          name: this.student.name,
+          code: this.student.code,
+          session_group_data: [
+            {
+              session_group_id: sessionGroupId,
+              quantity: quantity,
+            },
+          ],
+        };
+        students.push(studentData);
         sessionStorage.setItem("students", JSON.stringify(students));
         localStorage.setItem("students", JSON.stringify(students));
+
         console.log(
           `Student added successfully! Name: ${this.student.name}, Code: ${this.student.code}`
         );
