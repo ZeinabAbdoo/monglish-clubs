@@ -572,7 +572,11 @@ export default {
         console.log("Payload for POST request (after popup close):", payload);
 
         axios
-          .post("/api/session/club-session-cart", payload)
+          .post("/api/session/club-session-cart", payload, {
+            headers: {
+              "Content-Type": "application/json"
+            }
+          })
           .then(response => {
             console.log(
               "Cart updated successfully after popup close:",

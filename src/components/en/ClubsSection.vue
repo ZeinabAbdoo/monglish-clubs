@@ -503,7 +503,7 @@ export default {
   mounted() {
     this.fetchClubsPrices();
   },
-  methods: {
+    methods: {
     fetchClubsPrices() {
       axios
         .get("/api/session/get-session-groups")
@@ -577,6 +577,7 @@ export default {
 
       this.selectedSessionGroupId = sessionGroupId;
     },
+
     closePopup() {
       this.showPopup = false;
 
@@ -594,7 +595,11 @@ export default {
         console.log("Payload for POST request (after popup close):", payload);
 
         axios
-          .post("/api/session/club-session-cart", payload)
+          .post("/api/session/club-session-cart", payload, {
+            headers: {
+              "Content-Type": "application/json"
+            }
+          })
           .then(response => {
             console.log(
               "Cart updated successfully after popup close:",
@@ -614,7 +619,7 @@ export default {
       return Number.isInteger(numericPrice)
         ? numericPrice
         : numericPrice.toFixed(2);
-    },
+    }
   }
 };
 </script>
