@@ -13,13 +13,13 @@
       </div>
     </main>
     <div class="cart-page">
-      <!--div v-if="cartItems.length === 0" class="empty-cart">
+      <div v-if="cartItems.length === 0" class="empty-cart">
         <img src="@/assets/images/cart.png" alt="Empty Cart Image" />
         <h2>لا يوجد لديك شىء في السلة</h2>
         <p>ابدأ رحلتك التعليمية الآن اشترك في دوراتنا واستفد من تجربة تعلم فريدة!</p>
         <button class="back-to-courses" @click="goToCourses">العودة للدورات</button>
-      </div-->
-      <div class="cart-content">
+      </div>
+      <div v-else class="cart-content">
         <div class="cart-container cart-container-1">
           <div class="order-section">
             <table class="order-table">
