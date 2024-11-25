@@ -91,7 +91,7 @@
                 </tr>
               </tbody>
             </table>
-            <button class="buy-another-course-en" @click="goToCourses">← Buy Another Course</button>
+            <button class="buy-another-course-en" @click="goToCourses">← Add Club</button>
             <div v-if="orderUpdated" class="order-update-message-en">Cart updated.</div>
           </div>
         </div>
