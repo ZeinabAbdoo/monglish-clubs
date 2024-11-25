@@ -25,7 +25,7 @@
                   <th>Club</th>
                   <th>Quantity</th>
                   <th>Price</th>
-                  <th></th>
+                  <th>Remove</th>
                 </tr>
               </thead>
               <tbody>
