@@ -493,9 +493,7 @@ export default {
         });
     },
     addToCart(clubType, price, sessionGroupId) {
-      console.log(`Added ${clubType} with price ${price} to cart`);
-
-      const students = JSON.parse(localStorage.getItem("students")) || [];
+      let students = JSON.parse(localStorage.getItem("students")) || [];
 
       if (students.length === 0) {
         this.showPopup = true;
@@ -519,12 +517,76 @@ export default {
         });
         sessionStorage.setItem("students", JSON.stringify(students));
         localStorage.setItem("students", JSON.stringify(students));
-        this.showPopup = false; 
+        this.showPopup = false;
       }
-      this.selectedSessionGroupId = sessionGroupId; 
+
+      console.log(
+        "Updated students saved to localStorage:",
+        localStorage.getItem("students")
+      );
+
+      // Handle popup closure
+      if (!this.showPopup) {
+        students = JSON.parse(localStorage.getItem("students")) || [];
+        if (students.length !== 0) {
+          // Prepare payload for POST request
+          const payload = {
+            students: students.map(student => ({
+              id: student.id,
+              name: student.name,
+              session_group_data: student.session_group_data
+            }))
+          };
+
+          console.log("Payload for POST request:", payload);
+
+          // Make POST request
+          axios
+            .post("/api/session/club-session-cart", payload)
+            .then(response => {
+              console.log("Cart updated successfully:", response.data);
+            })
+            .catch(error => {
+              console.error(
+                "Error updating cart:",
+                error.response?.data || error.message
+              );
+            });
+        }
+      }
+
+      this.selectedSessionGroupId = sessionGroupId;
     },
+
     closePopup() {
       this.showPopup = false;
+
+      // Check and proceed with the POST request if conditions are met
+      let students = JSON.parse(localStorage.getItem("students")) || [];
+      if (students.length !== 0) {
+        const payload = students.map(student => ({
+          name: student.name,
+          code: student.code,
+          session_group_data: student.session_group_data
+        }));
+
+        console.log("Payload for POST request (after popup close):", payload);
+
+        axios
+          .post("/api/session/club-session-cart", payload)
+          .then(response => {
+            console.log(
+              "Cart updated successfully after popup close:",
+              response.data
+            );
+          })
+          .catch(error => {
+            console.error(
+              "Error updating cart after popup close:",
+              error.response?.data || error.message
+            );
+          });
+      }
     },
     formatPrice(price) {
       const numericPrice = Number(price);
