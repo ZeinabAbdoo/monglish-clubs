@@ -35,7 +35,11 @@
               <tbody>
                 <tr class="order-item" v-for="(item, index) in cartItems" :key="index">
                   <td class="code">{{ item.student_code }}</td>
-                  <td class="course">{{ item.club_name }}</td>
+                  <td class="course">
+                    <strong>{{ item.club_name }}</strong>
+                    <br />
+                    <span>عدد المحاضرات: {{ item.session_group.number }}</span>
+                  </td>
                   <td class="quantity">
                     <button
                       class="quantity-button decrease-btn"
@@ -65,7 +69,11 @@
               <tbody>
                 <tr class="order-item" v-for="(item, index) in cartItems" :key="index">
                   <td class="code">{{ item.student_code }}</td>
-                  <td class="course">{{ item.club_name }}</td>
+                  <td class="course">
+                    <strong>{{ item.club_name }}</strong>
+                    <br />
+                    <span>عدد المحاضرات: {{ item.session_group.number }}</span>
+                  </td>
                   <td class="quantity">
                     <button
                       class="quantity-button decrease-btn"
@@ -746,7 +754,11 @@ export default {
 }
 
 .order-table thead {
-  background: linear-gradient(135deg, #ff9442, #ff6f00); /* Adjusted angle for a cleaner look */
+  background: linear-gradient(
+    135deg,
+    #ff9442,
+    #ff6f00
+  ); /* Adjusted angle for a cleaner look */
   color: #ffffff; /* Text color for contrast */
   font-size: 20px; /* Slightly adjusted size for better readability */
   font-weight: bold; /* Emphasize the header text */
@@ -1176,7 +1188,7 @@ export default {
 }
 
 .increase-btn {
-  background-color: #F47D21; /* Button background color */
+  background-color: #f47d21; /* Button background color */
   color: #fff; /* Text color */
 }
 
@@ -1185,8 +1197,8 @@ export default {
 }
 
 .decrease-btn {
-  background-color: #F0F0F0; /* Button background color */
-  color: #BFBFBF; /* Text color */
+  background-color: #f0f0f0; /* Button background color */
+  color: #bfbfbf; /* Text color */
 }
 
 .decrease-btn:hover {

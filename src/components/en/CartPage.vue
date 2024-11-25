@@ -31,7 +31,11 @@
               <tbody>
                 <tr class="order-item" v-for="(item, index) in cartItems" :key="index">
                   <td class="code">{{ item.student_code }}</td>
-                  <td class="course">{{ item.club_name }}</td>
+                  <td class="course">
+                    <strong>{{ item.club_name }}</strong>
+                    <br />
+                    <span> Lectures : {{ item.session_group.number }}</span>
+                  </td>
                   <td class="quantity">
                     <button
                       class="quantity-button decrease-btn"
@@ -59,7 +63,11 @@
               <tbody>
                 <tr class="order-item" v-for="(item, index) in cartItems" :key="index">
                   <td class="code">{{ item.student_code }}</td>
-                  <td class="course">{{ item.club_name }}</td>
+                  <td class="course">
+                    <strong>{{ item.club_name }}</strong>
+                    <br />
+                    <span> Lectures : {{ item.session_group.number }}</span>
+                  </td>
                   <td class="quantity">
                     <button
                       class="quantity-button decrease-btn"
