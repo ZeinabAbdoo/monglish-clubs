@@ -67,6 +67,7 @@
           );
           this.resetForm();
           this.closePopup();
+          this.$router.push({ name: "CartEn" });
         } else {
           console.log("Please fill in all fields.");
         }

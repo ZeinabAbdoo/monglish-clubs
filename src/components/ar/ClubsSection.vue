@@ -516,7 +516,6 @@ export default {
           }
         });
         localStorage.setItem("userInfo", JSON.stringify(userInfo));
-        localStorage.setItem("userInfo", JSON.stringify(userInfo));
         this.showPopup = false;
       }
       console.log(
@@ -543,6 +542,7 @@ export default {
             .post("/api/session/club-session-cart", payload)
             .then(response => {
               console.log("Cart updated successfully:", response.data);
+              this.$router.push({ name: "CartAr" });
             })
             .catch(error => {
               console.error(

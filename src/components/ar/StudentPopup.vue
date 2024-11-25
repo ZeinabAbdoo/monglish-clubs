@@ -62,9 +62,7 @@
           };
           userInfo.push(studentData);
           localStorage.setItem("userInfo", JSON.stringify(userInfo));
-          console.log(
-            `Student added successfully! Name: ${this.student.name}, Code: ${this.student.code}`
-          );
+          
           this.resetForm();
           this.closePopup();
         } else {
