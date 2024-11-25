@@ -97,7 +97,7 @@
                 </tr>
               </tbody>
             </table>
-            <button class="buy-another-course" @click="goToCourses">→ شراء دورة اخرى</button>
+            <button class="buy-another-course" @click="goToCourses">→ أضف نادي</button>
             <div v-if="orderUpdated" class="order-update-message">تم تحديث سلة المشتريات.</div>
           </div>
         </div>
