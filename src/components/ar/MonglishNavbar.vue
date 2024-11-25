@@ -12,7 +12,7 @@
 
                     <circle cx="12" cy="6" r="6" fill="#EF4444" />
 
-                    <text x="12" y="6.5" text-anchor="middle" dy=".3em" fill="#165e84" font-size="8" font-family="Arial, sans-serif" id="totalCount1"></text>
+                    <text x="12" y="6.5" text-anchor="middle" dy=".3em" fill="#fff" font-size="10" font-family="Arial, sans-serif" id="totalCount1"></text>
                 </svg>
             </a>
         </div>
@@ -37,63 +37,120 @@
 </template>
 
 <script>
-import router from '@/router'; 
-import { routeMappings } from '@/router/routeMappings.js';
+    import router from '@/router'; 
+    import { routeMappings } from '@/router/routeMappings.js';
+    import axios from 'axios';
 
-export default {
-    name: 'NavBar',
-    methods: {
-        switchToEnglish() {
-            const currentPath = router.currentRoute.value.path;
-            const englishPath = routeMappings[currentPath] || '/';
-            router.push(englishPath);
+    export default {
+        name: 'NavBar',
+        data() {
+            return {
+                orderUpdated: false,
+                cartItems: [],
+                cartSummary: {
+                    total_price: 0,
+                    total_price_discount: 0,
+                    family_or_friend_discount: 0,
+                    currency_ar: "",
+                    total_items_count: 0,
+                    coupon_code: null,
+                    discount: 0,
+                },
+                couponCode: "",
+            };
+        },
+        methods: {
+            switchToEnglish() {
+                const currentPath = router.currentRoute.value.path;
+                const englishPath = routeMappings[currentPath] || '/';
+                router.push(englishPath);
+            },
+            async fetchCartItems() {
+                let url = sessionStorage.getItem('userInfo') ? '/api/user/cart' : '/api/session/cart';
+                let totalCartItems = 0;
+                const userInfo = sessionStorage.getItem('userInfo');
+                let headers = {};
+                if (userInfo) {
+                    try {
+                        const parsedUserInfo = JSON.parse(userInfo);
+                        const token = parsedUserInfo.token;
+                        
+                        if (token) {
+                            headers['Authorization'] = `Bearer ${token}`;
+                        }
+                    } catch (error) {
+                        console.error('Error parsing userInfo from sessionStorage:', error);
+                    }
+                }
+
+                const textElement1 = document.getElementById('totalCount1');
+        
+                axios.get(url, { headers })
+                .then(response => {
+                    // Store cart items in data
+                    totalCartItems = response.data.data.total_items_count;
+                    
+                    textElement1.textContent = totalCartItems > 0 ? totalCartItems : 0;
+                })
+                .catch(error => {
+                    if (error.response && error.response.status === 200) {
+                    //   // If the cart is not found, treat it as empty
+                        console.log('Cart is empty or was deleted:', error.response.data);
+                    } else {
+                        console.log('error total cart items', totalCartItems);
+                        console.log('Error fetching cart items:', error.response ? error.response.data : error.message);
+                    }
+                })
+            }
+        },
+        mounted() {
+            this.fetchCartItems();
         }
     }
-}
 </script>
 
 <style scoped>
-.navbar {
-    display: flex;
-    justify-content: space-between; 
-    align-items: center; 
-    z-index: 1000;
-    position: relative;
-    padding: 1% 5%;
-    background-color: #fff; 
-    color: #165e84; 
-    border-radius: 0 0 20px 20px;
-    width: 80%;
-    margin: 0 auto; 
-}
+    .navbar {
+        display: flex;
+        justify-content: space-between; 
+        align-items: center; 
+        z-index: 1000;
+        position: relative;
+        padding: 1% 5%;
+        background-color: #fff; 
+        color: #165e84; 
+        border-radius: 0 0 20px 20px;
+        width: 80%;
+        margin: 0 auto; 
+    }
 
-.left-buttons {
-    display: flex;
-    align-items: center; 
-}
+    .left-buttons {
+        display: flex;
+        align-items: center; 
+    }
 
-.navbar button {
-    border: none;
-    background-color: transparent;
-    color: inherit; 
-    cursor: pointer;
-    font-size: 1.2rem;
-    font-family: 'DIN Next LT Arabic';
-    font-weight: 500;
-    margin-right: 10px; 
-}
+    .navbar button {
+        border: none;
+        background-color: transparent;
+        color: inherit; 
+        cursor: pointer;
+        font-size: 1.2rem;
+        font-family: 'DIN Next LT Arabic';
+        font-weight: 500;
+        margin-right: 10px; 
+    }
 
-.cart-icon {
-    display: flex;
-    align-items: center;
-}
+    .cart-icon {
+        display: flex;
+        align-items: center;
+    }
 
-.cart-icon svg {
-    width: 24px; 
-    height: 24px; 
-}
+    .cart-icon svg {
+        width: 24px; 
+        height: 24px; 
+    }
 
-.cart-icon text {
-    pointer-events: none; 
-}
+    .cart-icon text {
+        pointer-events: none; 
+    }
 </style>
