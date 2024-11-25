@@ -67,7 +67,7 @@
                   <span>{{ formatPrice(prices[0].price) }}</span>
                   {{ prices[0].currency_en }}
                 </p>
-                <button @click="addToCart('Foreign Teachers', prices[0].price)">
+                <button @click="addToCart('Foreign Teachers', prices[0].price , 0)">
                   <i class="fa-solid fa-plus"></i> Add
                 </button>
               </div>
@@ -81,7 +81,7 @@
                   <span>{{ formatPrice(prices[1].price) }}</span>
                   {{ prices[1].currency_en }}
                 </p>
-                <button @click="addToCart('Foreign Teachers', prices[1].price)">
+                <button @click="addToCart('Foreign Teachers', prices[1].price , 1)">
                   <i class="fa-solid fa-plus"></i> Add
                 </button>
               </div>
@@ -95,7 +95,7 @@
                   <span>{{ formatPrice(prices[2].price) }}</span>
                   {{ prices[2].currency_en }}
                 </p>
-                <button @click="addToCart('Foreign Teachers', prices[2].price)">
+                <button @click="addToCart('Foreign Teachers', prices[2].price , 2)">
                   <i class="fa-solid fa-plus"></i> Add
                 </button>
               </div>
@@ -111,7 +111,7 @@
                   <span>{{ formatPrice(prices[3].price) }}</span>
                   {{ prices[3].currency_en }}
                 </p>
-                <button @click="addToCart('Language Experts', prices[3].price)">
+                <button @click="addToCart('Language Experts', prices[3].price , 3)">
                   <i class="fa-solid fa-plus"></i> Add
                 </button>
               </div>
@@ -125,7 +125,7 @@
                   <span>{{ formatPrice(prices[4].price) }}</span>
                   {{ prices[4].currency_en }}
                 </p>
-                <button @click="addToCart('Language Experts', prices[4].price)">
+                <button @click="addToCart('Language Experts', prices[4].price , 4)">
                   <i class="fa-solid fa-plus"></i> Add
                 </button>
               </div>
@@ -139,7 +139,7 @@
                   <span>{{ formatPrice(prices[5].price) }}</span>
                   {{ prices[5].currency_en }}
                 </p>
-                <button @click="addToCart('Language Experts', prices[5].price)">
+                <button @click="addToCart('Language Experts', prices[5].price , 5)">
                   <i class="fa-solid fa-plus"></i> Add
                 </button>
               </div>
@@ -251,7 +251,7 @@
                   <span>{{ formatPrice(prices[6].price) }}</span>
                   {{ prices[6].currency_en }}
                 </p>
-                <button @click="addToCart('Foreign Teachers', prices[6].price)">
+                <button @click="addToCart('Foreign Teachers', prices[6].price , 6)">
                   <i class="fa-solid fa-plus"></i> Add
                 </button>
               </div>
@@ -265,7 +265,7 @@
                   <span>{{ formatPrice(prices[7].price) }}</span>
                   {{ prices[7].currency_en }}
                 </p>
-                <button @click="addToCart('Foreign Teachers', prices[7].price)">
+                <button @click="addToCart('Foreign Teachers', prices[7].price , 7)">
                   <i class="fa-solid fa-plus"></i> Add
                 </button>
               </div>
@@ -279,7 +279,7 @@
                   <span>{{ formatPrice(prices[8].price) }}</span>
                   {{ prices[8].currency_en }}
                 </p>
-                <button @click="addToCart('Foreign Teachers', prices[8].price)">
+                <button @click="addToCart('Foreign Teachers', prices[8].price , 8)">
                   <i class="fa-solid fa-plus"></i> Add
                 </button>
               </div>
@@ -298,7 +298,7 @@
                   <span>{{ formatPrice(prices[9].price) }}</span>
                   {{ prices[9].currency_en }}
                 </p>
-                <button @click="addToCart('Foreign Teachers', prices[9].price)">
+                <button @click="addToCart('Foreign Teachers', prices[9].price , 9)">
                   <i class="fa-solid fa-plus"></i> Add
                 </button>
               </div>
@@ -313,7 +313,7 @@
                   {{ prices[10].currency_en }}
                 </p>
                 <button
-                  @click="addToCart('Foreign Teachers', prices[10].price)"
+                  @click="addToCart('Foreign Teachers', prices[10].price , 10)"
                 >
                   <i class="fa-solid fa-plus"></i> Add
                 </button>
@@ -329,7 +329,7 @@
                   {{ prices[11].currency_en }}
                 </p>
                 <button
-                  @click="addToCart('Foreign Teachers', prices[11].price)"
+                  @click="addToCart('Foreign Teachers', prices[11].price , 11)"
                 >
                   <i class="fa-solid fa-plus"></i> Add
                 </button>
@@ -435,7 +435,7 @@
                 {{ prices[12].currency_en }}
               </p>
             </div>
-            <button @click="addToCart('Language Experts', prices[12].price)">
+            <button @click="addToCart('Language Experts', prices[12].price , 12)">
               <i class="fa-solid fa-plus"></i> Add
             </button>
           </div>
@@ -495,6 +495,7 @@ export default {
     return {
       selectedClub: "Foreign Teachers",
       selectedClub2: "Foreign Teachers",
+      selectedSessionGroupId: null,
       showPopup: false,
       prices: [],
     };
@@ -513,12 +514,36 @@ export default {
           console.error("Error fetching session group prices:", error);
         });
     },
-    addToCart(clubType, price) {
+    addToCart(clubType, price, sessionGroupId) {
       console.log(`Added ${clubType} with price ${price} to cart`);
+
       const students = JSON.parse(localStorage.getItem("students")) || [];
+
       if (students.length === 0) {
         this.showPopup = true;
+      } else {
+        students.forEach(student => {
+          if (!Array.isArray(student.session_group_data)) {
+            student.session_group_data = [];
+          }
+          const existingSessionGroup = student.session_group_data.find(
+            group => group.session_group_id === sessionGroupId
+          );
+
+          if (existingSessionGroup) {
+            existingSessionGroup.quantity += 1;
+          } else {
+            student.session_group_data.push({
+              session_group_id: sessionGroupId,
+              quantity: 1
+            });
+          }
+        });
+        sessionStorage.setItem("students", JSON.stringify(students));
+        localStorage.setItem("students", JSON.stringify(students));
+        this.showPopup = false; 
       }
+      this.selectedSessionGroupId = sessionGroupId; 
     },
     closePopup() {
       this.showPopup = false;

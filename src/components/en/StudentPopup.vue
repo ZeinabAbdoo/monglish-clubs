@@ -15,16 +15,16 @@
               required
             />
           </div>
-        </div>
-        <div class="form-item">
-          <label for="student-code">Student Code</label>
-          <input
-            type="text"
-            id="student-code"
-            v-model="student.code"
-            placeholder="Enter student code"
-            required
-          />
+          <div class="form-item">
+            <label for="student-code">Student Code</label>
+            <input
+              type="text"
+              id="student-code"
+              v-model="student.code"
+              placeholder="Enter student code"
+              required
+            />
+          </div>
         </div>
         <button type="submit">Add</button>
       </form>
@@ -119,10 +119,11 @@
     display: flex;
     justify-content: space-between;
     margin-bottom: 15px;
+    gap: 15px; 
   }
 
   .form-item {
-    width: 45%;
+    flex: 1; 
   }
 
   label {
@@ -135,7 +136,7 @@
   }
 
   input {
-    width: 95%;
+    width: 90%; 
     padding: 10px;
     font-size: 14px;
     border: 1px solid #ccc;

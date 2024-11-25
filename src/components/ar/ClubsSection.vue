@@ -1,7 +1,8 @@
 <template>
   <section class="clubs">
     <h3>
-      رحلتك إلى التميز تبدأ هنا<br />أنديتنا الجديدة مصممة لتحقيق أهدافك بكل
+      رحلتك إلى التميز تبدأ هنا
+      <br />أنديتنا الجديدة مصممة لتحقيق أهدافك بكل
       سهولة!
     </h3>
 
@@ -43,15 +44,11 @@
           <button
             @click="selectedClub = 'مدرسين اجانب'"
             :class="{ active: selectedClub === 'مدرسين اجانب' }"
-          >
-            مدرسين اجانب
-          </button>
+          >مدرسين اجانب</button>
           <button
             @click="selectedClub = 'خبراء اللغة'"
             :class="{ active: selectedClub === 'خبراء اللغة' }"
-          >
-            خبراء اللغة
-          </button>
+          >خبراء اللغة</button>
         </div>
 
         <div class="price-border">
@@ -66,7 +63,7 @@
                   <span>{{ formatPrice(prices[0].price) }}</span>
                   {{ prices[0].currency_ar }}
                 </p>
-                <button @click="addToCart('مدرسين اجانب', prices[0].price)">
+                <button @click="addToCart('مدرسين اجانب', prices[0].price , 0)">
                   <i class="fa-solid fa-plus"></i> أضف
                 </button>
               </div>
@@ -221,15 +218,11 @@
           <button
             @click="selectedClub2 = 'مدرسين اجانب'"
             :class="{ active: selectedClub2 === 'مدرسين اجانب' }"
-          >
-            مدرسين اجانب
-          </button>
+          >مدرسين اجانب</button>
           <button
             @click="selectedClub2 = 'خبراء اللغة'"
             :class="{ active: selectedClub2 === 'خبراء اللغة' }"
-          >
-            خبراء اللغة
-          </button>
+          >خبراء اللغة</button>
         </div>
 
         <div class="price-border">
@@ -302,9 +295,7 @@
                   <span>{{ formatPrice(prices[10].price) }}</span>
                   {{ prices[10].currency_ar }}
                 </p>
-                <button
-                  @click="addToCart('مدرسين اجانب', prices[10].price, 10)"
-                >
+                <button @click="addToCart('مدرسين اجانب', prices[10].price, 10)">
                   <i class="fa-solid fa-plus"></i> أضف
                 </button>
               </div>
@@ -318,9 +309,7 @@
                   <span>{{ formatPrice(prices[11].price) }}</span>
                   {{ prices[11].currency_ar }}
                 </p>
-                <button
-                  @click="addToCart('مدرسين اجانب', prices[11].price, 11)"
-                >
+                <button @click="addToCart('مدرسين اجانب', prices[11].price, 11)">
                   <i class="fa-solid fa-plus"></i> أضف
                 </button>
               </div>
@@ -392,9 +381,7 @@
           لتناسبك تمامًا: احصل على توجيه خاص لتحسين أي مهارة: قراءة، كتابة،
           استماع أو تحدث. ركز على أهدافك التعليمية أو المهنية معنا.
         </p>
-        <h5>
-          لماذا تختار الدعم الفردية؟ لأننا نضمن لك تقدمًا حقيقيًا وملموسًا.
-        </h5>
+        <h5>لماذا تختار الدعم الفردية؟ لأننا نضمن لك تقدمًا حقيقيًا وملموسًا.</h5>
       </div>
 
       <!-- Left Half: Packages Section -->
@@ -422,7 +409,7 @@
                 {{ prices[12].currency_ar }}
               </p>
             </div>
-            <button @click="addToCart('مدرسين اجانب', prices[12].price)">
+            <button @click="addToCart('مدرسين اجانب', prices[12].price , 12)">
               <i class="fa-solid fa-plus"></i> أضف
             </button>
           </div>
@@ -480,7 +467,7 @@ import StudentPopup from "./StudentPopup.vue";
 export default {
   name: "ClubsSection",
   components: {
-    StudentPopup,
+    StudentPopup
   },
   data() {
     return {
@@ -488,7 +475,7 @@ export default {
       selectedClub2: "مدرسين اجانب",
       showPopup: false,
       selectedSessionGroupId: null,
-      prices: [],
+      prices: []
     };
   },
   mounted() {
@@ -498,17 +485,43 @@ export default {
     fetchClubsPrices() {
       axios
         .get("/api/session/get-session-groups")
-        .then((response) => {
+        .then(response => {
           this.prices = response.data.data;
         })
-        .catch((error) => {
+        .catch(error => {
           console.error("Error fetching session group prices:", error);
         });
     },
     addToCart(clubType, price, sessionGroupId) {
       console.log(`Added ${clubType} with price ${price} to cart`);
-      this.selectedSessionGroupId = sessionGroupId;
-      this.showPopup = true;
+
+      const students = JSON.parse(localStorage.getItem("students")) || [];
+
+      if (students.length === 0) {
+        this.showPopup = true;
+      } else {
+        students.forEach(student => {
+          if (!Array.isArray(student.session_group_data)) {
+            student.session_group_data = [];
+          }
+          const existingSessionGroup = student.session_group_data.find(
+            group => group.session_group_id === sessionGroupId
+          );
+
+          if (existingSessionGroup) {
+            existingSessionGroup.quantity += 1;
+          } else {
+            student.session_group_data.push({
+              session_group_id: sessionGroupId,
+              quantity: 1
+            });
+          }
+        });
+        sessionStorage.setItem("students", JSON.stringify(students));
+        localStorage.setItem("students", JSON.stringify(students));
+        this.showPopup = false; 
+      }
+      this.selectedSessionGroupId = sessionGroupId; 
     },
     closePopup() {
       this.showPopup = false;
@@ -518,8 +531,8 @@ export default {
       return Number.isInteger(numericPrice)
         ? numericPrice
         : numericPrice.toFixed(2);
-    },
-  },
+    }
+  }
 };
 </script>
 
