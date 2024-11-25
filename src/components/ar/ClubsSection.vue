@@ -66,7 +66,7 @@
                   <span>{{ formatPrice(prices[0].price) }}</span>
                   {{ prices[0].currency_ar }}
                 </p>
-                <button @click="addToCart('مدرسين اجانب', prices[0].price)">
+                <button @click="addToCart('مدرسين اجانب', prices[0].price , 0)">
                   <i class="fa-solid fa-plus"></i> أضف
                 </button>
               </div>
@@ -422,7 +422,7 @@
                 {{ prices[12].currency_ar }}
               </p>
             </div>
-            <button @click="addToCart('مدرسين اجانب', prices[12].price)">
+            <button @click="addToCart('مدرسين اجانب', prices[12].price , 12)">
               <i class="fa-solid fa-plus"></i> أضف
             </button>
           </div>
