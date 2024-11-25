@@ -493,12 +493,12 @@ export default {
         });
     },
     addToCart(clubType, price, sessionGroupId) {
-      let students = JSON.parse(localStorage.getItem("students")) || [];
+      let userInfo = JSON.parse(localStorage.getItem("userInfo")) || [];
 
-      if (students.length === 0) {
+      if (userInfo.length === 0) {
         this.showPopup = true;
       } else {
-        students.forEach(student => {
+        userInfo.forEach(student => {
           if (!Array.isArray(student.session_group_data)) {
             student.session_group_data = [];
           }
@@ -515,20 +515,20 @@ export default {
             });
           }
         });
-        sessionStorage.setItem("students", JSON.stringify(students));
-        localStorage.setItem("students", JSON.stringify(students));
+        sessionStorage.setItem("userInfo", JSON.stringify(userInfo));
+        localStorage.setItem("userInfo", JSON.stringify(userInfo));
         this.showPopup = false;
       }
       console.log(
-        "Updated students saved to localStorage:",
-        localStorage.getItem("students")
+        "Updated userInfo saved to localStorage:",
+        localStorage.getItem("userInfo")
       );
 
       // Handle popup closure
       if (!this.showPopup) {
-        students = JSON.parse(localStorage.getItem("students")) || [];
-        if (students.length !== 0) {
-          const lastStudent = students[students.length - 1];
+        userInfo = JSON.parse(localStorage.getItem("userInfo")) || [];
+        if (userInfo.length !== 0) {
+          const lastStudent = userInfo[userInfo.length - 1];
           // Prepare payload for POST request
           const payload = {
             name: lastStudent.name,
@@ -559,10 +559,10 @@ export default {
       this.showPopup = false;
 
       // Check and proceed with the POST request if conditions are met
-      let students = JSON.parse(localStorage.getItem("students")) || [];
-      if (students.length !== 0) {
+      let userInfo = JSON.parse(localStorage.getItem("userInfo")) || [];
+      if (userInfo.length !== 0) {
 
-        const lastStudent = students[students.length - 1];
+        const lastStudent = userInfo[userInfo.length - 1];
         const payload = {
           name: lastStudent.name,
           code: lastStudent.code,
