@@ -475,7 +475,7 @@ export default {
       selectedClub2: "مدرسين اجانب",
       selectedSessionGroupId: null,
       showPopup: false,
-      prices: [],
+      prices: []
     };
   },
   mounted() {
@@ -543,6 +543,7 @@ export default {
             .post("/api/session/club-session-cart", payload)
             .then(response => {
               console.log("Cart updated successfully:", response.data);
+              this.$router.push({ path: "/ar/cart/", name: "CartAr" });
             })
             .catch(error => {
               console.error(
@@ -561,7 +562,6 @@ export default {
       // Check and proceed with the POST request if conditions are met
       let userInfo = JSON.parse(localStorage.getItem("userInfo")) || [];
       if (userInfo.length !== 0) {
-
         const lastStudent = userInfo[userInfo.length - 1];
         const payload = {
           name: lastStudent.name,
@@ -596,7 +596,7 @@ export default {
       return Number.isInteger(numericPrice)
         ? numericPrice
         : numericPrice.toFixed(2);
-    },
+    }
   }
 };
 </script>
