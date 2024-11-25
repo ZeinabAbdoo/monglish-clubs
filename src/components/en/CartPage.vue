@@ -30,17 +30,23 @@
               </thead>
               <tbody>
                 <tr class="order-item" v-for="(item, index) in cartItems" :key="index">
-                  <td class="code">{{ item.student_id }}</td>
-                  <td class="course">{{ item.session_group_id }}</td>
+                  <td class="code">{{ item.student_code }}</td>
+                  <td class="course">{{ item.club_name }}</td>
                   <td class="quantity">
-                    <button @click="decreaseQuantity(item.student_id, item.id)">-</button>
-                    <label class="p-4">{{ item.quantity }}</label>
+                    <button
+                      class="quantity-button decrease-btn"
+                      @click="decreaseQuantity(item.id)"
+                    >-</button>
+                    <label class="quantity-label">{{ item.quantity }}</label>
                     <input type="hidden" v-model="item.quantity" readonly />
-                    <button @click="increaseQuantity(item.student_id, item.id)">+</button>
+                    <button
+                      class="quantity-button increase-btn"
+                      @click="increaseQuantity(item.id)"
+                    >+</button>
                   </td>
                   <td
                     class="price"
-                  >{{ (cartSummary.total_price / cartSummary.total_items_count).toFixed(2) }} {{ cartSummary.currency_ar }}</td>
+                  >{{ (cartSummary.total_price / cartSummary.total_items_count).toFixed(2) }} {{ cartSummary.currency_en }}</td>
                   <td>
                     <button class="remove-button" @click="removeItem(item.id)">
                       <i class="fa-regular fa-trash-can"></i>
@@ -52,17 +58,23 @@
             <table class="order-table-mobile-en" v-for="(item, index) in cartItems" :key="index">
               <tbody>
                 <tr class="order-item" v-for="(item, index) in cartItems" :key="index">
-                  <td class="code">{{ item.student_id }}</td>
-                  <td class="course">{{ item.session_group_id }}</td>
+                  <td class="code">{{ item.student_code }}</td>
+                  <td class="course">{{ item.club_name }}</td>
                   <td class="quantity">
-                    <button @click="decreaseQuantity(item.student_id, item.id)">-</button>
-                    <label class="p-4">{{ item.quantity }}</label>
+                    <button
+                      class="quantity-button decrease-btn"
+                      @click="decreaseQuantity(item.id)"
+                    >-</button>
+                    <label class="quantity-label">{{ item.quantity }}</label>
                     <input type="hidden" v-model="item.quantity" readonly />
-                    <button @click="increaseQuantity(item.student_id, item.id)">+</button>
+                    <button
+                      class="quantity-button increase-btn"
+                      @click="increaseQuantity(item.id)"
+                    >+</button>
                   </td>
                   <td
                     class="price"
-                  >{{ (cartSummary.total_price / cartSummary.total_items_count).toFixed(2) }} {{ cartSummary.currency_ar }}</td>
+                  >{{ (cartSummary.total_price / cartSummary.total_items_count).toFixed(2) }} {{ cartSummary.currency_en }}</td>
                   <td>
                     <button class="remove-button" @click="removeItem(item.student_id)">
                       <i class="fa-regular fa-trash-can"></i>
@@ -128,13 +140,6 @@
             </tbody>
           </table>
           <button class="confirm-button-en" @click="showAuthModal">Confirm Order</button>
-          <a href="https://edulixa360.com/shop/" target="_blank" style="text-decoration: none">
-            <img
-              src="https://monglish.b-cdn.net/home/tamara.webp"
-              alt="tamara and tabi link"
-              style="cursor: pointer; width: 100%"
-            />
-          </a>
         </div>
       </div>
     </div>
@@ -153,7 +158,7 @@ export default {
       cartSummary: {
         total_price: 0,
         total_price_discount: 0,
-        currency_ar: "",
+        currency_en: "",
         total_items_count: 0,
         coupon_code: null,
         discount: 0
@@ -661,90 +666,81 @@ export default {
   width: 100%;
   border-collapse: collapse;
   margin-bottom: 20px;
-  font-family: "DIN Next LT Arabic";
+  font-family: "DIN Next LT Arabic", sans-serif;
   font-weight: 500;
+}
+
+.order-table-en thead {
+    background: linear-gradient(135deg, #ff9442, #ff6f00); /* Adjusted angle for a cleaner look */
+  color: #ffffff; /* Text color for contrast */
+  font-size: 20px; /* Slightly adjusted size for better readability */
+  font-weight: bold; /* Emphasize the header text */
+  text-align: center; /* Center the text */
+  border-radius: 12px !; /* Add subtle rounding */
+  padding: 15px; /* Add padding for spacing */
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Add a soft shadow for depth */
+}
+
+.order-table-en thead th {
+  padding: 10px 15px; /* Ensure padding for each column header */
 }
 
 .order-table-mobile-en {
   display: none;
 }
 
+.order-table-en tbody {
+  background-color: #fff;
+  color: #3d3d3d;
+}
+
+.order-table-en tr {
+  transition: background-color 0.3s;
+}
+
 .order-table-en th,
 .order-table-en td {
-  border: 1px solid #ddd;
+  padding: 15px;
   text-align: center;
-  padding: 10px;
-  direction: rtl;
-  border-left: 0;
-  border-right: 0;
+  border-bottom: none;
 }
 
 .order-table-en th {
-  border-top: 0;
-  padding-bottom: 20px;
-  color: white;
+  border-top: none;
 }
 
-.order-item-en {
-  background-color: white;
+.order-item {
+  border-radius: 15px;
+  box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
 }
 
-.price-en {
+.price {
   color: #f47920;
   font-size: 26px;
   font-weight: 600;
 }
 
-.quantity-en {
-  align-items: center;
-  justify-content: center;
-  direction: ltr !important;
-}
-
-.quantity-en input {
-  width: 40px;
-  text-align: center;
-  margin: 0 10px;
-  border: 1px solid #ccc;
-  border-radius: 5px;
-  padding: 5px;
-}
-
-.quantity-en button {
-  background-color: #fff;
-  border: 1px solid #ccc;
-  color: #808b94;
-  padding: 5px;
-  font-size: 18px;
-  cursor: pointer;
-}
-
-.course-en {
-  font-size: 26px;
+.course {
+  font-size: 20px;
   font-weight: bold;
   transition: color 0.3s;
 }
 
-.course-en:hover {
+.course:hover {
   color: #f47920;
 }
 
-.remove-button-en {
+.remove-button {
   background-color: transparent;
-  border: 1px solid #f47d21;
-  border-radius: 50%;
+  border: none;
   color: #f47920;
   cursor: pointer;
-  width: 25px;
-  height: 25px;
-  align-items: center;
-  justify-content: center;
-  transition: background-color 0.3s, color 0.3s;
+  font-size: 20px;
+  transition: color 0.3s;
 }
 
-.remove-button-en:hover {
-  background-color: #f47920;
-  color: white;
+.remove-button:hover {
+  color: #d45d00;
 }
 
 .buy-another-course-en {
@@ -1084,6 +1080,48 @@ export default {
 .checkout-formm select:focus {
   border-color: #f47920;
   outline: none;
+}
+
+.quantity {
+  display: flex; /* Ensures the buttons and label are aligned in a row */
+  align-items: center; /* Vertically aligns the items */
+  justify-content: center; /* Centers the entire group */
+  gap: 10px; /* Adds space between the buttons and label */
+}
+
+.quantity-button {
+  padding: 5px 10px; /* Space inside the button */
+  font-size: 18px; /* Text size */
+  cursor: pointer; /* Pointer on hover */
+  border-radius: 8px; /* Rounded corners for buttons */
+  border: none; /* Removes default border */
+  transition: background-color 0.3s, color 0.3s; /* Smooth hover effects */
+}
+
+.increase-btn {
+  background-color: #F47D21; /* Button background color */
+  color: #fff; /* Text color */
+}
+
+.increase-btn:hover {
+  background-color: #d8691c; /* Darker shade on hover */
+}
+
+.decrease-btn {
+  background-color: #F0F0F0; /* Button background color */
+  color: #BFBFBF; /* Text color */
+}
+
+.decrease-btn:hover {
+  background-color: #dcdcdc; /* Slightly darker shade on hover */
+}
+
+.quantity-label {
+  font-size: 18px; /* Text size */
+  font-weight: bold; /* Makes the label stand out */
+  text-align: center; /* Centers the text */
+  width: 50px; /* Consistent width for alignment */
+  color: #000; /* Label text color */
 }
 
 @media (min-width: 320px) and (max-width: 479px) {
