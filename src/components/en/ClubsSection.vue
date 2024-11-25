@@ -564,7 +564,7 @@ export default {
             .post("/api/session/club-session-cart", payload)
             .then(response => {
               console.log("Cart updated successfully:", response.data);
-              this.$router.push({ path: "/ar/cart/", name: "CartAr" });
+              this.$router.push({ path: "/en/cart/", name: "CartEn" });
             })
             .catch(error => {
               console.error(
