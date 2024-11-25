@@ -42,7 +42,7 @@
                     class="price"
                   >{{ (cartSummary.total_price / cartSummary.total_items_count).toFixed(2) }} {{ cartSummary.currency_ar }}</td>
                   <td>
-                    <button class="remove-button" @click="removeItem(item.id)">
+                    <button class="remove-button" type="button" @click="removeItem(item.id)">
                       <i class="fa-regular fa-trash-can"></i>
                     </button>
                   </td>
@@ -64,7 +64,7 @@
                     class="price"
                   >{{ (cartSummary.total_price / cartSummary.total_items_count).toFixed(2) }} {{ cartSummary.currency_ar }}</td>
                   <td>
-                    <button class="remove-button" @click="removeItem(item.student_id)">
+                    <button class="remove-button" type="button" @click="removeItem(item.student_id)">
                       <i class="fa-regular fa-trash-can"></i>
                     </button>
                   </td>
@@ -182,7 +182,7 @@ export default {
             headers["Authorization"] = `Bearer ${token}`;
           }
         } catch (error) {
-          console.error("Error parsing userInfo from sessionStorage:", error);
+          console.error("Error parsing userInfo from localStorage:", error);
         }
       }
 
@@ -240,7 +240,7 @@ export default {
       let url = `/api/session/club-session-cart/increase/student-items/${studentId}/${itemId}`;
 
       // replace with your storage (zeinab!!!)
-      const userInfo = sessionStorage.getItem("userInfo");
+      const userInfo = localStorage.getItem("userInfo");
       let headers = {};
       if (userInfo) {
         try {
@@ -251,7 +251,7 @@ export default {
             headers["Authorization"] = `Bearer ${token}`;
           }
         } catch (error) {
-          console.error("Error parsing userInfo from sessionStorage:", error);
+          console.error("Error parsing userInfo from localStorage:", error);
         }
       }
 
@@ -269,7 +269,7 @@ export default {
       let url = `/api/session/club-session-cart/decrease/student-items/${studentId}/${itemId}`;
 
       // replace with your storage (zeinab!!!)
-      const userInfo = sessionStorage.getItem("userInfo");
+      const userInfo = localStorage.getItem("userInfo");
       let headers = {};
       if (userInfo) {
         try {
@@ -280,7 +280,7 @@ export default {
             headers["Authorization"] = `Bearer ${token}`;
           }
         } catch (error) {
-          console.error("Error parsing userInfo from sessionStorage:", error);
+          console.error("Error parsing userInfo from localStorage:", error);
         }
       }
 
@@ -298,7 +298,7 @@ export default {
       let url = `/api/session/club-session-cart/remove/student-items/${studentId}`;
 
       // replace with your storage (zeinab!!!)
-      const userInfo = sessionStorage.getItem("userInfo");
+      const userInfo = localStorage.getItem("userInfo");
       let headers = {};
       if (userInfo) {
         try {
@@ -309,7 +309,7 @@ export default {
             headers["Authorization"] = `Bearer ${token}`;
           }
         } catch (error) {
-          console.error("Error parsing userInfo from sessionStorage:", error);
+          console.error("Error parsing userInfo from localStorage:", error);
         }
       }
 
@@ -317,7 +317,7 @@ export default {
         .get(url, { headers })
         .then(() => {
           this.fetchCartItems();
-          window.location.reload();
+          // window.location.reload();
         })
         .catch(error => {
           this.errorMessage = "Error removing item.";
@@ -334,11 +334,11 @@ export default {
         return;
       }
       try {
-        let url = sessionStorage.getItem("userInfo")
+        let url = localStorage.getItem("userInfo")
           ? "/api/user/cart/apply-coupon"
           : "/api/session/cart/apply-coupon";
 
-        const userInfo = sessionStorage.getItem("userInfo");
+        const userInfo = localStorage.getItem("userInfo");
         let headers = {};
         if (userInfo) {
           try {
@@ -349,7 +349,7 @@ export default {
               headers["Authorization"] = `Bearer ${token}`;
             }
           } catch (error) {
-            console.error("Error parsing userInfo from sessionStorage:", error);
+            console.error("Error parsing userInfo from localStorage:", error);
           }
         }
 
@@ -376,11 +376,11 @@ export default {
       this.errorMessage = "";
 
       try {
-        let url = sessionStorage.getItem("userInfo")
+        let url = localStorage.getItem("userInfo")
           ? "/api/user/cart/remove-coupon"
           : "/api/session/cart/remove-coupon";
 
-        const userInfo = sessionStorage.getItem("userInfo");
+        const userInfo = localStorage.getItem("userInfo");
         let headers = {};
         if (userInfo) {
           try {
@@ -391,7 +391,7 @@ export default {
               headers["Authorization"] = `Bearer ${token}`;
             }
           } catch (error) {
-            console.error("Error parsing userInfo from sessionStorage:", error);
+            console.error("Error parsing userInfo from localStorage:", error);
           }
         }
 
@@ -415,7 +415,7 @@ export default {
       let url = "/api/session/club-session-checkout";
 
       // replace with your storage (zeinab!!!)
-      const userInfo = sessionStorage.getItem("userInfo");
+      const userInfo = localStorage.getItem("userInfo");
       let headers = {};
       let formData = {};
       if (userInfo) {
@@ -427,7 +427,7 @@ export default {
             headers["Authorization"] = `Bearer ${token}`;
           }
         } catch (error) {
-          console.error("Error parsing userInfo from sessionStorage:", error);
+          console.error("Error parsing userInfo from localStorage:", error);
         }
       }
 
