@@ -317,11 +317,10 @@
             }
           });
       },
-      async increaseQuantity(itemId) {
-        let url = sessionStorage.getItem("userInfo")
-          ? `/api/user/cart/increase/${itemId}`
-          : `/api/session/cart/increase/${itemId}`;
+      async increaseQuantity(studentId, itemId) {
+        let url = `/api/session/club-session-cart/increase/student-items/${studentId}/${itemId}`;
 
+        // replace with your storage (zeinab!!!)
         const userInfo = sessionStorage.getItem("userInfo");
         let headers = {};
         if (userInfo) {
@@ -347,11 +346,10 @@
             console.error("Error increasing item quantity:", error);
           });
       },
-      async decreaseQuantity(itemId) {
-        let url = sessionStorage.getItem("userInfo")
-          ? `/api/user/cart/decrease/${itemId}`
-          : `/api/session/cart/decrease/${itemId}`;
+      async decreaseQuantity(studentId, itemId) {
+        let url = `/api/session/club-session-cart/decrease/student-items/${studentId}/${itemId}`;
 
+        // replace with your storage (zeinab!!!)
         const userInfo = sessionStorage.getItem("userInfo");
         let headers = {};
         if (userInfo) {
@@ -377,11 +375,10 @@
             console.error("Error decreasing item quantity:", error);
           });
       },
-      async removeItem(itemId) {
-        let url = sessionStorage.getItem("userInfo")
-          ? `/api/user/cart/remove/${itemId}`
-          : `/api/session/cart/remove/${itemId}`;
+      async removeItem(studentId) {
+        let url = `/api/session/club-session-cart/remove/student-items/${studentId}`;
 
+        // replace with your storage (zeinab!!!)
         const userInfo = sessionStorage.getItem("userInfo");
         let headers = {};
         if (userInfo) {
@@ -498,7 +495,7 @@
       goToCheckout() {
         let url = "/api/session/club-session-checkout";
 
-        // replace with your storage 
+        // replace with your storage (zeinab!!!)
         const userInfo = sessionStorage.getItem("userInfo");
         let headers = {};
         let formData = {};
