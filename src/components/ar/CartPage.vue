@@ -29,17 +29,43 @@
                   <th>النادي</th>
                   <th>الكمية</th>
                   <th>السعر</th>
-                  <th></th>
+                  <th>حذف</th>
                 </tr>
               </thead>
               <tbody>
                 <tr class="order-item" v-for="(item, index) in cartItems" :key="index">
-                  <td class="code">
-                    {{ item.student_id }}
+                  <td class="code">{{ item.student_code }}</td>
+                  <td class="course">{{ item.club_name }}</td>
+                  <td class="quantity">
+                    <button
+                      class="quantity-button decrease-btn"
+                      @click="decreaseQuantity(item.id)"
+                    >-</button>
+                    <label class="quantity-label">{{ item.quantity }}</label>
+                    <input type="hidden" v-model="item.quantity" readonly />
+                    <button
+                      class="quantity-button increase-btn"
+                      @click="increaseQuantity(item.id)"
+                    >+</button>
                   </td>
-                  <td class="course">
-                    {{ item.session_group_id }}
+
+                  <td
+                    class="price"
+                  >{{ (cartSummary.total_price / cartSummary.total_items_count).toFixed(2) }} {{ cartSummary.currency_ar }}</td>
+                  <td>
+                    <button class="remove-button" @click="removeItem(item.id)">
+                      <i class="fa-regular fa-trash-can"></i>
+                    </button>
                   </td>
+                </tr>
+              </tbody>
+            </table>
+
+            <table class="order-table-mobile" v-for="(item, index) in cartItems" :key="index">
+              <tbody>
+                <tr class="order-item" v-for="(item, index) in cartItems" :key="index">
+                  <td class="code">{{ item.student_id }}</td>
+                  <td class="course">{{ item.session_group_id }}</td>
                   <td class="quantity">
                     <button @click="decreaseQuantity(item.id)">-</button>
                     <label class="p-4">{{ item.quantity }}</label>
@@ -57,60 +83,6 @@
                 </tr>
               </tbody>
             </table>
-
-            <!-- <table class="order-table-mobile" v-for="(item, index) in cartItems" :key="index">
-              <tbody>
-                <tr>
-                  <td>الدورة</td>
-                  <td class="course">
-                    {{
-                    item.course_package.stage +
-                    " - " +
-                    item.course_package.name +
-                    " - " +
-                    item.course_package.period +
-                    " Months"
-                    }}
-                  </td>
-                </tr>
-                <tr class="order-item">
-                  <td>الكمية</td>
-                  <td class="quantity">
-                    <button @click="decreaseQuantity(item.id)">-</button>
-                    <label class="p-4">{{ item.quantity }}</label>
-                    <input type="hidden" v-model="item.quantity" readonly />
-                    <button @click="increaseQuantity(item.id)">+</button>
-                  </td>
-                </tr>
-                <tr class="price-row">
-                  <td>السعر</td>
-                  <td class="price">{{ item.single_price }} {{ cartSummary.currency }}</td>
-                </tr>
-                <tr class="remove-row">
-                  <td></td>
-                  <td colspan="2">
-                    <button class="remove-button" @click="removeItem(item.id)">
-                      <svg
-                        aria-hidden="true"
-                        class="svg-inline--fa fa-xmark"
-                        focusable="false"
-                        data-prefix="fas"
-                        data-icon="xmark"
-                        role="img"
-                        xmlns="http://www.w3.org/2000/svg"
-                        viewBox="0 0 384 512"
-                        data-fa-i2svg
-                      >
-                        <path
-                          fill="currentColor"
-                          d="M342.6 150.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L192 210.7 86.6 105.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3L146.7 256 41.4 361.4c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0L192 301.3 297.4 406.6c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L237.3 256 342.6 150.6z"
-                        />
-                      </svg>
-                    </button>
-                  </td>
-                </tr>
-              </tbody>
-            </table>-->
             <button class="buy-another-course" @click="goToCourses">→ شراء دورة اخرى</button>
             <div v-if="orderUpdated" class="order-update-message">تم تحديث سلة المشتريات.</div>
           </div>
@@ -497,11 +469,6 @@ export default {
   },
   mounted() {
     this.fetchCartItems();
-    // const today = new Date();
-    // const options = { year: "numeric", month: "long", day: "numeric" };
-    // document.getElementById(
-    //   "currentDate"
-    // ).textContent = today.toLocaleDateString("ar-EG", options);
   }
 };
 </script>
@@ -766,46 +733,50 @@ export default {
 
 .order-table {
   width: 100%;
-  border-collapse: separate; /* Change to separate */
-  border-spacing: 0; /* Optional, to remove spacing between cells */
+  border-collapse: collapse;
   margin-bottom: 20px;
-  font-family: "DIN Next LT Arabic";
+  font-family: "DIN Next LT Arabic", sans-serif;
   font-weight: 500;
-  border-radius: 25px; /* Add border-radius to the table itself */
+}
+
+.order-table thead {
+  background: linear-gradient(135deg, #ff9442, #ff6f00); /* Adjusted angle for a cleaner look */
+  color: #ffffff; /* Text color for contrast */
+  font-size: 20px; /* Slightly adjusted size for better readability */
+  font-weight: bold; /* Emphasize the header text */
+  text-align: center; /* Center the text */
+  border-radius: 12px !; /* Add subtle rounding */
+  padding: 15px; /* Add padding for spacing */
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Add a soft shadow for depth */
+}
+
+.order-table thead th {
+  padding: 10px 15px; /* Ensure padding for each column header */
+}
+
+.order-table tbody {
+  background-color: #fff;
+  color: #3d3d3d;
 }
 
 .order-table tr {
-  background: linear-gradient(45deg, #ff9442, #ff6f00);
-  color: white;
-  border: none;
-  font-size: 22px;
-  font-family: "DIN Next LT Arabic";
-  font-weight: 500;
+  transition: background-color 0.3s;
 }
 
 .order-table th,
 .order-table td {
-  padding: 10px; /* Add padding to make sure the borders of cells are clear */
-}
-
-.order-table-mobile {
-  display: none;
-}
-
-.order-table td {
-  border: 1px solid #ddd;
+  padding: 15px;
   text-align: center;
-  padding: 10px;
+  border-bottom: none;
 }
 
 .order-table th {
-  border-top: 0;
-  padding-bottom: 20px;
-  color: white;
+  border-top: none;
 }
 
 .order-item {
-  background-color: white;
+  border-radius: 15px;
+  box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 .price {
@@ -814,31 +785,8 @@ export default {
   font-weight: 600;
 }
 
-.quantity {
-  align-items: center;
-  justify-content: center;
-}
-
-.quantity input {
-  width: 40px;
-  text-align: center;
-  margin: 0 10px;
-  border: 1px solid #ccc;
-  border-radius: 5px;
-  padding: 5px;
-}
-
-.quantity button {
-  background-color: #fff;
-  border: 1px solid #ccc;
-  color: #808b94;
-  padding: 5px;
-  font-size: 18px;
-  cursor: pointer;
-}
-
 .course {
-  font-size: 26px;
+  font-size: 20px;
   font-weight: bold;
   transition: color 0.3s;
 }
@@ -849,20 +797,15 @@ export default {
 
 .remove-button {
   background-color: transparent;
-  border: 1px solid #f47d21;
-  border-radius: 50%;
+  border: none;
   color: #f47920;
   cursor: pointer;
-  width: 25px;
-  height: 25px;
-  align-items: center;
-  justify-content: center;
-  transition: background-color 0.3s, color 0.3s;
+  font-size: 20px;
+  transition: color 0.3s;
 }
 
 .remove-button:hover {
-  background-color: #f47920;
-  color: white;
+  color: #d45d00;
 }
 
 .buy-another-course {
@@ -881,6 +824,10 @@ export default {
   flex-direction: row-reverse;
   align-items: flex-end;
   justify-content: center;
+}
+
+.order-table-mobile {
+  display: none;
 }
 /* end cart item */
 
@@ -1204,6 +1151,48 @@ export default {
 .checkout-formm select:focus {
   border-color: #f47920;
   outline: none;
+}
+
+.quantity {
+  display: flex; /* Ensures the buttons and label are aligned in a row */
+  align-items: center; /* Vertically aligns the items */
+  justify-content: center; /* Centers the entire group */
+  gap: 10px; /* Adds space between the buttons and label */
+}
+
+.quantity-button {
+  padding: 5px 10px; /* Space inside the button */
+  font-size: 18px; /* Text size */
+  cursor: pointer; /* Pointer on hover */
+  border-radius: 8px; /* Rounded corners for buttons */
+  border: none; /* Removes default border */
+  transition: background-color 0.3s, color 0.3s; /* Smooth hover effects */
+}
+
+.increase-btn {
+  background-color: #F47D21; /* Button background color */
+  color: #fff; /* Text color */
+}
+
+.increase-btn:hover {
+  background-color: #d8691c; /* Darker shade on hover */
+}
+
+.decrease-btn {
+  background-color: #F0F0F0; /* Button background color */
+  color: #BFBFBF; /* Text color */
+}
+
+.decrease-btn:hover {
+  background-color: #dcdcdc; /* Slightly darker shade on hover */
+}
+
+.quantity-label {
+  font-size: 18px; /* Text size */
+  font-weight: bold; /* Makes the label stand out */
+  text-align: center; /* Centers the text */
+  width: 50px; /* Consistent width for alignment */
+  color: #000; /* Label text color */
 }
 
 @media (min-width: 320px) and (max-width: 479px) {
