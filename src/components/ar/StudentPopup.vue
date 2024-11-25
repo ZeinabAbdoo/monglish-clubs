@@ -1,0 +1,173 @@
+<template>
+  <div class="student-popup">
+    <div class="popup-content">
+      <button class="close-btn" @click="closePopup">&times;</button>
+      <h2>إضافة كود الطالب</h2>
+      <form @submit.prevent="handleSubmit">
+        <div class="form-group">
+          <div class="form-item">
+            <label for="student-code">كود الطالب</label>
+            <input
+              type="text"
+              id="student-code"
+              v-model="student.code"
+              placeholder="أدخل كود الطالب"
+              required
+            />
+          </div>
+          <div class="form-item">
+            <label for="student-name">اسم الطالب</label>
+            <input
+              type="text"
+              id="student-name"
+              v-model="student.name"
+              placeholder="أدخل اسم الطالب"
+              required
+            />
+          </div>
+        </div>
+        <button type="submit">إضافة</button>
+      </form>
+    </div>
+  </div>
+</template>
+
+<script>
+export default {
+  name: "StudentPopup",
+  data() {
+    return {
+      student: {
+        code: "",
+        name: "",
+      },
+    };
+  },
+  methods: {
+    handleSubmit() {
+      if (this.student.code && this.student.name) {
+        const students = JSON.parse(sessionStorage.getItem("students")) || [];
+        students.push(this.student);
+        sessionStorage.setItem("students", JSON.stringify(students));
+        localStorage.setItem("students", JSON.stringify(students));
+        console.log(
+          `Student added successfully! Name: ${this.student.name}, Code: ${this.student.code}`
+        );
+        this.resetForm();
+        this.closePopup();
+      } else {
+        console.log("Please fill in all fields.");
+      }
+    },
+    resetForm() {
+      this.student = { code: "", name: "" };
+    },
+    closePopup() {
+      this.$emit("close");
+    },
+  },
+};
+</script>
+
+<style scoped>
+.student-popup {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.6);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  backdrop-filter: blur(10px);
+  z-index: 999;
+}
+
+.popup-content {
+  background: #ffffff;
+  width: 60%;
+  border-radius: 25px;
+  direction: rtl;
+  text-align: right;
+  padding: 20px;
+  position: relative;
+}
+
+.popup-content h2 {
+  text-align: center;
+  margin-bottom: 20px;
+  font-family: "DIN Next LT Arabic", sans-serif;
+  font-weight: 600;
+  color: #333;
+}
+
+.form-group {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 15px;
+}
+
+.form-item {
+  width: 45%;
+}
+
+label {
+  display: block;
+  font-size: 15px;
+  margin-bottom: 5px;
+  color: #4a4a4a;
+  font-family: "DIN Next LT Arabic", sans-serif;
+  font-weight: 500;
+}
+
+input {
+  width: 95%;
+  padding: 10px;
+  font-size: 14px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-family: "DIN Next LT Arabic", sans-serif;
+  color: #333;
+  transition: border-color 0.3s;
+}
+
+input:focus {
+  border-color: #ff9442;
+  outline: none;
+}
+
+button {
+  width: 100%;
+  padding: 12px;
+  background: linear-gradient(45deg, #ff9442, #ff6f00);
+  color: white;
+  border: none;
+  border-radius: 15px;
+  cursor: pointer;
+  font-size: 18px;
+  font-family: "DIN Next LT Arabic", sans-serif;
+  font-weight: 500;
+  transition: background 0.3s;
+}
+
+button:hover {
+  background: linear-gradient(45deg, #ff6f00, #ff9442);
+}
+
+.close-btn {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  font-size: 30px;
+  color: #333;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  width: 8%;
+}
+
+.close-btn:hover {
+  color: #ff9442;
+}
+</style>
