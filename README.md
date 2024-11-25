@@ -51,7 +51,7 @@ Ensure the frontend can dynamically display the card items (e.g., clubs, session
 
 _Tasks:_
 
-- [ ] Set up card item display functionality.
+- [x] Set up card item display functionality.
 - [ ] Fetch card item data from the backend.
 - [ ] Ensure responsive display of cards on both mobile and desktop.
 
@@ -61,7 +61,7 @@ Capture student data when a user registers for a session.
 
 _Tasks:_
 
-- [ ] Set up student registration form.
+- [x] Set up student registration form.
 - [ ] Connect form to backend to store student data.
 - [ ] Ensure data is stored correctly for later use and display in the dashboard.
 

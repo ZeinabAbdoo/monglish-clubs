@@ -57,66 +57,88 @@
         <div class="price-border">
           <div class="price-packages">
             <div v-if="selectedClub === 'مدرسين اجانب'" class="price-items">
-              <div class="price-item">
-                <h6><span>2</span> محاضرة</h6>
+              <!-- Display item at index 0 -->
+              <div v-if="prices.length > 0" class="price-item">
+                <h6>
+                  <span>{{ prices[0].sessionAmount }}</span> محاضرة
+                </h6>
                 <p>
-                  <span>80</span>
-                  ريال
+                  <span>{{ formatPrice(prices[0].price) }}</span>
+                  {{ prices[0].currency_ar }}
                 </p>
-                <button @click="addToCart('مدرسين اجانب', 80)">
+                <button @click="addToCart('مدرسين اجانب', prices[0].price)">
                   <i class="fa-solid fa-plus"></i> أضف
                 </button>
               </div>
-              <div class="price-item">
-                <h6><span>4</span> محاضرات</h6>
+
+              <!-- Display item at index 1 -->
+              <div v-if="prices.length > 1" class="price-item">
+                <h6>
+                  <span>{{ prices[1].sessionAmount }}</span> محاضرة
+                </h6>
                 <p>
-                  <span>140</span>
-                  ريال
+                  <span>{{ formatPrice(prices[1].price) }}</span>
+                  {{ prices[1].currency_ar }}
                 </p>
-                <button @click="addToCart('مدرسين اجانب', 140)">
+                <button @click="addToCart('مدرسين اجانب', prices[1].price, 1)">
                   <i class="fa-solid fa-plus"></i> أضف
                 </button>
               </div>
-              <div class="price-item">
-                <h6><span>8</span> محاضرات</h6>
+
+              <!-- Display item at index 2 -->
+              <div v-if="prices.length > 2" class="price-item">
+                <h6>
+                  <span>{{ prices[2].sessionAmount }}</span> محاضرة
+                </h6>
                 <p>
-                  <span>240</span>
-                  ريال
+                  <span>{{ formatPrice(prices[2].price) }}</span>
+                  {{ prices[2].currency_ar }}
                 </p>
-                <button @click="addToCart('مدرسين اجانب', 240)">
+                <button @click="addToCart('مدرسين اجانب', prices[2].price, 2)">
                   <i class="fa-solid fa-plus"></i> أضف
                 </button>
               </div>
             </div>
 
             <div v-if="selectedClub === 'خبراء اللغة'" class="price-items">
-              <div class="price-item">
-                <h6><span>2</span> محاضرة</h6>
+              <!-- Display item at index 3 -->
+              <div v-if="prices.length > 3" class="price-item">
+                <h6>
+                  <span>{{ prices[3].sessionAmount }}</span> محاضرة
+                </h6>
                 <p>
-                  <span>60</span>
-                  ريال
+                  <span>{{ formatPrice(prices[3].price) }}</span>
+                  {{ prices[3].currency_ar }}
                 </p>
-                <button @click="addToCart('خبراء اللغة', 60)">
+                <button @click="addToCart('مدرسين اجانب', prices[3].price, 3)">
                   <i class="fa-solid fa-plus"></i> أضف
                 </button>
               </div>
-              <div class="price-item">
-                <h6><span>4</span> محاضرات</h6>
+
+              <!-- Display item at index 4 -->
+              <div v-if="prices.length > 4" class="price-item">
+                <h6>
+                  <span>{{ prices[4].sessionAmount }}</span> محاضرة
+                </h6>
                 <p>
-                  <span>110</span>
-                  ريال
+                  <span>{{ formatPrice(prices[4].price) }}</span>
+                  {{ prices[4].currency_ar }}
                 </p>
-                <button @click="addToCart('خبراء اللغة', 110)">
+                <button @click="addToCart('مدرسين اجانب', prices[4].price, 4)">
                   <i class="fa-solid fa-plus"></i> أضف
                 </button>
               </div>
-              <div class="price-item">
-                <h6><span>8</span> محاضرات</h6>
+
+              <!-- Display item at index 5 -->
+              <div v-if="prices.length > 5" class="price-item">
+                <h6>
+                  <span>{{ prices[5].sessionAmount }}</span> محاضرة
+                </h6>
                 <p>
-                  <span>150</span>
-                  ريال
+                  <span>{{ formatPrice(prices[5].price) }}</span>
+                  {{ prices[5].currency_ar }}
                 </p>
-                <button @click="addToCart('خبراء اللغة', 150)">
+                <button @click="addToCart('مدرسين اجانب', prices[5].price, 5)">
                   <i class="fa-solid fa-plus"></i> أضف
                 </button>
               </div>
@@ -213,66 +235,92 @@
         <div class="price-border">
           <div class="price-packages">
             <div v-if="selectedClub2 === 'مدرسين اجانب'" class="price-items">
-              <div class="price-item">
-                <h6><span>2</span> محاضرة</h6>
+              <!-- Display item at index 6 -->
+              <div v-if="prices.length > 6" class="price-item">
+                <h6>
+                  <span>{{ prices[6].sessionAmount }}</span> محاضرة
+                </h6>
                 <p>
-                  <span>140</span>
-                  ريال
+                  <span>{{ formatPrice(prices[6].price) }}</span>
+                  {{ prices[6].currency_ar }}
                 </p>
-                <button @click="addToCart('مدرسين اجانب', 140)">
+                <button @click="addToCart('مدرسين اجانب', prices[6].price, 6)">
                   <i class="fa-solid fa-plus"></i> أضف
                 </button>
               </div>
-              <div class="price-item">
-                <h6><span>4</span> محاضرات</h6>
+
+              <!-- Display item at index 7 -->
+              <div v-if="prices.length > 7" class="price-item">
+                <h6>
+                  <span>{{ prices[7].sessionAmount }}</span> محاضرة
+                </h6>
                 <p>
-                  <span>270</span>
-                  ريال
+                  <span>{{ formatPrice(prices[7].price) }}</span>
+                  {{ prices[7].currency_ar }}
                 </p>
-                <button @click="addToCart('مدرسين اجانب', 270)">
+                <button @click="addToCart('مدرسين اجانب', prices[7].price, 7)">
                   <i class="fa-solid fa-plus"></i> أضف
                 </button>
               </div>
-              <div class="price-item">
-                <h6><span>8</span> محاضرات</h6>
+
+              <!-- Display item at index 8 -->
+              <div v-if="prices.length > 8" class="price-item">
+                <h6>
+                  <span>{{ prices[8].sessionAmount }}</span> محاضرة
+                </h6>
                 <p>
-                  <span>450</span>
-                  ريال
+                  <span>{{ formatPrice(prices[8].price) }}</span>
+                  {{ prices[8].currency_ar }}
                 </p>
-                <button @click="addToCart('مدرسين اجانب', 450)">
+                <button @click="addToCart('مدرسين اجانب', prices[8].price, 8)">
                   <i class="fa-solid fa-plus"></i> أضف
                 </button>
               </div>
             </div>
 
             <div v-if="selectedClub2 === 'خبراء اللغة'" class="price-items">
-              <div class="price-item">
-                <h6><span>2</span> محاضرة</h6>
+              <!-- Display item at index 9 -->
+              <div v-if="prices.length > 9" class="price-item">
+                <h6>
+                  <span>{{ prices[9].sessionAmount }}</span> محاضرة
+                </h6>
                 <p>
-                  <span>95</span>
-                  ريال
+                  <span>{{ formatPrice(prices[9].price) }}</span>
+                  {{ prices[9].currency_ar }}
                 </p>
-                <button @click="addToCart('خبراء اللغة', 95)">
+                <button @click="addToCart('مدرسين اجانب', prices[9].price, 9)">
                   <i class="fa-solid fa-plus"></i> أضف
                 </button>
               </div>
-              <div class="price-item">
-                <h6><span>4</span> محاضرات</h6>
+
+              <!-- Display item at index 10 -->
+              <div v-if="prices.length > 10" class="price-item">
+                <h6>
+                  <span>{{ prices[10].sessionAmount }}</span> محاضرة
+                </h6>
                 <p>
-                  <span>165</span>
-                  ريال
+                  <span>{{ formatPrice(prices[10].price) }}</span>
+                  {{ prices[10].currency_ar }}
                 </p>
-                <button @click="addToCart('خبراء اللغة', 165)">
+                <button
+                  @click="addToCart('مدرسين اجانب', prices[10].price, 10)"
+                >
                   <i class="fa-solid fa-plus"></i> أضف
                 </button>
               </div>
-              <div class="price-item">
-                <h6><span>8</span> محاضرات</h6>
+
+              <!-- Display item at index 11 -->
+              <div v-if="prices.length > 11" class="price-item">
+                <h6>
+                  <span>{{ prices[11].sessionAmount }}</span> محاضرة
+                </h6>
                 <p>
-                  <span>250</span>
-                  ريال
+                  <span>{{ formatPrice(prices[11].price) }}</span>
+                  {{ prices[11].currency_ar }}
                 </p>
-                <button @click="addToCart('خبراء اللغة', 250)">
+                <button
+                  @click="addToCart('مدرسين اجانب', prices[11].price, 11)"
+                >
                   <i class="fa-solid fa-plus"></i> أضف
                 </button>
               </div>
@@ -354,20 +402,27 @@
         <div class="price-border" style="margin-top: 2.5em">
           <div
             class="price-item"
-            style="
-              display: flex;
-              flex-direction: row;
-              align-items: center;
-              justify-content: space-between;
-              width: auto;
-              position: relative;
-            "
+            v-if="prices.length > 12"
+            :style="{
+              display: 'flex',
+              flexDirection: 'row',
+              alignItems: 'center',
+              justifyContent: 'space-between',
+              width: 'auto',
+              position: 'relative',
+              padding: '2em 1em',
+            }"
           >
             <div>
-              <h6><span>1</span> محاضرة دعم فردية</h6>
-              <p><span>77</span> ريال</p>
+              <h6>
+                <span>{{ prices[12].sessionAmount }}</span> محاضرة دعم فردية
+              </h6>
+              <p>
+                <span>{{ formatPrice(prices[12].price) }}</span>
+                {{ prices[12].currency_ar }}
+              </p>
             </div>
-            <button @click="addToCart('خبراء اللغة', 77)">
+            <button @click="addToCart('مدرسين اجانب', prices[12].price)">
               <i class="fa-solid fa-plus"></i> أضف
             </button>
           </div>
@@ -409,21 +464,60 @@
         </div>
       </div>
     </div>
+
+    <StudentPopup
+      v-if="showPopup"
+      @close="closePopup"
+      :selectedSessionGroupId="selectedSessionGroupId"
+    />
   </section>
 </template>
 
 <script>
+import axios from "axios";
+import StudentPopup from "./StudentPopup.vue";
+
 export default {
   name: "ClubsSection",
+  components: {
+    StudentPopup,
+  },
   data() {
     return {
       selectedClub: "مدرسين اجانب",
       selectedClub2: "مدرسين اجانب",
+      showPopup: false,
+      selectedSessionGroupId: null,
+      prices: [],
     };
   },
+  mounted() {
+    this.fetchClubsPrices();
+  },
   methods: {
-    addToCart(clubType, price) {
+    fetchClubsPrices() {
+      axios
+        .get("/api/session/get-session-groups")
+        .then((response) => {
+          this.prices = response.data.data;
+        })
+        .catch((error) => {
+          console.error("Error fetching session group prices:", error);
+        });
+    },
+    addToCart(clubType, price, sessionGroupId) {
       console.log(`Added ${clubType} with price ${price} to cart`);
+      this.selectedSessionGroupId = sessionGroupId;
+      this.showPopup = true;
+    },
+    closePopup() {
+      this.showPopup = false;
+    },
+    formatPrice(price) {
+      const numericPrice = Number(price);
+      return Number.isInteger(numericPrice)
+        ? numericPrice
+        : numericPrice.toFixed(2);
     },
   },
 };

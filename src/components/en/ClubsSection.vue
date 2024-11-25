@@ -58,48 +58,88 @@
         <div class="price-border">
           <div class="price-packages">
             <div v-if="selectedClub === 'Foreign Teachers'" class="price-items">
-              <div class="price-item">
-                <h6><span>2</span> Lectures</h6>
-                <p><span>80</span> Riyals</p>
-                <button @click="addToCart('Foreign Teachers', 80)">
+              <!-- Display item at index 0 -->
+              <div v-if="prices.length > 0" class="price-item">
+                <h6>
+                  <span>{{ prices[0].sessionAmount }}</span> Lectures
+                </h6>
+                <p>
+                  <span>{{ formatPrice(prices[0].price) }}</span>
+                  {{ prices[0].currency_en }}
+                </p>
+                <button @click="addToCart('Foreign Teachers', prices[0].price)">
                   <i class="fa-solid fa-plus"></i> Add
                 </button>
               </div>
-              <div class="price-item">
-                <h6><span>4</span> Lectures</h6>
-                <p><span>140</span> Riyals</p>
-                <button @click="addToCart('Foreign Teachers', 140)">
+
+              <!-- Display item at index 1 -->
+              <div v-if="prices.length > 1" class="price-item">
+                <h6>
+                  <span>{{ prices[1].sessionAmount }}</span> Lectures
+                </h6>
+                <p>
+                  <span>{{ formatPrice(prices[1].price) }}</span>
+                  {{ prices[1].currency_en }}
+                </p>
+                <button @click="addToCart('Foreign Teachers', prices[1].price)">
                   <i class="fa-solid fa-plus"></i> Add
                 </button>
               </div>
-              <div class="price-item">
-                <h6><span>8</span> Lectures</h6>
-                <p><span>240</span> Riyals</p>
-                <button @click="addToCart('Foreign Teachers', 240)">
+
+              <!-- Display item at index 2 -->
+              <div v-if="prices.length > 2" class="price-item">
+                <h6>
+                  <span>{{ prices[2].sessionAmount }}</span> Lectures
+                </h6>
+                <p>
+                  <span>{{ formatPrice(prices[2].price) }}</span>
+                  {{ prices[2].currency_en }}
+                </p>
+                <button @click="addToCart('Foreign Teachers', prices[2].price)">
                   <i class="fa-solid fa-plus"></i> Add
                 </button>
               </div>
             </div>
 
             <div v-if="selectedClub === 'Language Experts'" class="price-items">
-              <div class="price-item">
-                <h6><span>2</span> Lectures</h6>
-                <p><span>60</span> Riyals</p>
-                <button @click="addToCart('Language Experts', 60)">
+              <!-- Display item at index 3 -->
+              <div v-if="prices.length > 3" class="price-item">
+                <h6>
+                  <span>{{ prices[3].sessionAmount }}</span> Lectures
+                </h6>
+                <p>
+                  <span>{{ formatPrice(prices[3].price) }}</span>
+                  {{ prices[3].currency_en }}
+                </p>
+                <button @click="addToCart('Language Experts', prices[3].price)">
                   <i class="fa-solid fa-plus"></i> Add
                 </button>
               </div>
-              <div class="price-item">
-                <h6><span>4</span> Lectures</h6>
-                <p><span>110</span> Riyals</p>
-                <button @click="addToCart('Language Experts', 110)">
+
+              <!-- Display item at index 4 -->
+              <div v-if="prices.length > 4" class="price-item">
+                <h6>
+                  <span>{{ prices[4].sessionAmount }}</span> Lectures
+                </h6>
+                <p>
+                  <span>{{ formatPrice(prices[4].price) }}</span>
+                  {{ prices[4].currency_en }}
+                </p>
+                <button @click="addToCart('Language Experts', prices[4].price)">
                   <i class="fa-solid fa-plus"></i> Add
                 </button>
               </div>
-              <div class="price-item">
-                <h6><span>8</span> Lectures</h6>
-                <p><span>150</span> Riyals</p>
-                <button @click="addToCart('Language Experts', 150)">
+
+              <!-- Display item at index 5 -->
+              <div v-if="prices.length > 5" class="price-item">
+                <h6>
+                  <span>{{ prices[5].sessionAmount }}</span> Lectures
+                </h6>
+                <p>
+                  <span>{{ formatPrice(prices[5].price) }}</span>
+                  {{ prices[5].currency_en }}
+                </p>
+                <button @click="addToCart('Language Experts', prices[5].price)">
                   <i class="fa-solid fa-plus"></i> Add
                 </button>
               </div>
@@ -202,24 +242,44 @@
               v-if="selectedClub2 === 'Foreign Teachers'"
               class="price-items"
             >
-              <div class="price-item">
-                <h6><span>2</span> Lectures</h6>
-                <p><span>140</span> Riyals</p>
-                <button @click="addToCart('Foreign Teachers', 140)">
+              <!-- Display item at index 6 -->
+              <div v-if="prices.length > 6" class="price-item">
+                <h6>
+                  <span>{{ prices[6].sessionAmount }}</span> Lectures
+                </h6>
+                <p>
+                  <span>{{ formatPrice(prices[6].price) }}</span>
+                  {{ prices[6].currency_en }}
+                </p>
+                <button @click="addToCart('Foreign Teachers', prices[6].price)">
                   <i class="fa-solid fa-plus"></i> Add
                 </button>
               </div>
-              <div class="price-item">
-                <h6><span>4</span> Lectures</h6>
-                <p><span>270</span> Riyals</p>
-                <button @click="addToCart('Foreign Teachers', 270)">
+
+              <!-- Display item at index 7 -->
+              <div v-if="prices.length > 7" class="price-item">
+                <h6>
+                  <span>{{ prices[7].sessionAmount }}</span> Lectures
+                </h6>
+                <p>
+                  <span>{{ formatPrice(prices[7].price) }}</span>
+                  {{ prices[7].currency_en }}
+                </p>
+                <button @click="addToCart('Foreign Teachers', prices[7].price)">
                   <i class="fa-solid fa-plus"></i> Add
                 </button>
               </div>
-              <div class="price-item">
-                <h6><span>8</span> Lectures</h6>
-                <p><span>450</span> Riyals</p>
-                <button @click="addToCart('Foreign Teachers', 450)">
+
+              <!-- Display item at index 8 -->
+              <div v-if="prices.length > 8" class="price-item">
+                <h6>
+                  <span>{{ prices[8].sessionAmount }}</span> Lectures
+                </h6>
+                <p>
+                  <span>{{ formatPrice(prices[8].price) }}</span>
+                  {{ prices[8].currency_en }}
+                </p>
+                <button @click="addToCart('Foreign Teachers', prices[8].price)">
                   <i class="fa-solid fa-plus"></i> Add
                 </button>
               </div>
@@ -229,24 +289,48 @@
               v-if="selectedClub2 === 'Language Experts'"
               class="price-items"
             >
-              <div class="price-item">
-                <h6><span>2</span> Lectures</h6>
-                <p><span>95</span> Riyals</p>
-                <button @click="addToCart('Language Experts', 95)">
+              <!-- Display item at index 9 -->
+              <div v-if="prices.length > 9" class="price-item">
+                <h6>
+                  <span>{{ prices[9].sessionAmount }}</span> Lectures
+                </h6>
+                <p>
+                  <span>{{ formatPrice(prices[9].price) }}</span>
+                  {{ prices[9].currency_en }}
+                </p>
+                <button @click="addToCart('Foreign Teachers', prices[9].price)">
                   <i class="fa-solid fa-plus"></i> Add
                 </button>
               </div>
-              <div class="price-item">
-                <h6><span>4</span> Lectures</h6>
-                <p><span>165</span> Riyals</p>
-                <button @click="addToCart('Language Experts', 165)">
+
+              <!-- Display item at index 10 -->
+              <div v-if="prices.length > 10" class="price-item">
+                <h6>
+                  <span>{{ prices[10].sessionAmount }}</span> Lectures
+                </h6>
+                <p>
+                  <span>{{ formatPrice(prices[10].price) }}</span>
+                  {{ prices[10].currency_en }}
+                </p>
+                <button
+                  @click="addToCart('Foreign Teachers', prices[10].price)"
+                >
                   <i class="fa-solid fa-plus"></i> Add
                 </button>
               </div>
-              <div class="price-item">
-                <h6><span>8</span> Lectures</h6>
-                <p><span>250</span> Riyals</p>
-                <button @click="addToCart('Language Experts', 250)">
+
+              <!-- Display item at index 11 -->
+              <div v-if="prices.length > 11" class="price-item">
+                <h6>
+                  <span>{{ prices[11].sessionAmount }}</span> Lectures
+                </h6>
+                <p>
+                  <span>{{ formatPrice(prices[11].price) }}</span>
+                  {{ prices[11].currency_en }}
+                </p>
+                <button
+                  @click="addToCart('Foreign Teachers', prices[11].price)"
+                >
                   <i class="fa-solid fa-plus"></i> Add
                 </button>
               </div>
@@ -330,20 +414,28 @@
         <div class="price-border" style="margin-top: 2.5em">
           <div
             class="price-item"
-            style="
-              display: flex;
-              flex-direction: row;
-              align-items: center;
-              justify-content: space-between;
-              width: auto;
-              position: relative;
-            "
+            v-if="prices.length > 12"
+            :style="{
+              display: 'flex',
+              flexDirection: 'row',
+              alignItems: 'center',
+              justifyContent: 'space-between',
+              width: 'auto',
+              position: 'relative',
+              padding: '2em 1em',
+            }"
           >
             <div>
-              <h6><span>1</span> One-on-One Support Session</h6>
-              <p><span>77</span> Riyals</p>
+              <h6>
+                <span>{{ prices[12].sessionAmount }}</span> One-on-One Support
+                Session
+              </h6>
+              <p>
+                <span>{{ formatPrice(prices[12].price) }}</span>
+                {{ prices[12].currency_en }}
+              </p>
             </div>
-            <button @click="addToCart('Language Experts', 77)">
+            <button @click="addToCart('Language Experts', prices[12].price)">
               <i class="fa-solid fa-plus"></i> Add
             </button>
           </div>
@@ -385,21 +477,57 @@
         </div>
       </div>
     </div>
+    <!-- Conditionally render the StudentPopup if showPopup is true -->
+    <StudentPopup v-if="showPopup" @close="closePopup" />
   </section>
 </template>
 
 <script>
+import axios from "axios";
+import StudentPopup from "./StudentPopup.vue";
+
 export default {
   name: "ClubsSection",
+  components: {
+    StudentPopup,
+  },
   data() {
     return {
       selectedClub: "Foreign Teachers",
       selectedClub2: "Foreign Teachers",
+      showPopup: false,
+      prices: [],
     };
   },
+  mounted() {
+    this.fetchClubsPrices();
+  },
   methods: {
+    fetchClubsPrices() {
+      axios
+        .get("/api/session/get-session-groups")
+        .then((response) => {
+          this.prices = response.data.data;
+        })
+        .catch((error) => {
+          console.error("Error fetching session group prices:", error);
+        });
+    },
     addToCart(clubType, price) {
       console.log(`Added ${clubType} with price ${price} to cart`);
+      const students = JSON.parse(localStorage.getItem("students")) || [];
+      if (students.length === 0) {
+        this.showPopup = true;
+      }
+    },
+    closePopup() {
+      this.showPopup = false;
+    },
+    formatPrice(price) {
+      const numericPrice = Number(price);
+      return Number.isInteger(numericPrice)
+        ? numericPrice
+        : numericPrice.toFixed(2);
     },
   },
 };
