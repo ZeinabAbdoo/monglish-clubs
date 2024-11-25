@@ -272,7 +272,7 @@ export default {
         .get(url, { headers })
         .then(() => {
           this.fetchCartItems();
-          // window.location.reload();
+          window.location.reload();
         }) // Refresh cart items
         .catch(error => {
           console.error("Error increasing item quantity:", error);
