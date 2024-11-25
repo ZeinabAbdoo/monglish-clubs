@@ -473,9 +473,9 @@ export default {
     return {
       selectedClub: "مدرسين اجانب",
       selectedClub2: "مدرسين اجانب",
-      showPopup: false,
       selectedSessionGroupId: null,
-      prices: []
+      showPopup: false,
+      prices: [],
     };
   },
   mounted() {
@@ -519,7 +519,6 @@ export default {
         localStorage.setItem("students", JSON.stringify(students));
         this.showPopup = false;
       }
-
       console.log(
         "Updated students saved to localStorage:",
         localStorage.getItem("students")
@@ -529,13 +528,12 @@ export default {
       if (!this.showPopup) {
         students = JSON.parse(localStorage.getItem("students")) || [];
         if (students.length !== 0) {
+          const lastStudent = students[students.length - 1];
           // Prepare payload for POST request
           const payload = {
-            students: students.map(student => ({
-              id: student.id,
-              name: student.name,
-              session_group_data: student.session_group_data
-            }))
+            name: lastStudent.name,
+            code: lastStudent.code,
+            session_group_data: lastStudent.session_group_data
           };
 
           console.log("Payload for POST request:", payload);
@@ -557,18 +555,19 @@ export default {
 
       this.selectedSessionGroupId = sessionGroupId;
     },
-
     closePopup() {
       this.showPopup = false;
 
       // Check and proceed with the POST request if conditions are met
       let students = JSON.parse(localStorage.getItem("students")) || [];
       if (students.length !== 0) {
-        const payload = students.map(student => ({
-          name: student.name,
-          code: student.code,
-          session_group_data: student.session_group_data
-        }));
+
+        const lastStudent = students[students.length - 1];
+        const payload = {
+          name: lastStudent.name,
+          code: lastStudent.code,
+          session_group_data: lastStudent.session_group_data
+        };
 
         console.log("Payload for POST request (after popup close):", payload);
 
@@ -597,7 +596,7 @@ export default {
       return Number.isInteger(numericPrice)
         ? numericPrice
         : numericPrice.toFixed(2);
-    }
+    },
   }
 };
 </script>
