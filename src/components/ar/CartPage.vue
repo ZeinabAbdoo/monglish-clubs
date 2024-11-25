@@ -64,13 +64,19 @@
             <table class="order-table-mobile" v-for="(item, index) in cartItems" :key="index">
               <tbody>
                 <tr class="order-item" v-for="(item, index) in cartItems" :key="index">
-                  <td class="code">{{ item.student_id }}</td>
-                  <td class="course">{{ item.session_group_id }}</td>
+                  <td class="code">{{ item.student_code }}</td>
+                  <td class="course">{{ item.club_name }}</td>
                   <td class="quantity">
-                    <button @click="decreaseQuantity(item.id)">-</button>
-                    <label class="p-4">{{ item.quantity }}</label>
+                    <button
+                      class="quantity-button decrease-btn"
+                      @click="decreaseQuantity(item.id)"
+                    >-</button>
+                    <label class="quantity-label">{{ item.quantity }}</label>
                     <input type="hidden" v-model="item.quantity" readonly />
-                    <button @click="increaseQuantity(item.id)">+</button>
+                    <button
+                      class="quantity-button increase-btn"
+                      @click="increaseQuantity(item.id)"
+                    >+</button>
                   </td>
                   <td
                     class="price"
