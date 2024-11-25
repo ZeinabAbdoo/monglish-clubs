@@ -221,261 +221,13 @@
     </div>
   </div>
 
-  <!--Modal for Data-->
-  <form v-show="showModal" class="modal" @submit.prevent="goToCheckout">
-    <div class="modal-content">
-      <!--Modal Header-->
-      <div class="modal-header">
-        <div class="header-right">
-          <h1>
-            إقرار قبول دراسي لأكاديمية مونجلش الدولية
-            <br />
-            "MIA-TC 01"
-          </h1>
-        </div>
-        <div class="header-left">
-          <p>التاريخ: <span id="currentDate"></span></p>
-        </div>
-        <!--Close Btn-->
-        <span class="close" @click="closeModal">
-          <svg
-            width="34px"
-            height="34px"
-            viewBox="0 0 24 24"
-            fill="none"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
-            <g
-              id="SVGRepo_tracerCarrier"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-            ></g>
-            <g id="SVGRepo_iconCarrier">
-              <path
-                fill-rule="evenodd"
-                clip-rule="evenodd"
-                d="M22 12C22 17.5228 17.5228 22 12 22C6.47715 22 2 17.5228 2 12C2 6.47715 6.47715 2 12 2C17.5228 2 22 6.47715 22 12ZM8.96963 8.96965C9.26252 8.67676 9.73739 8.67676 10.0303 8.96965L12 10.9393L13.9696 8.96967C14.2625 8.67678 14.7374 8.67678 15.0303 8.96967C15.3232 9.26256 15.3232 9.73744 15.0303 10.0303L13.0606 12L15.0303 13.9696C15.3232 14.2625 15.3232 14.7374 15.0303 15.0303C14.7374 15.3232 14.2625 15.3232 13.9696 15.0303L12 13.0607L10.0303 15.0303C9.73742 15.3232 9.26254 15.3232 8.96965 15.0303C8.67676 14.7374 8.67676 14.2625 8.96965 13.9697L10.9393 12L8.96963 10.0303C8.67673 9.73742 8.67673 9.26254 8.96963 8.96965Z"
-                fill="#fff"
-              ></path>
-            </g>
-          </svg>
-        </span>
-      </div>
-
-      <!--Modal Form-->
-      <div class="checkout-div">
-        <div class="checkout-formm">
-          <div v-if="validationErrorMessage" class="validation-container">
-            <p
-              id="validationError"
-              class="error"
-              v-html="validationErrorMessage"
-            ></p>
-            <span class="error">,</span>
-            <a
-              v-if="link"
-              href="https://front.monglish.academy/login"
-              class="text-link"
-              >Login</a
-            >
-            <span class="error">or enter another email</span>
-          </div>
-
-          <!-- First row of inputs -->
-          <div class="input-row">
-            <div class="form-group">
-              <label for="firstname">الاسم الأول</label>
-              <input type="text" id="firstname" v-model="firstname" />
-              <p v-if="errors.firstname" class="error">
-                {{ errors.firstname }}
-              </p>
-            </div>
-
-            <div class="form-group">
-              <label for="lastname">الاسم الأخير</label>
-              <input type="text" id="lastname" v-model="lastname" />
-              <p v-if="errors.lastname" class="error">{{ errors.lastname }}</p>
-            </div>
-          </div>
-
-          <!-- Second row of inputs -->
-          <div class="input-row">
-            <div class="form-group">
-              <label for="country">البلد / المنطقة</label>
-              <select
-                id="country"
-                v-model="country"
-                @change="updatePhoneNumber"
-              >
-                <option
-                  v-for="country in sortedCountries"
-                  :key="country.code"
-                  :value="country.code"
-                >
-                  {{ country.name }}
-                </option>
-              </select>
-            </div>
-
-            <div class="form-group">
-              <label for="phone">رقم الهاتف (مع كود الدولة)</label>
-              <input
-                type="text"
-                id="phone"
-                v-model="phone"
-                style="direction: ltr"
-              />
-              <p v-if="errors.phone" class="error">{{ errors.phone }}</p>
-            </div>
-          </div>
-
-          <!-- Third row (full width input) -->
-          <div class="form-group full-width">
-            <label for="email">البريد الإلكتروني</label>
-            <input type="email" id="email" v-model="email" />
-            <p v-if="errors.email" class="error">{{ errors.email }}</p>
-          </div>
-        </div>
-      </div>
-
-      <!--Modal Header-->
-      <div class="modal-terms">
-        <h2>
-          لضمان حقوقك الكاملة في التعاقد مع الأكاديمية، برجاء قراءة البنود
-          التالية بعناية والموافقة عليها:
-        </h2>
-        <div class="terms-container">
-          <div class="terms-content">
-            <ol>
-              <li>
-                <strong>سياسات الأكاديمية:</strong><br />
-                أتعهد بالالتزام بكافة السياسات والإجراءات المتبعة داخل
-                الأكاديمية، وأقر بأنني قد اطلعت عليها وفهمتها بالكامل ووافقت
-                عليها.
-              </li>
-              <li>
-                <strong>الرسوم الدراسية:</strong><br />
-                أقر بأنني قد اطلعت على الرسوم الدراسية المقررة وأتعهد بسدادها في
-                المواعيد المحددة. أعلم أنه في حالة التأخر في السداد، يحق
-                للأكاديمية اتخاذ الإجراءات المناسبة بما في ذلك تعليق الحساب أو
-                وقف الخدمات التعليمية حتى سداد المستحقات.
-              </li>
-              <li>
-                <strong>الحضور الإلكتروني والانضباط:</strong><br />
-                أتعهد بضمان حضور ابني/ابنتي للحصص الدراسية الإلكترونية بانتظام
-                وفي المواعيد المحددة، وأفهم أن التغيب المتكرر دون عذر مقبول قد
-                يؤدي إلى إجراءات إدارية مثل إلغاء الحجز أو إعادة الجدولة
-                بالإضافة إلى الالتزام بما ورد في نموذج
-                <a href="/ar/terms-and-conditions/terms">الشروط والأحكام</a> بما
-                يخص بند الحضور.
-              </li>
-              <li>
-                <strong>السلوك الإلكتروني:</strong><br />
-                أتعهد بمتابعة سلوك ابني/ابنتي خلال الحصص الدراسية الإلكترونية،
-                وأدرك أن الأكاديمية لها الحق في اتخاذ إجراءات تأديبية في حال
-                حدوث مخالفات سلوكية عبر المنصة الإلكترونية.
-              </li>
-              <li>
-                <strong>التقنية والمسؤوليات:</strong><br />
-                أقر بأنني مسؤول عن توفير جهاز إلكتروني واتصال إنترنت مستقر لضمان
-                مشاركة ابني/ابنتي في الحصص الدراسية عبر الإنترنت، وأدرك أن
-                الأكاديمية غير مسؤولة عن أي مشكلات تقنية تتعلق بالاتصال من
-                جانبي.
-              </li>
-              <li>
-                <strong>الانسحاب أو الإلغاء:</strong><br />
-                أعلم أنه في حالة الرغبة في سحب ابني/ابنتي من الأكاديمية أو إلغاء
-                الاشتراك في البرنامج، يجب إبلاغ الإدارة كتابةً قبل فترة زمنية
-                محددة، وأوافق على الالتزام
-                <a href="/ar/terms-and-conditions/refund">بسياسة الإلغاء</a>
-                والاسترداد كما هو موضح في
-                <a href="/ar/terms-and-conditions/terms">الشروط والأحكام</a>
-                الخاصة بسياسات الأكاديمية.
-              </li>
-              <li>
-                <strong>استخدام الوسائل التعليمية الإلكترونية:</strong><br />
-                أوافق على استخدام الأكاديمية لمنصات التعليم الإلكتروني والتقنيات
-                الحديثة لتقديم الدروس،وأقر بأنني قد قرأت وفهمت
-                <a href="/ar/terms-and-conditions/privacy">بسياسة الخصوصية</a>
-                المتعلقة باستخدام هذه الوسائل.
-              </li>
-              <li>
-                <strong>الصور والمقاطع المصورة:</strong><br />
-                <ul>
-                  <li>
-                    فتح الكاميرا طوال فترة المحاضرة لضمان جودة العملية التعليمية
-                    وتسهيل التواصل بين المعلمين والمتدربين كافة.
-                  </li>
-                  <li>
-                    يراعى التواجد في مكان هادئ بعيداً عن الضوضاء مع إحدى
-                    الخلفيات المحددة من قِبل خدمة العملاء.
-                  </li>
-                  <li>استخدام شاشة كمبيوتر كحد أدنى أو لابتوب.</li>
-                  <li>
-                    الالتزام بالزي المناسب (أبيض – أزرق – أسود) وذلك حرصاً منا
-                    على تنمية الانضباط لدى المتدرب.
-                  </li>
-                  <li>
-                    جميع المحاضرات مسجلة ويتم إرسالها لجميع المتدربين للاستفادة
-                    العامة. تعتبر الحصص المسجلة ملك خالص للأكاديمية ويحق لها
-                    استخدامها على سبيل المثال "تحليل لمستويات الطلاب أو حملات
-                    ترويجية للأكاديمية."
-                  </li>
-                </ul>
-              </li>
-              <li>
-                <strong>الموافقة على الشروط:</strong><br />
-                بمجرد الضغط على زر شراء، يعتبر هذا موافقة منك على الشروط
-                والأحكام المذكورة أعلاه والمرفقة بنموذج رقم MIA-TC-01.
-              </li>
-            </ol>
-          </div>
-        </div>
-
-        <label class="checkbox">
-          <input type="checkbox" v-model="isChecked" />
-          أوافق على جميع الشروط والأحكام
-        </label>
-
-        <button type="submit" class="checkout-button" :disabled="!isChecked">
-          أوافق وأرغب بالاستمرار لإتمام الطلب
-        </button>
-      </div>
-    </div>
-  </form>
 </template>
 
 <script>
   import axios from "axios";
-  import { countries } from "countries-list";
   export default {
     data() {
       return {
-        preferredCountries: [
-          "SA",
-          "KW",
-          "AE",
-          "QA",
-          "EG",
-          "JO",
-          "OM",
-          "YE",
-          "BH",
-          "IQ",
-        ],
-        countryCodes: {
-          SA: "+966",
-          KW: "+965",
-          AE: "+971",
-          QA: "+974",
-          EG: "+20",
-          JO: "+962",
-          OM: "+968",
-          YE: "+967",
-          BH: "+973",
-          IQ: "+964",
-        },
         isChecked: false,
         orderUpdated: false,
         showModal: false,
@@ -483,17 +235,11 @@
         cartSummary: {
           total_price: 0,
           total_price_discount: 0,
-          family_or_friend_discount: 0,
-          currency: "",
+          currency_ar: "",
           total_items_count: 0,
           coupon_code: null,
           discount: 0,
         },
-        firstname: "",
-        lastname: "",
-        country: "",
-        phone: "",
-        email: "",
         couponCode: "",
         successMessage: "",
         errors: {},
@@ -529,9 +275,7 @@
         }
       },
       async fetchCartItems() {
-        let url = sessionStorage.getItem("userInfo")
-          ? "/api/user/cart"
-          : "/api/session/cart";
+        let url = "/api/session/club-session-cart";
 
         const userInfo = sessionStorage.getItem("userInfo");
         let headers = {};
@@ -751,40 +495,10 @@
       goToCourses() {
         this.$router.push("/");
       },
-      validateForm() {
-        this.errors = {};
-
-        if (!this.firstname) {
-          this.errors.firstname = "الاسم الأول مطلوب";
-        }
-
-        if (!this.lastname) {
-          this.errors.lastname = "الاسم الأخير مطلوب";
-        }
-
-        if (!this.country) {
-          this.errors.country = "البلد / المنطقة مطلوب";
-        }
-
-        if (!this.phone) {
-          this.errors.phone = "رقم الجوال مطلوب";
-        }
-
-        if (!this.email) {
-          this.errors.email = "البريد الإلكتروني مطلوب";
-        } else if (!this.isValidEmail(this.email)) {
-          this.errors.email = "البريد الإلكتروني غير صالح";
-        }
-      },
-      isValidEmail(email) {
-        const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-        return re.test(email);
-      },
       goToCheckout() {
-        let url = sessionStorage.getItem("userInfo")
-          ? "/api/user/checkout"
-          : "/api/session/checkout";
+        let url = "/api/session/club-session-checkout";
 
+        // replace with your storage 
         const userInfo = sessionStorage.getItem("userInfo");
         let headers = {};
         let formData = {};
@@ -799,15 +513,6 @@
           } catch (error) {
             console.error("Error parsing userInfo from sessionStorage:", error);
           }
-        } else {
-          formData = {
-            firstname: this.firstname,
-            lastname: this.lastname,
-            country: this.country,
-            phone: this.phone,
-            email: this.email,
-          };
-          this.validateForm();
         }
 
         // If there are no errors, submit the form
@@ -819,7 +524,7 @@
               console.log("Order checkout successfully:", response.data);
               if (response.data.success) {
                 // Redirect to the URL in the response data
-                window.location.href = response.data.data;
+                window.location.href = response.data.data.stripeUrl;
               } else {
                 console.error("Error:", response.data.message);
                 // Optionally, display an error message to the user
@@ -838,42 +543,10 @@
         }
       },
       showAuthModal() {
-        if (sessionStorage.getItem("userInfo")) {
-          this.goToCheckout();
-        } else {
-          this.showModal = true;
-        }
+        this.goToCheckout();
       },
       closeModal() {
         this.showModal = false;
-      },
-      updatePhoneNumber() {
-        // Get the selected country code and set it to the phone input
-        const countryCode = this.country;
-
-        // Set phone to the country code only if it exists
-        if (this.countryCodes[countryCode]) {
-          this.phone = this.countryCodes[countryCode]; // Set phone to country code
-        } else {
-          this.phone = ""; // Clear if no valid country is selected
-        }
-      },
-    },
-    computed: {
-      sortedCountries() {
-        // Create an array of countries from the countries-list package
-        const countryArray = Object.keys(countries).map((code) => ({
-          code: code,
-          name: countries[code].name,
-        }));
-
-        const preferred = this.preferredCountries
-          .map((code) => countryArray.find((c) => c.code === code))
-          .filter(Boolean);
-        const others = countryArray.filter(
-          (country) => !this.preferredCountries.includes(country.code)
-        );
-        return [...preferred, ...others]; // Combine preferred and other countries
       },
     },
     mounted() {
