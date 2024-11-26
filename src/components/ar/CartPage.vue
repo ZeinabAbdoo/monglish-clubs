@@ -152,15 +152,6 @@
                 <td v-else>قيمة السلة</td>
                 <td>{{ cartSummary.total_price }} {{ cartSummary.currency_ar }}</td>
               </tr>
-              <tr v-if="cartSummary.family_or_friend_discount > 0">
-                <td>خصومات الأصدقاء/العائلة</td>
-                <td>
-                  <div class="remove-coupon-section">
-                    - {{ cartSummary.family_or_friend_discount }}
-                    {{ cartSummary.currency_ar }}
-                  </div>
-                </td>
-              </tr>
               <tr v-if="cartSummary.coupon_code">
                 <td>الخصم</td>
                 <td>
@@ -235,17 +226,13 @@ export default {
           console.error("Error parsing userInfo from localStorage:", error);
         }
       }
-
       const textElement1 = document.getElementById("totalCount1");
-
       axios
         .get(url, { headers })
         .then(response => {
           console.log("Fetched cart items:", response.data);
           totalCartItems = response.data.data.total_items_count;
-
           textElement1.textContent = totalCartItems > 0 ? totalCartItems : 0;
-
           this.cartItems = response.data.data.items || [];
           this.orderUpdated = false;
           this.cartSummary = response.data.data;
@@ -269,25 +256,22 @@ export default {
         });
     },
     openModal() {
-      // Retrieve userInfo from localStorage
       const storedUserInfo = localStorage.getItem("userInfo");
       this.userInfo = storedUserInfo ? JSON.parse(storedUserInfo) : [];
-      this.showModal = true; // Show the modal
+      this.showModal = true;
     },
     closeModal() {
-      this.showModal = false; // Close the modal
-      this.resetForm(); // Reset the form inputs
+      this.showModal = false;
+      this.resetForm();
     },
     addStudent() {
-      // Add the new student to the userInfo array
       this.userInfo.push({ ...this.newStudent });
-      // Save the updated userInfo to localStorage
       localStorage.setItem("userInfo", JSON.stringify(this.userInfo));
-      // Close the modal and reset the form
       this.closeModal();
+      this.$router.push({ path: "/", name: "HomeAr" });
     },
     resetForm() {
-      this.newStudent = { name: "", code: "" }; // Reset form fields
+      this.newStudent = { name: "", code: "" };
     },
     isSameStudentCode(studentCode) {
       return (
@@ -321,15 +305,12 @@ export default {
     },
     async increaseQuantity(studentId, itemId) {
       let url = `/api/session/club-session-cart/increase/student-items/${studentId}/${itemId}`;
-
-      // replace with your storage (zeinab!!!)
       const userInfo = localStorage.getItem("userInfo");
       let headers = {};
       if (userInfo) {
         try {
           const parsedUserInfo = JSON.parse(userInfo);
           const token = parsedUserInfo.token;
-
           if (token) {
             headers["Authorization"] = `Bearer ${token}`;
           }
@@ -337,65 +318,6 @@ export default {
           console.error("Error parsing userInfo from localStorage:", error);
         }
       }
-
-      axios
-        .get(url, { headers })
-        .then(() => {
-          this.fetchCartItems();
-          window.location.reload();
-        }) // Refresh cart items
-        .catch(error => {
-          console.error("Error increasing item quantity:", error);
-        });
-    },
-    async decreaseQuantity(studentId, itemId) {
-      let url = `/api/session/club-session-cart/decrease/student-items/${studentId}/${itemId}`;
-
-      // replace with your storage (zeinab!!!)
-      const userInfo = localStorage.getItem("userInfo");
-      let headers = {};
-      if (userInfo) {
-        try {
-          const parsedUserInfo = JSON.parse(userInfo);
-          const token = parsedUserInfo.token;
-
-          if (token) {
-            headers["Authorization"] = `Bearer ${token}`;
-          }
-        } catch (error) {
-          console.error("Error parsing userInfo from localStorage:", error);
-        }
-      }
-
-      axios
-        .get(url, { headers })
-        .then(() => {
-          this.fetchCartItems();
-          window.location.reload();
-        }) // Refresh cart items
-        .catch(error => {
-          console.error("Error decreasing item quantity:", error);
-        });
-    },
-    async removeItem(studentId) {
-      let url = `/api/session/club-session-cart/remove/student-items/${studentId}`;
-
-      // replace with your storage (zeinab!!!)
-      const userInfo = localStorage.getItem("userInfo");
-      let headers = {};
-      if (userInfo) {
-        try {
-          const parsedUserInfo = JSON.parse(userInfo);
-          const token = parsedUserInfo.token;
-
-          if (token) {
-            headers["Authorization"] = `Bearer ${token}`;
-          }
-        } catch (error) {
-          console.error("Error parsing userInfo from localStorage:", error);
-        }
-      }
-
       axios
         .get(url, { headers })
         .then(() => {
@@ -403,12 +325,89 @@ export default {
           // window.location.reload();
         })
         .catch(error => {
-          this.errorMessage = "Error removing item.";
-          console.error("Error removing item:", error);
+          console.error("Error increasing item quantity:", error);
         });
     },
+    async decreaseQuantity(studentId, itemId) {
+      let url = `/api/session/club-session-cart/decrease/student-items/${studentId}/${itemId}`;
+      const userInfo = localStorage.getItem("userInfo");
+      let headers = {};
+      if (userInfo) {
+        try {
+          const parsedUserInfo = JSON.parse(userInfo);
+          const token = parsedUserInfo.token;
+          if (token) {
+            headers["Authorization"] = `Bearer ${token}`;
+          }
+        } catch (error) {
+          console.error("Error parsing userInfo from localStorage:", error);
+        }
+      }
+      axios
+        .get(url, { headers })
+        .then(() => {
+          this.fetchCartItems();
+          window.location.reload();
+        })
+        .catch(error => {
+          console.error("Error decreasing item quantity:", error);
+        });
+    },
+    async removeItem(studentId) {
+      let url = `/api/session/club-session-cart/remove/student-items/${studentId}`;
+      const userInfo = localStorage.getItem("userInfo");
+      let headers = {};
+
+      if (userInfo) {
+        try {
+          const parsedUserInfo = JSON.parse(userInfo);
+          const token = parsedUserInfo.token;
+
+          if (token) {
+            headers["Authorization"] = `Bearer ${token}`;
+          }
+        } catch (error) {
+          console.error("Error parsing userInfo from localStorage:", error);
+          return;
+        }
+      }
+
+      try {
+        await axios.get(url, { headers });
+
+        await this.fetchCartItems();
+
+        const updatedCartItems = this.cartItems;
+        let updatedUserInfo = [];
+
+        if (userInfo) {
+          const parsedUserInfo = JSON.parse(userInfo);
+
+          updatedUserInfo = parsedUserInfo.map(student => {
+            const studentCode = student.code;
+
+            const studentCartItems = updatedCartItems.filter(
+              item => item.student_code === studentCode
+            );
+
+            return {
+              ...student,
+              session_group_data: studentCartItems.map(cartItem => ({
+                session_group_id: cartItem.session_group_id,
+                quantity: cartItem.quantity
+              }))
+            };
+          });
+
+          console.log("Updated userInfo:", updatedUserInfo);
+          localStorage.setItem("userInfo", JSON.stringify(updatedUserInfo));
+        }
+      } catch (error) {
+        this.errorMessage = "Error removing item.";
+        console.error("Error removing item:", error);
+      }
+    },
     async applyCoupon() {
-      // Reset messages
       this.successMessage = "";
       this.errorMessage = "";
 
@@ -435,13 +434,11 @@ export default {
             console.error("Error parsing userInfo from localStorage:", error);
           }
         }
-
         const response = await axios.post(
           url,
           { coupon_code: this.couponCode },
           { headers }
         );
-
         if (response.data.success) {
           this.cartSummary = response.data.data.cartSummary;
           this.successMessage = response.data.message;
@@ -454,15 +451,12 @@ export default {
       }
     },
     async removeCoupon() {
-      // Reset messages
       this.successMessage = "";
       this.errorMessage = "";
-
       try {
         let url = localStorage.getItem("userInfo")
           ? "/api/user/cart/remove-coupon"
           : "/api/session/cart/remove-coupon";
-
         const userInfo = localStorage.getItem("userInfo");
         let headers = {};
         if (userInfo) {
@@ -477,7 +471,6 @@ export default {
             console.error("Error parsing userInfo from localStorage:", error);
           }
         }
-
         const response = await axios.post(url, {}, { headers });
         console.log(response.data);
         if (response.data.success) {
@@ -496,8 +489,6 @@ export default {
     },
     goToCheckout() {
       let url = "/api/session/club-session-checkout";
-
-      // replace with your storage (zeinab!!!)
       const userInfo = localStorage.getItem("userInfo");
       let headers = {};
       let formData = {};
@@ -513,24 +504,24 @@ export default {
           console.error("Error parsing userInfo from localStorage:", error);
         }
       }
-
-      // If there are no errors, submit the form
       if (Object.keys(this.errors).length === 0) {
         axios
           .post(url, formData, { headers })
           .then(response => {
-            // Handle successful form submission
             console.log("Order checkout successfully:", response.data);
             if (response.data.success) {
-              // Redirect to the URL in the response data
+              localStorage.clear();
+
+              document.cookie.split(";").forEach(cookie => {
+                const [name] = cookie.split("=");
+                document.cookie = `${name}=;expire=Thu, 01 Jan 2001 00:00:00 UTC;path/`;
+              });
               window.location.href = response.data.data.stripeUrl;
             } else {
               console.error("Error:", response.data.message);
-              // Optionally, display an error message to the user
             }
           })
           .catch(error => {
-            // Handle errors
             console.error("Error submitting form:", error.response.data);
             this.validationErrorMessage =
               error.response.data.data.error ||
@@ -788,6 +779,7 @@ export default {
   text-align: center;
   font-size: 18px;
   direction: ltr;
+  border: 1px solid #ddd;
 }
 
 .confirm-button {
@@ -1176,8 +1168,8 @@ export default {
 }
 
 .quantity {
-  display: flex; 
-  align-items: center; 
+  display: flex;
+  align-items: center;
   justify-content: center;
   gap: 10px;
 }
@@ -1187,10 +1179,9 @@ export default {
   font-size: 18px;
   cursor: pointer;
   border-radius: 8px;
-  border: none; 
-  transition: background-color 0.3s, color 0.3s; 
+  border: none;
+  transition: background-color 0.3s, color 0.3s;
 }
-
 
 .quantity-label {
   font-size: 18px; /* Text size */
@@ -1484,28 +1475,27 @@ export default {
   }
 
   .order-table th,
-.order-table td {
-  padding: 0px;
-}
+  .order-table td {
+    padding: 0px;
+  }
 
-.price {
-  font-size: 20px;
-}
+  .price {
+    font-size: 20px;
+  }
 
-.quantity {
-  gap: 0px;
-}
+  .quantity {
+    gap: 0px;
+  }
 
-.quantity-button {
-  padding: 3px 6px;
-  font-size: 16px;
-}
+  .quantity-button {
+    padding: 3px 6px;
+    font-size: 16px;
+  }
 
-
-.quantity-label {
-  font-size: 18px; 
-  width: 15px;
-}
+  .quantity-label {
+    font-size: 18px;
+    width: 15px;
+  }
 }
 
 .add-new-stud {
