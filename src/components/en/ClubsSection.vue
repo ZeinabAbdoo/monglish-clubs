@@ -67,7 +67,7 @@
                   <span>{{ formatPrice(prices[0].price) }}</span>
                   {{ prices[0].currency_en }}
                 </p>
-                <button @click="addToCart('Foreign Teachers', prices[0].price , 0)">
+                <button @click="addToCart('Foreign Teachers', prices[0].price , 1)">
                   <i class="fa-solid fa-plus"></i> Add
                 </button>
               </div>
@@ -81,7 +81,7 @@
                   <span>{{ formatPrice(prices[1].price) }}</span>
                   {{ prices[1].currency_en }}
                 </p>
-                <button @click="addToCart('Foreign Teachers', prices[1].price , 1)">
+                <button @click="addToCart('Foreign Teachers', prices[1].price , 2)">
                   <i class="fa-solid fa-plus"></i> Add
                 </button>
               </div>
@@ -95,7 +95,7 @@
                   <span>{{ formatPrice(prices[2].price) }}</span>
                   {{ prices[2].currency_en }}
                 </p>
-                <button @click="addToCart('Foreign Teachers', prices[2].price , 2)">
+                <button @click="addToCart('Foreign Teachers', prices[2].price , 3)">
                   <i class="fa-solid fa-plus"></i> Add
                 </button>
               </div>
@@ -111,7 +111,7 @@
                   <span>{{ formatPrice(prices[3].price) }}</span>
                   {{ prices[3].currency_en }}
                 </p>
-                <button @click="addToCart('Language Experts', prices[3].price , 3)">
+                <button @click="addToCart('Language Experts', prices[3].price , 4)">
                   <i class="fa-solid fa-plus"></i> Add
                 </button>
               </div>
@@ -125,7 +125,7 @@
                   <span>{{ formatPrice(prices[4].price) }}</span>
                   {{ prices[4].currency_en }}
                 </p>
-                <button @click="addToCart('Language Experts', prices[4].price , 4)">
+                <button @click="addToCart('Language Experts', prices[4].price , 5)">
                   <i class="fa-solid fa-plus"></i> Add
                 </button>
               </div>
@@ -139,7 +139,7 @@
                   <span>{{ formatPrice(prices[5].price) }}</span>
                   {{ prices[5].currency_en }}
                 </p>
-                <button @click="addToCart('Language Experts', prices[5].price , 5)">
+                <button @click="addToCart('Language Experts', prices[5].price , 6)">
                   <i class="fa-solid fa-plus"></i> Add
                 </button>
               </div>
@@ -251,7 +251,7 @@
                   <span>{{ formatPrice(prices[6].price) }}</span>
                   {{ prices[6].currency_en }}
                 </p>
-                <button @click="addToCart('Foreign Teachers', prices[6].price , 6)">
+                <button @click="addToCart('Foreign Teachers', prices[6].price , 7)">
                   <i class="fa-solid fa-plus"></i> Add
                 </button>
               </div>
@@ -265,7 +265,7 @@
                   <span>{{ formatPrice(prices[7].price) }}</span>
                   {{ prices[7].currency_en }}
                 </p>
-                <button @click="addToCart('Foreign Teachers', prices[7].price , 7)">
+                <button @click="addToCart('Foreign Teachers', prices[7].price , 8)">
                   <i class="fa-solid fa-plus"></i> Add
                 </button>
               </div>
@@ -279,7 +279,7 @@
                   <span>{{ formatPrice(prices[8].price) }}</span>
                   {{ prices[8].currency_en }}
                 </p>
-                <button @click="addToCart('Foreign Teachers', prices[8].price , 8)">
+                <button @click="addToCart('Foreign Teachers', prices[8].price , 9)">
                   <i class="fa-solid fa-plus"></i> Add
                 </button>
               </div>
@@ -298,7 +298,7 @@
                   <span>{{ formatPrice(prices[9].price) }}</span>
                   {{ prices[9].currency_en }}
                 </p>
-                <button @click="addToCart('Foreign Teachers', prices[9].price , 9)">
+                <button @click="addToCart('Foreign Teachers', prices[9].price , 10)">
                   <i class="fa-solid fa-plus"></i> Add
                 </button>
               </div>
@@ -313,7 +313,7 @@
                   {{ prices[10].currency_en }}
                 </p>
                 <button
-                  @click="addToCart('Foreign Teachers', prices[10].price , 10)"
+                  @click="addToCart('Foreign Teachers', prices[10].price , 11)"
                 >
                   <i class="fa-solid fa-plus"></i> Add
                 </button>
@@ -329,7 +329,7 @@
                   {{ prices[11].currency_en }}
                 </p>
                 <button
-                  @click="addToCart('Foreign Teachers', prices[11].price , 11)"
+                  @click="addToCart('Foreign Teachers', prices[11].price , 12)"
                 >
                   <i class="fa-solid fa-plus"></i> Add
                 </button>
@@ -435,7 +435,7 @@
                 {{ prices[12].currency_en }}
               </p>
             </div>
-            <button @click="addToCart('Language Experts', prices[12].price , 12)">
+            <button @click="addToCart('Language Experts', prices[12].price , 13)">
               <i class="fa-solid fa-plus"></i> Add
             </button>
           </div>
@@ -483,436 +483,436 @@
 </template>
 
 <script>
-import axios from "axios";
-import StudentPopup from "./StudentPopup.vue";
+  import axios from "axios";
+  import StudentPopup from "./StudentPopup.vue";
 
-export default {
-  name: "ClubsSection",
-  components: {
-    StudentPopup,
-  },
-  data() {
-    return {
-      selectedClub: "Foreign Teachers",
-      selectedClub2: "Foreign Teachers",
-      selectedSessionGroupId: null,
-      showPopup: false,
-      prices: [],
-      orderUpdated: false,
-      cartItems: [],
-      cartSummary: {
-        total_price: 0,
-        total_price_discount: 0,
-        currency_en: "",
-        total_items_count: 0,
-        coupon_code: null,
-        discount: 0
-      },
-      couponCode: "",
-    };
-  },
-  mounted() {
-    this.fetchClubsPrices();
-    this.fetchCartItems();
-  },
-  methods: {
-    async fetchCartItems() {
-      let url = "/api/session/club-session-cart";
-      let totalCartItems = 0;
-      const userInfo = localStorage.getItem("userInfo");
-      console.log("userInfo", userInfo);
-      let headers = {};
-      if (userInfo) {
-        try {
-          const parsedUserInfo = JSON.parse(userInfo);
-          const token = parsedUserInfo.token;
+  export default {
+    name: "ClubsSection",
+    components: {
+      StudentPopup,
+    },
+    data() {
+      return {
+        selectedClub: "Foreign Teachers",
+        selectedClub2: "Foreign Teachers",
+        selectedSessionGroupId: null,
+        showPopup: false,
+        prices: [],
+        orderUpdated: false,
+        cartItems: [],
+        cartSummary: {
+          total_price: 0,
+          total_price_discount: 0,
+          currency_en: "",
+          total_items_count: 0,
+          coupon_code: null,
+          discount: 0
+        },
+        couponCode: "",
+      };
+    },
+    mounted() {
+      this.fetchClubsPrices();
+      this.fetchCartItems();
+    },
+    methods: {
+      async fetchCartItems() {
+        let url = "/api/session/club-session-cart";
+        let totalCartItems = 0;
+        const userInfo = localStorage.getItem("userInfo");
+        console.log("userInfo", userInfo);
+        let headers = {};
+        if (userInfo) {
+          try {
+            const parsedUserInfo = JSON.parse(userInfo);
+            const token = parsedUserInfo.token;
 
-          if (token) {
-            headers["Authorization"] = `Bearer ${token}`;
+            if (token) {
+              headers["Authorization"] = `Bearer ${token}`;
+            }
+          } catch (error) {
+            console.error("Error parsing userInfo from localStorage:", error);
           }
-        } catch (error) {
-          console.error("Error parsing userInfo from localStorage:", error);
         }
-      }
 
-      const textElement1 = document.getElementById("totalCount1");
+        const textElement1 = document.getElementById("totalCount1");
 
-      axios
-        .get(url, { headers })
-        .then(response => {
-          console.log("Fetched cart items:", response.data);
-          totalCartItems = response.data.data.total_items_count;
+        axios
+          .get(url, { headers })
+          .then(response => {
+            console.log("Fetched cart items:", response.data);
+            totalCartItems = response.data.data.total_items_count;
 
-          textElement1.textContent = totalCartItems > 0 ? totalCartItems : 0;
-          
-          this.cartItems = response.data.data.items || [];
-          this.orderUpdated = false;
-          this.cartSummary = response.data.data;
-          console.log("Cart Summary:", this.cartSummary);
-          if (this.cartSummary.coupon_code) {
-            this.couponCode = this.cartSummary.coupon_code["code"];
-            console.log("Coupon code:", this.couponCode);
-          }
-        })
-        .catch(error => {
-          if (error.response && error.response.status === 404) {
-            this.cartItems = [];
-            this.cartSummary = {};
-            console.warn("Cart is empty or was deleted:", error.response.data);
-          } else {
-            console.error(
-              "Error fetching cart items:",
-              error.response ? error.response.data : error.message
+            textElement1.textContent = totalCartItems > 0 ? totalCartItems : 0;
+            
+            this.cartItems = response.data.data.items || [];
+            this.orderUpdated = false;
+            this.cartSummary = response.data.data;
+            console.log("Cart Summary:", this.cartSummary);
+            if (this.cartSummary.coupon_code) {
+              this.couponCode = this.cartSummary.coupon_code["code"];
+              console.log("Coupon code:", this.couponCode);
+            }
+          })
+          .catch(error => {
+            if (error.response && error.response.status === 404) {
+              this.cartItems = [];
+              this.cartSummary = {};
+              console.warn("Cart is empty or was deleted:", error.response.data);
+            } else {
+              console.error(
+                "Error fetching cart items:",
+                error.response ? error.response.data : error.message
+              );
+            }
+          });
+      },
+      fetchClubsPrices() {
+        axios
+          .get("/api/session/get-session-groups")
+          .then(response => {
+            this.prices = response.data.data;
+          })
+          .catch(error => {
+            console.error("Error fetching session group prices:", error);
+          });
+      },
+      addToCart(clubType, price, sessionGroupId) {
+        let userInfo = JSON.parse(localStorage.getItem("userInfo")) || [];
+        let totalCartItems = 0;
+
+        if (userInfo.length === 0) {
+          this.showPopup = true;
+        } else {
+          userInfo.forEach(student => {
+            if (!Array.isArray(student.session_group_data)) {
+              student.session_group_data = [];
+            }
+            const existingSessionGroup = student.session_group_data.find(
+              group => group.session_group_id === sessionGroupId
             );
-          }
-        });
-    },
-    fetchClubsPrices() {
-      axios
-        .get("/api/session/get-session-groups")
-        .then(response => {
-          this.prices = response.data.data;
-        })
-        .catch(error => {
-          console.error("Error fetching session group prices:", error);
-        });
-    },
-    addToCart(clubType, price, sessionGroupId) {
-      let userInfo = JSON.parse(localStorage.getItem("userInfo")) || [];
-      let totalCartItems = 0;
 
-      if (userInfo.length === 0) {
-        this.showPopup = true;
-      } else {
-        userInfo.forEach(student => {
-          if (!Array.isArray(student.session_group_data)) {
-            student.session_group_data = [];
-          }
-          const existingSessionGroup = student.session_group_data.find(
-            group => group.session_group_id === sessionGroupId
-          );
+            if (existingSessionGroup) {
+              existingSessionGroup.quantity += 1;
+            } else {
+              student.session_group_data.push({
+                session_group_id: sessionGroupId,
+                quantity: 1
+              });
+            }
+          });
+          localStorage.setItem("userInfo", JSON.stringify(userInfo));
+          this.showPopup = false;
+        }
+        console.log(
+          "Updated userInfo saved to localStorage:",
+          localStorage.getItem("userInfo")
+        );
 
-          if (existingSessionGroup) {
-            existingSessionGroup.quantity += 1;
-          } else {
-            student.session_group_data.push({
-              session_group_id: sessionGroupId,
-              quantity: 1
-            });
+        const textElement1 = document.getElementById("totalCount1");
+
+        // Handle popup closure
+        if (!this.showPopup) {
+          userInfo = JSON.parse(localStorage.getItem("userInfo")) || [];
+          if (userInfo.length !== 0) {
+            const lastStudent = userInfo[userInfo.length - 1];
+            // Prepare payload for POST request
+            const payload = {
+              name: lastStudent.name,
+              code: lastStudent.code,
+              session_group_data: lastStudent.session_group_data
+            };
+
+            console.log("Payload for POST request:", payload);
+
+            // Make POST request
+            axios
+              .post("/api/session/club-session-cart", payload)
+              .then(response => {
+                console.log("Cart updated successfully:", response.data);
+
+                totalCartItems = response.data.data.total_items_count;
+                textElement1.textContent = totalCartItems > 0 ? totalCartItems : 0;
+
+                this.$router.push({ path: "/en/cart/", name: "CartEn" });
+              })
+              .catch(error => {
+                console.error(
+                  "Error updating cart:",
+                  error.response?.data || error.message
+                );
+              });
           }
-        });
-        localStorage.setItem("userInfo", JSON.stringify(userInfo));
+        }
+
+        this.selectedSessionGroupId = sessionGroupId;
+      },
+
+      closePopup() {
         this.showPopup = false;
-      }
-      console.log(
-        "Updated userInfo saved to localStorage:",
-        localStorage.getItem("userInfo")
-      );
 
-      const textElement1 = document.getElementById("totalCount1");
-
-      // Handle popup closure
-      if (!this.showPopup) {
-        userInfo = JSON.parse(localStorage.getItem("userInfo")) || [];
+        // Check and proceed with the POST request if conditions are met
+        let userInfo = JSON.parse(localStorage.getItem("userInfo")) || [];
         if (userInfo.length !== 0) {
+
           const lastStudent = userInfo[userInfo.length - 1];
-          // Prepare payload for POST request
           const payload = {
             name: lastStudent.name,
             code: lastStudent.code,
             session_group_data: lastStudent.session_group_data
           };
 
-          console.log("Payload for POST request:", payload);
+          console.log("Payload for POST request (after popup close):", payload);
 
-          // Make POST request
           axios
-            .post("/api/session/club-session-cart", payload)
+            .post("/api/session/club-session-cart", payload, {
+              headers: {
+                "Content-Type": "application/json"
+              }
+            })
             .then(response => {
-              console.log("Cart updated successfully:", response.data);
-
-              totalCartItems = response.data.data.total_items_count;
-              textElement1.textContent = totalCartItems > 0 ? totalCartItems : 0;
-
-              this.$router.push({ path: "/en/cart/", name: "CartEn" });
+              console.log(
+                "Cart updated successfully after popup close:",
+                response.data
+              );
             })
             .catch(error => {
               console.error(
-                "Error updating cart:",
+                "Error updating cart after popup close:",
                 error.response?.data || error.message
               );
             });
         }
+      },
+      formatPrice(price) {
+        const numericPrice = Number(price);
+        return Number.isInteger(numericPrice)
+          ? numericPrice
+          : numericPrice.toFixed(2);
       }
-
-      this.selectedSessionGroupId = sessionGroupId;
-    },
-
-    closePopup() {
-      this.showPopup = false;
-
-      // Check and proceed with the POST request if conditions are met
-      let userInfo = JSON.parse(localStorage.getItem("userInfo")) || [];
-      if (userInfo.length !== 0) {
-
-        const lastStudent = userInfo[userInfo.length - 1];
-        const payload = {
-          name: lastStudent.name,
-          code: lastStudent.code,
-          session_group_data: lastStudent.session_group_data
-        };
-
-        console.log("Payload for POST request (after popup close):", payload);
-
-        axios
-          .post("/api/session/club-session-cart", payload, {
-            headers: {
-              "Content-Type": "application/json"
-            }
-          })
-          .then(response => {
-            console.log(
-              "Cart updated successfully after popup close:",
-              response.data
-            );
-          })
-          .catch(error => {
-            console.error(
-              "Error updating cart after popup close:",
-              error.response?.data || error.message
-            );
-          });
-      }
-    },
-    formatPrice(price) {
-      const numericPrice = Number(price);
-      return Number.isInteger(numericPrice)
-        ? numericPrice
-        : numericPrice.toFixed(2);
     }
-  }
-};
+  };
 </script>
 
 <style scoped>
-.clubs {
-  background-image: url("@/assets/images/b4.png");
-  background-size: cover;
-  background-position: center;
-  width: 90%;
-  margin: 0 auto;
-  color: #fff;
-  font-family: "DIN Next LT Arabic", sans-serif;
-  overflow-x: hidden;
-  transform: scaleX(-1); /* Mirror the background image */
-  direction: ltr; /* Change direction to LTR */
-  padding: 3em 2em;
-}
+  .clubs {
+    background-image: url("@/assets/images/b4.png");
+    background-size: cover;
+    background-position: center;
+    width: 90%;
+    margin: 0 auto;
+    color: #fff;
+    font-family: "DIN Next LT Arabic", sans-serif;
+    overflow-x: hidden;
+    transform: scaleX(-1); /* Mirror the background image */
+    direction: ltr; /* Change direction to LTR */
+    padding: 3em 2em;
+  }
 
-h3 {
-  margin: 3em 2em 0 0;
-  font-size: 1.7rem;
-  font-weight: 500;
-  transform: scaleX(-1); /* Mirror the background image */
-}
-
-.content-wrapper {
-  display: flex;
-  justify-content: space-between;
-  margin: 1em 0;
-  transform: scaleX(-1);
-}
-
-.right-half {
-  width: 40%;
-  padding-left: 1.8em;
-}
-
-.left-half {
-  width: 55%;
-}
-
-.price-border {
-  background-image: url("@/assets/images/border.png");
-  background-size: cover;
-  background-position: center;
-}
-
-.right-half h4 {
-  font-size: 1.5rem;
-  margin-bottom: 1rem;
-  font-weight: 500;
-}
-
-.right-half p {
-  font-size: 1rem;
-  font-weight: 500;
-  padding-left: 1.2em;
-}
-
-.right-half h5 {
-  font-size: 1.2rem;
-  font-weight: 500;
-  padding-left: 1.2em;
-}
-
-.toggle-btns {
-  display: flex;
-  justify-content: center;
-}
-
-.toggle-btns p {
-  margin-right: 10px;
-}
-
-.toggle-btns button {
-  padding: 0px 15px 6px 15px;
-  font-size: 1.2rem;
-  background-color: #fff;
-  border: 2px solid #fff;
-  cursor: pointer;
-  color: #808080;
-  width: 15%;
-  font-family: "DIN Next LT Arabic", sans-serif;
-  font-weight: 500;
-}
-
-.toggle-btns .active {
-  background-color: #ff9442;
-  color: #fff;
-}
-
-.price-packages {
-  display: flex;
-  justify-content: space-between;
-}
-
-.price-items {
-  display: flex;
-  justify-content: space-between;
-  width: 100%;
-  gap: 1.5rem;
-}
-
-.price-item {
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  align-items: center;
-  padding: 1rem;
-  width: 30%;
-  position: relative;
-}
-
-.price-item:not(:last-child) {
-  border-right: 1px solid rgba(255, 255, 255, 0.3);
-}
-
-.price-item h6 {
-  font-size: 1.2rem;
-  font-weight: 500;
-  margin: 0;
-}
-
-.price-item h6 span {
-  font-size: 1.8rem;
-  font-weight: 700;
-}
-
-.price-item p {
-  font-size: 1.1rem;
-  font-weight: 500;
-}
-
-.price-item p span {
-  font-size: 2.3rem;
-  color: #ff9442;
-  font-weight: 700;
-}
-
-.price-item button {
-  background: #fff;
-  color: #ff9442;
-  border: #ff9442 1px solid;
-  border-radius: 25px;
-  padding: 2px 30px 6px 30px;
-  cursor: pointer;
-  font-size: 19px;
-  font-family: "DIN Next LT Arabic";
-  font-weight: 500;
-}
-
-.price-item button:hover {
-  background-color: #ff9442;
-  color: #fff;
-}
-hr {
-  border: 1px solid rgba(255, 255, 255, 0.3);
-  margin: 1em 2.5em 1em 0em;
-}
-
-.duration {
-  width: 100%;
-  text-align: center;
-}
-/* Media query for mobile view */
-@media (max-width: 768px) {
   h3 {
-    text-align: center;
-    margin: 0;
+    margin: 3em 2em 0 0;
+    font-size: 1.7rem;
+    font-weight: 500;
+    transform: scaleX(-1); /* Mirror the background image */
   }
 
   .content-wrapper {
-    flex-direction: column; /* Stack the left and right halves vertically */
+    display: flex;
+    justify-content: space-between;
+    margin: 1em 0;
+    transform: scaleX(-1);
   }
 
-  .right-half,
+  .right-half {
+    width: 40%;
+    padding-left: 1.8em;
+  }
+
   .left-half {
-    width: 100%; /* Set each half to 100% width */
-    padding-right: 0; /* Remove extra padding on right half */
-    padding-left: 0; /* Remove extra padding on left half */
+    width: 55%;
   }
 
-  .price-items {
-    flex-direction: column; /* Stack price items in a column */
-    gap: 1rem; /* Adjust gap for stacked items */
-  }
-
-  .price-item {
-    width: 100%; /* Set price item width to 100% */
-  }
-
-  .toggle-btns button {
-    font-size: 1rem; /* Slightly reduce button font size */
-    width: 40%; /* Adjust button width on mobile */
+  .price-border {
+    background-image: url("@/assets/images/border.png");
+    background-size: cover;
+    background-position: center;
   }
 
   .right-half h4 {
-    font-size: 1.4rem; /* Slightly smaller font size */
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+    font-weight: 500;
   }
 
-  .right-half p,
+  .right-half p {
+    font-size: 1rem;
+    font-weight: 500;
+    padding-left: 1.2em;
+  }
+
   .right-half h5 {
-    font-size: 0.9rem; /* Slightly smaller font size */
+    font-size: 1.2rem;
+    font-weight: 500;
+    padding-left: 1.2em;
+  }
+
+  .toggle-btns {
+    display: flex;
+    justify-content: center;
+  }
+
+  .toggle-btns p {
+    margin-right: 10px;
+  }
+
+  .toggle-btns button {
+    padding: 0px 15px 6px 15px;
+    font-size: 1.2rem;
+    background-color: #fff;
+    border: 2px solid #fff;
+    cursor: pointer;
+    color: #808080;
+    width: 15%;
+    font-family: "DIN Next LT Arabic", sans-serif;
+    font-weight: 500;
+  }
+
+  .toggle-btns .active {
+    background-color: #ff9442;
+    color: #fff;
+  }
+
+  .price-packages {
+    display: flex;
+    justify-content: space-between;
+  }
+
+  .price-items {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    gap: 1.5rem;
+  }
+
+  .price-item {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem;
+    width: 30%;
+    position: relative;
+  }
+
+  .price-item:not(:last-child) {
+    border-right: 1px solid rgba(255, 255, 255, 0.3);
   }
 
   .price-item h6 {
-    font-size: 1rem; /* Slightly smaller font size */
+    font-size: 1.2rem;
+    font-weight: 500;
+    margin: 0;
+  }
+
+  .price-item h6 span {
+    font-size: 1.8rem;
+    font-weight: 700;
   }
 
   .price-item p {
-    font-size: 1rem; /* Slightly smaller font size */
+    font-size: 1.1rem;
+    font-weight: 500;
   }
 
   .price-item p span {
-    font-size: 2rem; /* Slightly smaller font size */
+    font-size: 2.3rem;
+    color: #ff9442;
+    font-weight: 700;
   }
 
   .price-item button {
-    font-size: 16px; /* Slightly smaller button font size */
+    background: #fff;
+    color: #ff9442;
+    border: #ff9442 1px solid;
+    border-radius: 25px;
+    padding: 2px 30px 6px 30px;
+    cursor: pointer;
+    font-size: 19px;
+    font-family: "DIN Next LT Arabic";
+    font-weight: 500;
   }
-  .duration svg {
-    width: 80%;
+
+  .price-item button:hover {
+    background-color: #ff9442;
+    color: #fff;
   }
-}
+  hr {
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    margin: 1em 2.5em 1em 0em;
+  }
+
+  .duration {
+    width: 100%;
+    text-align: center;
+  }
+  /* Media query for mobile view */
+  @media (max-width: 768px) {
+    h3 {
+      text-align: center;
+      margin: 0;
+    }
+
+    .content-wrapper {
+      flex-direction: column; /* Stack the left and right halves vertically */
+    }
+
+    .right-half,
+    .left-half {
+      width: 100%; /* Set each half to 100% width */
+      padding-right: 0; /* Remove extra padding on right half */
+      padding-left: 0; /* Remove extra padding on left half */
+    }
+
+    .price-items {
+      flex-direction: column; /* Stack price items in a column */
+      gap: 1rem; /* Adjust gap for stacked items */
+    }
+
+    .price-item {
+      width: 100%; /* Set price item width to 100% */
+    }
+
+    .toggle-btns button {
+      font-size: 1rem; /* Slightly reduce button font size */
+      width: 40%; /* Adjust button width on mobile */
+    }
+
+    .right-half h4 {
+      font-size: 1.4rem; /* Slightly smaller font size */
+    }
+
+    .right-half p,
+    .right-half h5 {
+      font-size: 0.9rem; /* Slightly smaller font size */
+    }
+
+    .price-item h6 {
+      font-size: 1rem; /* Slightly smaller font size */
+    }
+
+    .price-item p {
+      font-size: 1rem; /* Slightly smaller font size */
+    }
+
+    .price-item p span {
+      font-size: 2rem; /* Slightly smaller font size */
+    }
+
+    .price-item button {
+      font-size: 16px; /* Slightly smaller button font size */
+    }
+    .duration svg {
+      width: 80%;
+    }
+  }
 </style>
