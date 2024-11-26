@@ -34,7 +34,7 @@
 
 <script>
   export default {
-    name: "AddStudentPopup",
+    name: "StudentPopup",
     data() {
       return {
         student: {
@@ -62,9 +62,9 @@
           };
           userInfo.push(studentData);
           localStorage.setItem("userInfo", JSON.stringify(userInfo));
-          
           this.resetForm();
           this.closePopup();
+          this.$router.push({ name: "CartAr" });
         } else {
           console.log("Please fill in all fields.");
         }

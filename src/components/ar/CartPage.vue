@@ -400,7 +400,7 @@ export default {
         .get(url, { headers })
         .then(() => {
           this.fetchCartItems();
-          window.location.reload();
+          // window.location.reload();
         })
         .catch(error => {
           this.errorMessage = "Error removing item.";
