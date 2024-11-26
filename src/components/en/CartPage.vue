@@ -151,15 +151,6 @@
                 <td v-else>Initial Price</td>
                 <td>{{ cartSummary.total_price }} {{ cartSummary.currency_en }}</td>
               </tr>
-              <tr v-if="cartSummary.total_price_discount > 0">
-                <td>Family/Friends Discount</td>
-                <td>
-                  <div class="remove-coupon-section">
-                    - {{ cartSummary.family_or_friend_discount }}
-                    {{ cartSummary.currency_en }}
-                  </div>
-                </td>
-              </tr>
               <tr v-if="cartSummary.coupon_code">
                 <td>Discount</td>
                 <td>
@@ -378,10 +369,9 @@ export default {
     },
     async removeItem(studentId) {
       let url = `/api/session/club-session-cart/remove/student-items/${studentId}`;
-
-      // replace with your storage (zeinab!!!)
       const userInfo = localStorage.getItem("userInfo");
       let headers = {};
+
       if (userInfo) {
         try {
           const parsedUserInfo = JSON.parse(userInfo);
@@ -392,19 +382,44 @@ export default {
           }
         } catch (error) {
           console.error("Error parsing userInfo from localStorage:", error);
+          return;
         }
       }
 
-      axios
-        .get(url, { headers })
-        .then(() => {
-          this.fetchCartItems();
-          // window.location.reload();
-        })
-        .catch(error => {
-          this.errorMessage = "Error removing item.";
-          console.error("Error removing item:", error);
-        });
+      try {
+        await axios.get(url, { headers });
+
+        await this.fetchCartItems();
+
+        const updatedCartItems = this.cartItems; 
+        let updatedUserInfo = [];
+
+        if (userInfo) {
+          const parsedUserInfo = JSON.parse(userInfo);
+
+          updatedUserInfo = parsedUserInfo.map(student => {
+            const studentCode = student.code;
+
+            const studentCartItems = updatedCartItems.filter(
+              item => item.student_code === studentCode
+            );
+
+            return {
+              ...student,
+              session_group_data: studentCartItems.map(cartItem => ({
+                session_group_id: cartItem.session_group_id,
+                quantity: cartItem.quantity
+              }))
+            };
+          });
+
+          console.log("Updated userInfo:", updatedUserInfo);
+          localStorage.setItem("userInfo", JSON.stringify(updatedUserInfo));
+        }
+      } catch (error) {
+        this.errorMessage = "Error removing item.";
+        console.error("Error removing item:", error);
+      }
     },
     async applyCoupon() {
       // Reset messages

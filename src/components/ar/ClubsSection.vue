@@ -461,215 +461,220 @@
 </template>
 
 <script>
-  import axios from "axios";
-  import StudentPopup from "./StudentPopup.vue";
+import axios from "axios";
+import StudentPopup from "./StudentPopup.vue";
 
-  export default {
-    name: "ClubsSection",
-    components: {
-      StudentPopup,
-    },
-    data() {
-      return {
+export default {
+  name: "ClubsSection",
+  components: {
+    StudentPopup
+  },
+  data() {
+    return {
       selectedClub: "مدرسين اجانب",
       selectedClub2: "مدرسين اجانب",
       selectedSessionGroupId: null,
-        showPopup: false,
-        prices: [],
-        orderUpdated: false,
-        cartItems: [],
-        cartSummary: {
-          total_price: 0,
-          total_price_discount: 0,
-          currency_en: "",
-          total_items_count: 0,
-          coupon_code: null,
-          discount: 0
-        },
-        couponCode: "",
-      };
-    },
-    mounted() {
-      this.fetchClubsPrices();
-      this.fetchCartItems();
-    },
-    methods: {
-      async fetchCartItems() {
-        let url = "/api/session/club-session-cart";
-        let totalCartItems = 0;
-        const userInfo = localStorage.getItem("userInfo");
-        console.log("userInfo", userInfo);
-        let headers = {};
-        if (userInfo) {
-          try {
-            const parsedUserInfo = JSON.parse(userInfo);
-            const token = parsedUserInfo.token;
+      showPopup: false,
+      prices: [],
+      orderUpdated: false,
+      cartItems: [],
+      cartSummary: {
+        total_price: 0,
+        total_price_discount: 0,
+        currency_en: "",
+        total_items_count: 0,
+        coupon_code: null,
+        discount: 0
+      },
+      couponCode: ""
+    };
+  },
+  mounted() {
+    this.fetchClubsPrices();
+    this.fetchCartItems();
+  },
+  methods: {
+    async fetchCartItems() {
+      let url = "/api/session/club-session-cart";
+      let totalCartItems = 0;
+      const userInfo = localStorage.getItem("userInfo");
+      console.log("userInfo", userInfo);
+      let headers = {};
+      if (userInfo) {
+        try {
+          const parsedUserInfo = JSON.parse(userInfo);
+          const token = parsedUserInfo.token;
 
-            if (token) {
-              headers["Authorization"] = `Bearer ${token}`;
-            }
-          } catch (error) {
-            console.error("Error parsing userInfo from localStorage:", error);
+          if (token) {
+            headers["Authorization"] = `Bearer ${token}`;
           }
+        } catch (error) {
+          console.error("Error parsing userInfo from localStorage:", error);
         }
+      }
 
-        const textElement1 = document.getElementById("totalCount1");
+      const textElement1 = document.getElementById("totalCount1");
 
-        axios
-          .get(url, { headers })
-          .then(response => {
-            console.log("Fetched cart items:", response.data);
-            totalCartItems = response.data.data.total_items_count;
+      axios
+        .get(url, { headers })
+        .then(response => {
+          console.log("Fetched cart items:", response.data);
+          totalCartItems = response.data.data.total_items_count;
 
-            textElement1.textContent = totalCartItems > 0 ? totalCartItems : 0;
-            
-            this.cartItems = response.data.data.items || [];
-            this.orderUpdated = false;
-            this.cartSummary = response.data.data;
-            console.log("Cart Summary:", this.cartSummary);
-            if (this.cartSummary.coupon_code) {
-              this.couponCode = this.cartSummary.coupon_code["code"];
-              console.log("Coupon code:", this.couponCode);
-            }
-          })
-          .catch(error => {
-            if (error.response && error.response.status === 404) {
-              this.cartItems = [];
-              this.cartSummary = {};
-              console.warn("Cart is empty or was deleted:", error.response.data);
-            } else {
-              console.error(
-                "Error fetching cart items:",
-                error.response ? error.response.data : error.message
-              );
-            }
-          });
-      },
-      fetchClubsPrices() {
-        axios
-          .get("/api/session/get-session-groups")
-          .then(response => {
-            this.prices = response.data.data;
-          })
-          .catch(error => {
-            console.error("Error fetching session group prices:", error);
-          });
-      },
-      addToCart(clubType, price, sessionGroupId) {
-        let userInfo = JSON.parse(localStorage.getItem("userInfo")) || [];
-        let totalCartItems = 0;
+          textElement1.textContent = totalCartItems > 0 ? totalCartItems : 0;
 
-        if (userInfo.length === 0) {
-          this.showPopup = true;
-        } else {
-          userInfo.forEach(student => {
-            if (!Array.isArray(student.session_group_data)) {
-              student.session_group_data = [];
-            }
-            const existingSessionGroup = student.session_group_data.find(
-              group => group.session_group_id === sessionGroupId
+          this.cartItems = response.data.data.items || [];
+          this.orderUpdated = false;
+          this.cartSummary = response.data.data;
+          console.log("Cart Summary:", this.cartSummary);
+          if (this.cartSummary.coupon_code) {
+            this.couponCode = this.cartSummary.coupon_code["code"];
+            console.log("Coupon code:", this.couponCode);
+          }
+        })
+        .catch(error => {
+          if (error.response && error.response.status === 404) {
+            this.cartItems = [];
+            this.cartSummary = {};
+            console.warn("Cart is empty or was deleted:", error.response.data);
+          } else {
+            console.error(
+              "Error fetching cart items:",
+              error.response ? error.response.data : error.message
             );
-
-            if (existingSessionGroup) {
-              existingSessionGroup.quantity += 1;
-            } else {
-              student.session_group_data.push({
-                session_group_id: sessionGroupId,
-                quantity: 1
-              });
-            }
-          });
-          localStorage.setItem("userInfo", JSON.stringify(userInfo));
-          this.showPopup = false;
-        }
-        console.log(
-          "Updated userInfo saved to localStorage:",
-          localStorage.getItem("userInfo")
-        );
-
-        const textElement1 = document.getElementById("totalCount1");
-
-        // Handle popup closure
-        if (!this.showPopup) {
-          userInfo = JSON.parse(localStorage.getItem("userInfo")) || [];
-          if (userInfo.length !== 0) {
-            const lastStudent = userInfo[userInfo.length - 1];
-            // Prepare payload for POST request
-            const payload = {
-              name: lastStudent.name,
-              code: lastStudent.code,
-              session_group_data: lastStudent.session_group_data
-            };
-
-            console.log("Payload for POST request:", payload);
-
-            // Make POST request
-            axios
-              .post("/api/session/club-session-cart", payload)
-              .then(response => {
-                console.log("Cart updated successfully:", response.data);
-
-                totalCartItems = response.data.data.total_items_count;
-                textElement1.textContent = totalCartItems > 0 ? totalCartItems : 0;
-
-                this.$router.push({ path: "/ar/cart/", name: "CartAr" });
-              })
-              .catch(error => {
-                console.error(
-                  "Error updating cart:",
-                  error.response?.data || error.message
-                );
-              });
           }
-        }
+        });
+    },
+    fetchClubsPrices() {
+      axios
+        .get("/api/session/get-session-groups")
+        .then(response => {
+          this.prices = response.data.data;
+        })
+        .catch(error => {
+          console.error("Error fetching session group prices:", error);
+        });
+    },
+    addToCart(clubType, price, sessionGroupId) {
+      let userInfo = JSON.parse(localStorage.getItem("userInfo")) || [];
+      let totalCartItems = 0;
 
-        this.selectedSessionGroupId = sessionGroupId;
-      },
+      if (userInfo.length === 0) {
+        this.showPopup = true;
+      } else {
+        userInfo.forEach(student => {
+          if (!Array.isArray(student.session_group_data)) {
+            student.session_group_data = [];
+          }
 
-      closePopup() {
+          const existingSessionGroup = student.session_group_data.find(
+            group => group.session_group_id === sessionGroupId
+          );
+
+          if (existingSessionGroup) {
+            // Ensure quantity is updated correctly
+            existingSessionGroup.quantity += 1;
+          } else {
+            // Add new session group data
+            student.session_group_data.push({
+              session_group_id: sessionGroupId,
+              quantity: 1
+            });
+          }
+        });
+
+        // Save updated userInfo to localStorage
+        localStorage.setItem("userInfo", JSON.stringify(userInfo));
         this.showPopup = false;
+      }
 
-        // Check and proceed with the POST request if conditions are met
-        let userInfo = JSON.parse(localStorage.getItem("userInfo")) || [];
+      console.log(
+        "Updated userInfo saved to localStorage:",
+        localStorage.getItem("userInfo")
+      );
+
+      const textElement1 = document.getElementById("totalCount1");
+
+      // Handle popup closure
+      if (!this.showPopup) {
+        userInfo = JSON.parse(localStorage.getItem("userInfo")) || [];
         if (userInfo.length !== 0) {
-
           const lastStudent = userInfo[userInfo.length - 1];
+          // Prepare payload for POST request
           const payload = {
             name: lastStudent.name,
             code: lastStudent.code,
             session_group_data: lastStudent.session_group_data
           };
 
-          console.log("Payload for POST request (after popup close):", payload);
+          console.log("Payload for POST request:", payload);
 
+          // Make POST request
           axios
-            .post("/api/session/club-session-cart", payload, {
-              headers: {
-                "Content-Type": "application/json"
-              }
-            })
+            .post("/api/session/club-session-cart", payload)
             .then(response => {
-              console.log(
-                "Cart updated successfully after popup close:",
-                response.data
-              );
+              console.log("Cart updated successfully:", response.data);
+
+              totalCartItems = response.data.data.total_items_count;
+              textElement1.textContent =
+                totalCartItems > 0 ? totalCartItems : 0;
+
+              this.$router.push({ path: "/ar/cart/", name: "CartAr" });
             })
             .catch(error => {
               console.error(
-                "Error updating cart after popup close:",
+                "Error updating cart:",
                 error.response?.data || error.message
               );
             });
         }
-      },
-      formatPrice(price) {
-        const numericPrice = Number(price);
-        return Number.isInteger(numericPrice)
-          ? numericPrice
-          : numericPrice.toFixed(2);
       }
+
+      this.selectedSessionGroupId = sessionGroupId;
+    },
+    closePopup() {
+      this.showPopup = false;
+
+      // Check and proceed with the POST request if conditions are met
+      let userInfo = JSON.parse(localStorage.getItem("userInfo")) || [];
+      if (userInfo.length !== 0) {
+        const lastStudent = userInfo[userInfo.length - 1];
+        const payload = {
+          name: lastStudent.name,
+          code: lastStudent.code,
+          session_group_data: lastStudent.session_group_data
+        };
+
+        console.log("Payload for POST request (after popup close):", payload);
+
+        axios
+          .post("/api/session/club-session-cart", payload, {
+            headers: {
+              "Content-Type": "application/json"
+            }
+          })
+          .then(response => {
+            console.log(
+              "Cart updated successfully after popup close:",
+              response.data
+            );
+          })
+          .catch(error => {
+            console.error(
+              "Error updating cart after popup close:",
+              error.response?.data || error.message
+            );
+          });
+      }
+    },
+    formatPrice(price) {
+      const numericPrice = Number(price);
+      return Number.isInteger(numericPrice)
+        ? numericPrice
+        : numericPrice.toFixed(2);
     }
-  };
+  }
+};
 </script>
 
 <style scoped>
