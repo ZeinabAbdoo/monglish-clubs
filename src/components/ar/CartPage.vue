@@ -16,7 +16,7 @@
       <div v-if="cartItems.length === 0" class="empty-cart">
         <img src="@/assets/images/cart.png" alt="Empty Cart Image" />
         <h2>لا يوجد لديك شىء في السلة</h2>
-        <p>ابدأ رحلتك التعليمية الآن اشترك في دوراتنا واستفد من تجربة تعلم فريدة!</p>
+        <p>ابدأ رحلتك التعليمية الآن اشترك في انديتنا واستفد من تجربة تعلم فريدة!</p>
         <button class="back-to-courses" @click="goToCourses">العودة للأنديه</button>
       </div>
       <div v-else class="cart-content">
