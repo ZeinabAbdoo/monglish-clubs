@@ -461,59 +461,59 @@
 </template>
 
 <script>
-  import axios from "axios";
-  import StudentPopup from "./StudentPopup.vue";
+import axios from "axios";
+import StudentPopup from "./StudentPopup.vue";
 
-  export default {
-    name: "ClubsSection",
-    components: {
-      StudentPopup,
-    },
-    data() {
-      return {
+export default {
+  name: "ClubsSection",
+  components: {
+    StudentPopup
+  },
+  data() {
+    return {
       selectedClub: "مدرسين اجانب",
       selectedClub2: "مدرسين اجانب",
       selectedSessionGroupId: null,
-        showPopup: false,
-        prices: [],
-        orderUpdated: false,
-        cartItems: [],
-        cartSummary: {
-          total_price: 0,
-          total_price_discount: 0,
-          currency_en: "",
-          total_items_count: 0,
-          coupon_code: null,
-          discount: 0
-        },
-        couponCode: "",
-      };
-    },
-    mounted() {
-      this.fetchClubsPrices();
-      this.fetchCartItems();
-    },
-    methods: {
-      async fetchCartItems() {
-        let url = "/api/session/club-session-cart";
-        let totalCartItems = 0;
-        const userInfo = localStorage.getItem("userInfo");
-        console.log("userInfo", userInfo);
-        let headers = {};
-        if (userInfo) {
-          try {
-            const parsedUserInfo = JSON.parse(userInfo);
-            const token = parsedUserInfo.token;
+      showPopup: false,
+      prices: [],
+      orderUpdated: false,
+      cartItems: [],
+      cartSummary: {
+        total_price: 0,
+        total_price_discount: 0,
+        currency_en: "",
+        total_items_count: 0,
+        coupon_code: null,
+        discount: 0
+      },
+      couponCode: "",
+    };
+  },
+  mounted() {
+    this.fetchClubsPrices();
+    this.fetchCartItems();
+  },
+  methods: {
+    async fetchCartItems() {
+      let url = "/api/session/club-session-cart";
+      let totalCartItems = 0;
+      const userInfo = localStorage.getItem("userInfo");
+      console.log("userInfo", userInfo);
+      let headers = {};
+      if (userInfo) {
+        try {
+          const parsedUserInfo = JSON.parse(userInfo);
+          const token = parsedUserInfo.token;
 
-            if (token) {
-              headers["Authorization"] = `Bearer ${token}`;
-            }
-          } catch (error) {
-            console.error("Error parsing userInfo from localStorage:", error);
+          if (token) {
+            headers["Authorization"] = `Bearer ${token}`;
           }
+        } catch (error) {
+          console.error("Error parsing userInfo from localStorage:", error);
         }
+      }
 
-        const textElement1 = document.getElementById("totalCount1");
+      const textElement1 = document.getElementById("totalCount1");
 
       axios
       .get(url, { headers })
@@ -587,13 +587,14 @@
               quantity: 1
             });
           }
-        },
-
-        this.selectedSessionGroupId = sessionGroupId;
-      },
-
-      closePopup() {
+        });
+        localStorage.setItem("userInfo", JSON.stringify(userInfo));
         this.showPopup = false;
+      }
+      console.log(
+        "Updated userInfo saved to localStorage:",
+        localStorage.getItem("userInfo")
+      );
 
       const textElement1 = document.getElementById("totalCount1");
 
@@ -602,16 +603,17 @@
         console.log("Popup closed.");
         userInfo = JSON.parse(localStorage.getItem("userInfo")) || [];
         if (userInfo.length !== 0) {
-
           const lastStudent = userInfo[userInfo.length - 1];
+          // Prepare payload for POST request
           const payload = {
             name: lastStudent.name,
             code: lastStudent.code,
             session_group_data: lastStudent.session_group_data
           };
 
-          console.log("Payload for POST request (after popup close):", payload);
-
+          console.log("Payload for POST request:", payload);
+         
+          // Make POST request
           axios
           .post("/api/session/club-session-cart", payload)
           .then(response => {
@@ -620,14 +622,14 @@
             totalCartItems = response.data.data.total_items_count;
             textElement1.textContent = totalCartItems > 0 ? totalCartItems : 0;
 
-              this.$router.push({ path: "/ar/cart/", name: "CartAr" });
-            })
-            .catch(error => {
-              console.error(
-                "Error updating cart:",
-                error.response?.data || error.message
-              );
-            });
+            // this.$router.push({ path: "/ar/cart/", name: "CartAr" });
+          })
+          .catch(error => {
+            console.error(
+              "Error updating cart:",
+              error.response?.data || error.message
+            );
+          });
         }
       }
 
@@ -666,16 +668,16 @@
               error.response?.data || error.message
             );
           });
-        }
-      },
-      formatPrice(price) {
-        const numericPrice = Number(price);
-        return Number.isInteger(numericPrice)
-          ? numericPrice
-          : numericPrice.toFixed(2);
       }
+    },
+    formatPrice(price) {
+      const numericPrice = Number(price);
+      return Number.isInteger(numericPrice)
+        ? numericPrice
+        : numericPrice.toFixed(2);
     }
-  };
+  }
+};
 </script>
 
 <style scoped>
