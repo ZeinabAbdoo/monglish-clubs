@@ -498,12 +498,75 @@ export default {
       selectedSessionGroupId: null,
       showPopup: false,
       prices: [],
+      orderUpdated: false,
+      cartItems: [],
+      cartSummary: {
+        total_price: 0,
+        total_price_discount: 0,
+        currency_en: "",
+        total_items_count: 0,
+        coupon_code: null,
+        discount: 0
+      },
+      couponCode: "",
     };
   },
   mounted() {
     this.fetchClubsPrices();
+    this.fetchCartItems();
   },
-    methods: {
+  methods: {
+    async fetchCartItems() {
+      let url = "/api/session/club-session-cart";
+      let totalCartItems = 0;
+      const userInfo = localStorage.getItem("userInfo");
+      console.log("userInfo", userInfo);
+      let headers = {};
+      if (userInfo) {
+        try {
+          const parsedUserInfo = JSON.parse(userInfo);
+          const token = parsedUserInfo.token;
+
+          if (token) {
+            headers["Authorization"] = `Bearer ${token}`;
+          }
+        } catch (error) {
+          console.error("Error parsing userInfo from localStorage:", error);
+        }
+      }
+
+      const textElement1 = document.getElementById("totalCount1");
+
+      axios
+        .get(url, { headers })
+        .then(response => {
+          console.log("Fetched cart items:", response.data);
+          totalCartItems = response.data.data.total_items_count;
+
+          textElement1.textContent = totalCartItems > 0 ? totalCartItems : 0;
+          
+          this.cartItems = response.data.data.items || [];
+          this.orderUpdated = false;
+          this.cartSummary = response.data.data;
+          console.log("Cart Summary:", this.cartSummary);
+          if (this.cartSummary.coupon_code) {
+            this.couponCode = this.cartSummary.coupon_code["code"];
+            console.log("Coupon code:", this.couponCode);
+          }
+        })
+        .catch(error => {
+          if (error.response && error.response.status === 404) {
+            this.cartItems = [];
+            this.cartSummary = {};
+            console.warn("Cart is empty or was deleted:", error.response.data);
+          } else {
+            console.error(
+              "Error fetching cart items:",
+              error.response ? error.response.data : error.message
+            );
+          }
+        });
+    },
     fetchClubsPrices() {
       axios
         .get("/api/session/get-session-groups")
@@ -516,6 +579,7 @@ export default {
     },
     addToCart(clubType, price, sessionGroupId) {
       let userInfo = JSON.parse(localStorage.getItem("userInfo")) || [];
+      let totalCartItems = 0;
 
       if (userInfo.length === 0) {
         this.showPopup = true;
@@ -545,6 +609,8 @@ export default {
         localStorage.getItem("userInfo")
       );
 
+      const textElement1 = document.getElementById("totalCount1");
+
       // Handle popup closure
       if (!this.showPopup) {
         userInfo = JSON.parse(localStorage.getItem("userInfo")) || [];
@@ -564,6 +630,10 @@ export default {
             .post("/api/session/club-session-cart", payload)
             .then(response => {
               console.log("Cart updated successfully:", response.data);
+
+              totalCartItems = response.data.data.total_items_count;
+              textElement1.textContent = totalCartItems > 0 ? totalCartItems : 0;
+
               this.$router.push({ path: "/en/cart/", name: "CartEn" });
             })
             .catch(error => {
