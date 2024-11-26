@@ -52,10 +52,7 @@
                       @click="increaseQuantity(item.student_id, item.id)"
                     >+</button>
                   </td>
-
-                  <td
-                    class="price"
-                  >{{ (cartSummary.total_price / cartSummary.total_items_count).toFixed(2) }} {{ cartSummary.currency_ar }}</td>
+                  <td class="price">{{ item.price }} {{ cartSummary.currency_ar }}</td>
                   <td>
                     <button class="remove-button" @click="removeItem(item.student_id)">
                       <i class="fa-regular fa-trash-can"></i>
@@ -216,6 +213,7 @@
             textElement1.textContent = totalCartItems > 0 ? totalCartItems : 0;
 
             this.cartItems = response.data.data.items || [];
+            console.log(this.cartItems);
             this.orderUpdated = false;
             this.cartSummary = response.data.data;
             console.log("Cart Summary:", this.cartSummary);
