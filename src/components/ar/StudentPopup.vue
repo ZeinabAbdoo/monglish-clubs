@@ -34,7 +34,7 @@
 
 <script>
   export default {
-    name: "StudentPopup",
+    name: "AddStudentPopup",
     data() {
       return {
         student: {
