@@ -478,7 +478,11 @@
       </div>
     </div>
     <!-- Conditionally render the StudentPopup if showPopup is true -->
-    <StudentPopup v-if="showPopup" @close="closePopup" />
+    <StudentPopup 
+      v-if="showPopup" 
+      @close="closePopup"
+      :selectedSessionGroupId="selectedSessionGroupId"
+    />
   </section>
 </template>
 
