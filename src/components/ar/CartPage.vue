@@ -268,6 +268,7 @@ export default {
       this.userInfo.push({ ...this.newStudent });
       localStorage.setItem("userInfo", JSON.stringify(this.userInfo));
       this.closeModal();
+      this.$router.push({ path: "/", name: "HomeAr" });
     },
     resetForm() {
       this.newStudent = { name: "", code: "" };
@@ -509,6 +510,12 @@ export default {
           .then(response => {
             console.log("Order checkout successfully:", response.data);
             if (response.data.success) {
+              localStorage.clear();
+
+              document.cookie.split(";").forEach(cookie => {
+                const [name] = cookie.split("=");
+                document.cookie = `${name}=;expire=Thu, 01 Jan 2001 00:00:00 UTC;path/`;
+              });
               window.location.href = response.data.data.stripeUrl;
             } else {
               console.error("Error:", response.data.message);

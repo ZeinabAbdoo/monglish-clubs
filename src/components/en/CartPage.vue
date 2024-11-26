@@ -275,6 +275,7 @@ export default {
       localStorage.setItem("userInfo", JSON.stringify(this.userInfo));
       // Close the modal and reset the form
       this.closeModal();
+      this.$router.push({ path: "/en/", name: "HomeEn" });
     },
     resetForm() {
       this.newStudent = { name: "", code: "" }; // Reset form fields
@@ -391,7 +392,7 @@ export default {
 
         await this.fetchCartItems();
 
-        const updatedCartItems = this.cartItems; 
+        const updatedCartItems = this.cartItems;
         let updatedUserInfo = [];
 
         if (userInfo) {
@@ -537,6 +538,12 @@ export default {
             console.log("Order checkout successfully:", response.data);
             if (response.data.success) {
               // Redirect to the URL in the response data
+              localStorage.clear();
+
+              document.cookie.split(";").forEach(cookie => {
+                const [name] = cookie.split("=");
+                document.cookie = `${name}=;expire=Thu, 01 Jan 2001 00:00:00 UTC;path/`;
+              });
               window.location.href = response.data.data.stripeUrl;
             } else {
               console.error("Error:", response.data.message);
