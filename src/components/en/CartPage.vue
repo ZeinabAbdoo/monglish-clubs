@@ -48,7 +48,7 @@
                       @click="increaseQuantity(item.student_id, item.id)"
                     >+</button>
                   </td>
-                  <td class="price">{{ item.single_price}} {{ cartSummary.currency_en }}</td>
+                  <td class="price">{{ item.price }} {{ cartSummary.currency_en }}</td>
                   <td>
                     <button
                       class="remove-button"
@@ -82,9 +82,7 @@
                       @click="increaseQuantity(item.student_id, item.id)"
                     >+</button>
                   </td>
-                  <td
-                    class="price"
-                  >{{ (cartSummary.total_price / cartSummary.total_items_count).toFixed(2) }} {{ cartSummary.currency_en }}</td>
+                  <td class="price">{{ item.price }} {{ cartSummary.currency_en }}</td>
                   <td>
                     <button
                       class="remove-button"
@@ -151,14 +149,14 @@
               <tr>
                 <td v-if="cartSummary.total_price_discount == 0">Final Price</td>
                 <td v-else>Initial Price</td>
-                <td>{{ cartSummary.total_price }} {{ cartSummary.currency }}</td>
+                <td>{{ cartSummary.total_price }} {{ cartSummary.currency_en }}</td>
               </tr>
               <tr v-if="cartSummary.total_price_discount > 0">
                 <td>Family/Friends Discount</td>
                 <td>
                   <div class="remove-coupon-section">
                     - {{ cartSummary.family_or_friend_discount }}
-                    {{ cartSummary.currency }}
+                    {{ cartSummary.currency_en }}
                   </div>
                 </td>
               </tr>
@@ -167,14 +165,14 @@
                 <td>
                   <div
                     class="remove-coupon-section"
-                  >- {{ cartSummary.discount }} {{ cartSummary.currency }}</div>
+                  >- {{ cartSummary.discount }} {{ cartSummary.currency_en }}</div>
                 </td>
               </tr>
               <tr v-if="cartSummary.total_price_discount != 0">
                 <td>Total Price</td>
                 <td>
                   {{ cartSummary.total_price_discount }}
-                  {{ cartSummary.currency }}
+                  {{ cartSummary.currency_en }}
                 </td>
               </tr>
             </tbody>

@@ -57,11 +57,7 @@
                       @click="increaseQuantity(item.student_id, item.id)"
                     >+</button>
                   </td>
-
-                  <td class="price">
-                    {{ item.price }}
-                    {{ cartSummary.currency_ar }}
-                  </td>
+                  <td class="price">{{ item.price }} {{ cartSummary.currency_ar }}</td>
                   <td>
                     <button class="remove-button" @click="removeItem(item.student_id)">
                       <i class="fa-regular fa-trash-can"></i>
