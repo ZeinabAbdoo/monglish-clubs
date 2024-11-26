@@ -10,10 +10,10 @@
         <img src="@/assets/images/cart.png" alt="Empty Cart Image" />
         <h2>Your cart is empty</h2>
         <p>
-          Start your educational journey now by enrolling in our courses and
+          Start your educational journey now by enrolling in our clubs and
           enjoy a unique learning experience!
         </p>
-        <button class="back-to-courses-en" @click="goToCourses">Back to Courses</button>
+        <button class="back-to-courses-en" @click="goToCourses">Back to Clubs</button>
       </div>
       <div v-else class="cart-content-en">
         <div class="cart-container-en cart-container-1-en">
