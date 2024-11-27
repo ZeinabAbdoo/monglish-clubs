@@ -53,7 +53,7 @@
                     <button
                       class="remove-button"
                       type="button"
-                      @click="removeItem(item.student_id)"
+                      @click="removeItem(item.id)"
                     >
                       <i class="fa-regular fa-trash-can"></i>
                     </button>
@@ -87,7 +87,7 @@
                     <button
                       class="remove-button"
                       type="button"
-                      @click="removeItem(item.student_id)"
+                      @click="removeItem(item.id)"
                     >
                       <i class="fa-regular fa-trash-can"></i>
                     </button>
@@ -368,8 +368,8 @@ export default {
           console.error("Error decreasing item quantity:", error);
         });
     },
-    async removeItem(studentId) {
-      let url = `/api/session/club-session-cart/remove/student-items/${studentId}`;
+    async removeItem(itemId) {
+      let url = `/api/session/club-session-cart/remove/student-items/${itemId}`;
       const userInfo = localStorage.getItem("userInfo");
       let headers = {};
 
