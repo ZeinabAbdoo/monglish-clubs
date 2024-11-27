@@ -562,7 +562,7 @@ export default {
       if (userInfo.length === 0) {
         this.showPopup = true;
       } else {
-        userInfo.forEach(student => {
+        userInfo.forEach((student, index) => {
           if (!Array.isArray(student.session_group_data)) {
             student.session_group_data = [];
           }
@@ -575,8 +575,8 @@ export default {
             // Update the quantity if the session group already exists
             existingSessionGroup.quantity += 1;
           } else {
-            // Add new session group data only if userInfo exists
-            if (userInfo.length > 0) {
+            // Add new session group data only for the last student
+            if (index === userInfo.length - 1) {
               student.session_group_data.push({
                 session_group_id: sessionGroupId,
                 quantity: 1
@@ -611,8 +611,11 @@ export default {
             session_group_data: lastStudent.session_group_data || []
           };
         } else {
-          // If userInfo exists, only send new session group data
+          // If userInfo exists, only send new session group data for the last student
+          const lastStudent = userInfo[userInfo.length - 1];
           payload = {
+            name: lastStudent.name,
+            code: lastStudent.code,
             session_group_data: [
               {
                 session_group_id: sessionGroupId,
@@ -645,7 +648,6 @@ export default {
 
       this.selectedSessionGroupId = sessionGroupId;
     },
-
     closePopup() {
       this.showPopup = false;
 
