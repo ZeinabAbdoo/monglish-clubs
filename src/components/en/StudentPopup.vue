@@ -68,7 +68,6 @@
           this.resetForm();
           this.closePopup();
           this.$router.push({ name: "CartEn" });
-          window.location.reload();
         } else {
           console.log("Please fill in all fields.");
         }
