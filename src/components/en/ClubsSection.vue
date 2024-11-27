@@ -642,7 +642,7 @@ export default {
             totalCartItems = response.data.data.total_items_count;
             textElement1.textContent = totalCartItems > 0 ? totalCartItems : 0;
 
-            this.$router.push({ path: "/ar/cart/", name: "CartAr" });
+            this.$router.push({ path: "/en/cart/", name: "CartEn" });
           })
           .catch(error => {
             console.error(
