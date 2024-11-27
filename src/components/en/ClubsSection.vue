@@ -561,7 +561,7 @@ export default {
           console.error("Error fetching session group prices:", error);
         });
     },
-    addToCart(clubType, price, sessionGroupId) {
+    addToCart(sessionGroupId) {
       let userInfo = JSON.parse(localStorage.getItem("userInfo")) || [];
       let totalCartItems = 0;
 

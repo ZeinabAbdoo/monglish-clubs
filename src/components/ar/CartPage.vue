@@ -59,7 +59,7 @@
                   </td>
                   <td class="price">{{ item.price }} {{ cartSummary.currency_ar }}</td>
                   <td>
-                    <button class="remove-button" @click="removeItem(item.student_id)">
+                    <button class="remove-button" @click="removeItem(item.id)">
                       <i class="fa-regular fa-trash-can"></i>
                     </button>
                   </td>
@@ -88,9 +88,9 @@
                       @click="increaseQuantity(item.student_id, item.id)"
                     >+</button>
                   </td>
-                  <td class="price">{{ item.single_price}}</td>
+                  <td class="price">{{ item.price }} {{ cartSummary.currency_ar }}</td>
                   <td>
-                    <button class="remove-button" @click="removeItem(item.student_id)">
+                    <button class="remove-button" @click="removeItem(item.id)">
                       <i class="fa-regular fa-trash-can"></i>
                     </button>
                   </td>
@@ -322,7 +322,7 @@ export default {
         .get(url, { headers })
         .then(() => {
           this.fetchCartItems();
-          // window.location.reload();
+          window.location.reload();
         })
         .catch(error => {
           console.error("Error increasing item quantity:", error);
@@ -353,8 +353,8 @@ export default {
           console.error("Error decreasing item quantity:", error);
         });
     },
-    async removeItem(studentId) {
-      let url = `/api/session/club-session-cart/remove/student-items/${studentId}`;
+    async removeItem(itemId) {
+      let url = `/api/session/club-session-cart/remove/student-items/${itemId}`;
       const userInfo = localStorage.getItem("userInfo");
       let headers = {};
 
