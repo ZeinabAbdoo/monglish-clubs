@@ -66,9 +66,9 @@
                 router.push(englishPath);
             },
             async fetchCartItems() {
-                let url = sessionStorage.getItem('userInfo') ? '/api/user/cart' : '/api/session/cart';
+                let url = '/api/session/cart';
                 let totalCartItems = 0;
-                const userInfo = sessionStorage.getItem('userInfo');
+                const userInfo = localStorage.getItem('userInfo');
                 let headers = {};
                 if (userInfo) {
                     try {
@@ -79,7 +79,7 @@
                             headers['Authorization'] = `Bearer ${token}`;
                         }
                     } catch (error) {
-                        console.error('Error parsing userInfo from sessionStorage:', error);
+                        console.error('Error parsing userInfo from localStorage:', error);
                     }
                 }
 
