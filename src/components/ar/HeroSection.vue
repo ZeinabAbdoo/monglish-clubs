@@ -41,7 +41,7 @@ export default {
 
 <style scoped>
 .hero {
-  background-image: url('@/assets/images/b.png');
+  background-image: url('@/assets/images/b.webp');
   background-size: cover;
   background-position: center;
   min-height: 100vh;
@@ -162,7 +162,7 @@ p {
 /* Mobile responsive styles */
 @media (max-width: 768px) {
   .hero {
-    background-image: url('@/assets/images/b2.png');
+    background-image: url('@/assets/images/b2.webp');
     overflow-x: hidden;
     margin-top: -70px;
   }

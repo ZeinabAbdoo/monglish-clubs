@@ -29,7 +29,7 @@ export default {
 
 <style scoped>
 .kids-sec4 {
-  background-image: url('@/assets/images/b3.png');
+  background-image: url('@/assets/images/b3.webp');
   background-size: cover;
   background-position: center;
  background-size: cover;
