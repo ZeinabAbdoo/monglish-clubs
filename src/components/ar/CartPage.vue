@@ -538,6 +538,7 @@ export default {
   },
   mounted() {
     this.fetchCartItems();
+    window.location.reload();
   }
 };
 </script>
