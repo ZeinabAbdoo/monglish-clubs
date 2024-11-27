@@ -65,7 +65,6 @@
           this.resetForm();
           this.closePopup();
           this.$router.push({ name: "CartAr" });
-          window.location.reload();
         } else {
           console.log("Please fill in all fields.");
         }
