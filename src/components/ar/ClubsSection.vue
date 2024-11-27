@@ -637,6 +637,10 @@ export default {
             textElement1.textContent = totalCartItems > 0 ? totalCartItems : 0;
 
             this.$router.push({ path: "/ar/cart/", name: "CartAr" });
+            
+            this.$nextTick(() => {
+              location.reload(); 
+            });
           })
           .catch(error => {
             console.error(
