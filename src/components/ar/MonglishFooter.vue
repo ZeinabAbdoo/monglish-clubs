@@ -89,7 +89,7 @@ export default {
 
 <style scoped>
 .footer {
-  background-image: url("@/assets/images/footer.png");
+  background-image: url("@/assets/images/footer.webp");
   background-size: cover;
   background-position: center;
   padding: 40px 0;

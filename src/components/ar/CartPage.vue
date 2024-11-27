@@ -14,7 +14,7 @@
     </main>
     <div class="cart-page">
       <div v-if="cartItems.length === 0" class="empty-cart">
-        <img src="@/assets/images/cart.png" alt="Empty Cart Image" />
+        <img src="@/assets/images/cart.webp" alt="Empty Cart Image" />
         <h2>لا يوجد لديك شىء في السلة</h2>
         <p>ابدأ رحلتك التعليمية الآن اشترك في انديتنا واستفد من تجربة تعلم فريدة!</p>
         <button class="back-to-courses" @click="goToCourses">العودة للأنديه</button>
@@ -547,7 +547,7 @@ export default {
   display: flex;
   flex-direction: column;
   align-items: center;
-  background-image: url("@/assets/images/cart_bg.png");
+  background-image: url("@/assets/images/cart_bg.webp");
   background-size: cover;
   background-position: center;
   direction: rtl;

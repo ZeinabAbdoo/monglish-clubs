@@ -7,7 +7,7 @@
     </main>
     <div class="cart-page-en">
       <div v-if="cartItems.length === 0" class="empty-cart-en">
-        <img src="@/assets/images/cart.png" alt="Empty Cart Image" />
+        <img src="@/assets/images/cart.webp" alt="Empty Cart Image" />
         <h2>Your cart is empty</h2>
         <p>
           Start your educational journey now by enrolling in our clubs and
@@ -546,7 +546,7 @@ export default {
   display: flex;
   flex-direction: column;
   align-items: center;
-  background-image: url("@/assets/images/cart_bg.png");
+  background-image: url("@/assets/images/cart_bg.webp");
   background-size: cover;
   background-position: center;
   direction: ltr;

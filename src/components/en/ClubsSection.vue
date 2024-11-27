@@ -701,7 +701,7 @@ export default {
 
 <style scoped>
 .clubs {
-  background-image: url("@/assets/images/b4.png");
+  background-image: url("@/assets/images/b4.webp");
   background-size: cover;
   background-position: center;
   width: 90%;
@@ -738,7 +738,7 @@ h3 {
 }
 
 .price-border {
-  background-image: url("@/assets/images/border.png");
+  background-image: url("@/assets/images/border.webp");
   background-size: cover;
   background-position: center;
 }
