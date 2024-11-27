@@ -236,6 +236,7 @@ export default {
           this.orderUpdated = false;
           this.cartSummary = response.data.data;
           console.log("Cart Summary:", this.cartSummary);
+          window.location.reload();
           if (this.cartSummary.coupon_code) {
             this.couponCode = this.cartSummary.coupon_code["code"];
             console.log("Coupon code:", this.couponCode);
