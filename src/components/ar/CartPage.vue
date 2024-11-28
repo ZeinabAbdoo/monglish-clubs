@@ -59,7 +59,7 @@
                   </td>
                   <td class="price">{{ item.price }} {{ cartSummary.currency_ar }}</td>
                   <td>
-                    <button class="remove-button" @click="removeItem(item.student_id)">
+                    <button class="remove-button" @click="removeItem(item.id)">
                       <i class="fa-regular fa-trash-can"></i>
                     </button>
                   </td>
@@ -90,7 +90,7 @@
                   </td>
                   <td class="price">{{ item.single_price}}</td>
                   <td>
-                    <button class="remove-button" @click="removeItem(item.student_id)">
+                    <button class="remove-button" @click="removeItem(item.id)">
                       <i class="fa-regular fa-trash-can"></i>
                     </button>
                   </td>
@@ -98,7 +98,7 @@
               </tbody>
             </table>
             <button class="add-new-stud" @click="openModal">
-              اضف كود طالب جديد
+              اضف طالب جديد
               <i class="fa-solid fa-circle-plus"></i>
             </button>
 
@@ -206,6 +206,12 @@ export default {
       validationErrorMessage: "",
       link: false
     };
+  },
+  mounted() {
+    this.fetchCartItems();
+  },
+  beforeMount() {
+    this.fetchCartItems();
   },
   methods: {
     async fetchCartItems() {
@@ -353,8 +359,8 @@ export default {
           console.error("Error decreasing item quantity:", error);
         });
     },
-    async removeItem(studentId) {
-      let url = `/api/session/club-session-cart/remove/student-items/${studentId}`;
+    async removeItem(itemId) {
+      let url = `/api/session/club-session-cart/remove/student-items/${itemId}`;
       const userInfo = localStorage.getItem("userInfo");
       let headers = {};
 
@@ -535,9 +541,6 @@ export default {
     showAuthModal() {
       this.goToCheckout();
     }
-  },
-  mounted() {
-    this.fetchCartItems();
   }
 };
 </script>

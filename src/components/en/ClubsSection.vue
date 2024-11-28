@@ -601,8 +601,6 @@ export default {
         localStorage.getItem("userInfo")
       );
 
-      const textElement1 = document.getElementById("totalCount1");
-
       // Handle popup closure
       if (!this.showPopup) {
         userInfo = JSON.parse(localStorage.getItem("userInfo")) || [];
@@ -640,8 +638,11 @@ export default {
             console.log("Cart updated successfully:", response.data);
 
             totalCartItems = response.data.data.total_items_count;
+            const textElement1 = document.getElementById("totalCount1");
             textElement1.textContent = totalCartItems > 0 ? totalCartItems : 0;
 
+            this.fetchCartItems();
+            window.location.reload();
             this.$router.push({ path: "/en/cart/", name: "CartEn" });
           })
           .catch(error => {
@@ -654,6 +655,7 @@ export default {
 
       this.selectedSessionGroupId = sessionGroupId;
     },
+
     closePopup() {
       this.showPopup = false;
 
