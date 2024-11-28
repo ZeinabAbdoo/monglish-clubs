@@ -98,7 +98,7 @@
               </tbody>
             </table>
             <button class="add-new-stud" @click="openModal">
-              اضف كود طالب جديد
+              اضف طالب جديد
               <i class="fa-solid fa-circle-plus"></i>
             </button>
 
