@@ -582,7 +582,7 @@ export default {
 
               document.cookie.split(";").forEach((cookie) => {
                 const [name] = cookie.split("=");
-                document.cookie = `${name}=;expire=Thu, 01 Jan 2001 00:00:00 UTC;path/`;
+                document.cookie = `${name}=; expires=Thu, 01 Jan 2001 00:00:00 UTC; path=/;`;
               });
               window.location.href = response.data.data.stripeUrl;
             } else {
