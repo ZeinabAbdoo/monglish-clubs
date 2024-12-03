@@ -16,8 +16,12 @@
       <div v-if="cartItems.length === 0" class="empty-cart">
         <img src="@/assets/images/cart.webp" alt="Empty Cart Image" />
         <h2>لا يوجد لديك شىء في السلة</h2>
-        <p>ابدأ رحلتك التعليمية الآن اشترك في انديتنا واستفد من تجربة تعلم فريدة!</p>
-        <button class="back-to-courses" @click="goToCourses">العودة للأنديه</button>
+        <p>
+          ابدأ رحلتك التعليمية الآن اشترك في انديتنا واستفد من تجربة تعلم فريدة!
+        </p>
+        <button class="back-to-courses" @click="goToCourses">
+          العودة للأنديه
+        </button>
       </div>
       <div v-else class="cart-content">
         <div class="cart-container cart-container-1">
@@ -37,7 +41,9 @@
                   class="order-item"
                   v-for="(item, index) in cartItems"
                   :key="index"
-                  :class="{'same-code-border': isSameStudentCode(item.student_code)}"
+                  :class="{
+                    'same-code-border': isSameStudentCode(item.student_code),
+                  }"
                 >
                   <td class="code">{{ item.student_code }}</td>
                   <td class="course">
@@ -49,15 +55,21 @@
                     <button
                       class="quantity-button decrease-btn"
                       @click="decreaseQuantity(item.student_id, item.id)"
-                    >-</button>
+                    >
+                      -
+                    </button>
                     <label class="quantity-label">{{ item.quantity }}</label>
                     <input type="hidden" v-model="item.quantity" readonly />
                     <button
                       class="quantity-button increase-btn"
                       @click="increaseQuantity(item.student_id, item.id)"
-                    >+</button>
+                    >
+                      +
+                    </button>
                   </td>
-                  <td class="price">{{ item.price }} {{ cartSummary.currency_ar }}</td>
+                  <td class="price">
+                    {{ item.price }} {{ cartSummary.currency_ar }}
+                  </td>
                   <td>
                     <button class="remove-button" @click="removeItem(item.id)">
                       <i class="fa-regular fa-trash-can"></i>
@@ -67,9 +79,17 @@
               </tbody>
             </table>
 
-            <table class="order-table-mobile" v-for="(item, index) in cartItems" :key="index">
+            <table
+              class="order-table-mobile"
+              v-for="(item, index) in cartItems"
+              :key="index"
+            >
               <tbody>
-                <tr class="order-item" v-for="(item, index) in cartItems" :key="index">
+                <tr
+                  class="order-item"
+                  v-for="(item, index) in cartItems"
+                  :key="index"
+                >
                   <td class="code">{{ item.student_code }}</td>
                   <td class="course">
                     <strong>{{ item.club_name }}</strong>
@@ -80,15 +100,21 @@
                     <button
                       class="quantity-button decrease-btn"
                       @click="decreaseQuantity(item.student_id, item.id)"
-                    >-</button>
+                    >
+                      -
+                    </button>
                     <label class="quantity-label">{{ item.quantity }}</label>
                     <input type="hidden" v-model="item.quantity" readonly />
                     <button
                       class="quantity-button increase-btn"
                       @click="increaseQuantity(item.student_id, item.id)"
-                    >+</button>
+                    >
+                      +
+                    </button>
                   </td>
-                  <td class="price">{{ item.price }} {{ cartSummary.currency_ar }}</td>
+                  <td class="price">
+                    {{ item.price }} {{ cartSummary.currency_ar }}
+                  </td>
                   <td>
                     <button class="remove-button" @click="removeItem(item.id)">
                       <i class="fa-regular fa-trash-can"></i>
@@ -105,59 +131,92 @@
             <!-- Modal for adding new student -->
             <div v-if="showModal" class="student-popup">
               <div class="student-popup-content">
-                <button class="student-close-btn" @click="closeModal">&times;</button>
+                <button class="student-close-btn" @click="closeModal">
+                  &times;
+                </button>
                 <h2>إضافة طالب جديد</h2>
                 <form @submit.prevent="addStudent">
                   <div class="student-form-group">
                     <div class="student-form-item">
                       <label for="student-name">اسم الطالب</label>
-                      <input id="student-name" v-model="newStudent.name" type="text" required />
+                      <input
+                        id="student-name"
+                        v-model="newStudent.name"
+                        type="text"
+                        required
+                      />
                     </div>
                     <div class="student-form-item">
                       <label for="student-code">كود الطالب</label>
-                      <input id="student-code" v-model="newStudent.code" type="text" required />
+                      <input
+                        id="student-code"
+                        v-model="newStudent.code"
+                        type="text"
+                        required
+                      />
                     </div>
                   </div>
                   <button type="submit" class="submit-stud">إضافة</button>
                 </form>
               </div>
             </div>
-            <button class="buy-another-course" @click="goToCourses">→ أضف نادي</button>
-            <div v-if="orderUpdated" class="order-update-message">تم تحديث سلة المشتريات.</div>
+            <button class="buy-another-course" @click="goToCourses">
+              → أضف نادي
+            </button>
+            <div v-if="orderUpdated" class="order-update-message">
+              تم تحديث سلة المشتريات.
+            </div>
           </div>
         </div>
         <div class="cart-container cart-container-2">
-          <div v-if="successMessage" class="success-message">{{ successMessage }}</div>
-          <div v-if="errorMessage" class="error-message">{{ errorMessage }}</div>
+          <div v-if="successMessage" class="success-message">
+            {{ successMessage }}
+          </div>
+          <div v-if="errorMessage" class="error-message">
+            {{ errorMessage }}
+          </div>
           <div class="coupon-section">
             <label for="coupon-code">لديك كود خصم ؟</label>
             <div class="coupon-input">
-              <input type="text" id="coupon-code" placeholder="Coupon code" v-model="couponCode" />
+              <input
+                type="text"
+                id="coupon-code"
+                placeholder="Coupon code"
+                v-model="couponCode"
+              />
               <button
                 v-if="!cartSummary.coupon_code"
                 @click="applyCoupon"
                 class="apply-button"
-              >تطبيق</button>
+              >
+                تطبيق
+              </button>
               <button
                 v-if="cartSummary.coupon_code"
                 @click="removeCoupon"
                 class="remove-coupon-button"
-              >إزالة الكوبون</button>
+              >
+                إزالة الكوبون
+              </button>
             </div>
           </div>
           <table class="price-table">
             <tbody>
               <tr>
-                <td v-if="cartSummary.total_price_discount == 0">اجمالي المبلغ</td>
+                <td v-if="cartSummary.total_price_discount == 0">
+                  اجمالي المبلغ
+                </td>
                 <td v-else>قيمة السلة</td>
-                <td>{{ cartSummary.total_price }} {{ cartSummary.currency_ar }}</td>
+                <td>
+                  {{ cartSummary.total_price }} {{ cartSummary.currency_ar }}
+                </td>
               </tr>
               <tr v-if="cartSummary.coupon_code">
                 <td>الخصم</td>
                 <td>
-                  <div
-                    class="remove-coupon-section"
-                  >- {{ cartSummary.discount }} {{ cartSummary.currency_ar }}</div>
+                  <div class="remove-coupon-section">
+                    - {{ cartSummary.discount }} {{ cartSummary.currency_ar }}
+                  </div>
                 </td>
               </tr>
               <tr v-if="cartSummary.total_price_discount != 0">
@@ -169,27 +228,36 @@
               </tr>
             </tbody>
           </table>
-          <button class="confirm-button" @click="showAuthModal">تأكيد الشراء</button>
+          <button class="confirm-button" @click="showAuthModal">
+            تأكيد الشراء
+          </button>
         </div>
       </div>
     </div>
   </div>
+
+  <TermsModal v-if="isTermsModalVisible" @close="handleModalClose" />
 </template>
 
 <script>
 import axios from "axios";
+import TermsModal from "./TermsModal.vue";
 
 export default {
+  components: {
+    TermsModal,
+  },
   data() {
     return {
       isChecked: false,
       orderUpdated: false,
+      isTermsModalVisible: false,
       cartItems: [],
       showModal: false,
       userInfo: [],
       newStudent: {
         name: "",
-        code: ""
+        code: "",
       },
       cartSummary: {
         total_price: 0,
@@ -197,21 +265,21 @@ export default {
         currency_ar: "",
         total_items_count: 0,
         coupon_code: null,
-        discount: 0
+        discount: 0,
       },
       couponCode: "",
       successMessage: "",
       errors: {},
       errorMessage: "",
       validationErrorMessage: "",
-      link: false
+      link: false,
     };
   },
   methods: {
     async fetchCartItems() {
       let url = "/api/session/club-session-cart";
       let totalCartItems = 0;
-      const userInfo = localStorage.getItem("userInfo");
+      const userInfo = sessionStorage.getItem("userInfo");
       console.log("userInfo", userInfo);
       let headers = {};
       if (userInfo) {
@@ -223,13 +291,13 @@ export default {
             headers["Authorization"] = `Bearer ${token}`;
           }
         } catch (error) {
-          console.error("Error parsing userInfo from localStorage:", error);
+          console.error("Error parsing userInfo from sessionStorage:", error);
         }
       }
       const textElement1 = document.getElementById("totalCount1");
       axios
         .get(url, { headers })
-        .then(response => {
+        .then((response) => {
           console.log("Fetched cart items:", response.data);
           totalCartItems = response.data.data.total_items_count;
           textElement1.textContent = totalCartItems > 0 ? totalCartItems : 0;
@@ -242,7 +310,7 @@ export default {
             console.log("Coupon code:", this.couponCode);
           }
         })
-        .catch(error => {
+        .catch((error) => {
           if (error.response && error.response.status === 404) {
             this.cartItems = [];
             this.cartSummary = {};
@@ -256,7 +324,7 @@ export default {
         });
     },
     openModal() {
-      const storedUserInfo = localStorage.getItem("userInfo");
+      const storedUserInfo = sessionStorage.getItem("userInfo");
       this.userInfo = storedUserInfo ? JSON.parse(storedUserInfo) : [];
       this.showModal = true;
     },
@@ -266,7 +334,7 @@ export default {
     },
     addStudent() {
       this.userInfo.push({ ...this.newStudent });
-      localStorage.setItem("userInfo", JSON.stringify(this.userInfo));
+      sessionStorage.setItem("userInfo", JSON.stringify(this.userInfo));
       this.closeModal();
       this.$router.push({ path: "/", name: "HomeAr" });
     },
@@ -275,7 +343,7 @@ export default {
     },
     isSameStudentCode(studentCode) {
       return (
-        this.cartItems.filter(item => item.student_code === studentCode)
+        this.cartItems.filter((item) => item.student_code === studentCode)
           .length > 1
       );
     },
@@ -291,11 +359,12 @@ export default {
         this.getNumber = data.phone_number;
 
         if (this.chatInput !== "" && this.getNumber) {
-          const baseUrl = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(
-            navigator.userAgent
-          )
-            ? "whatsapp://send"
-            : "https://web.whatsapp.com/send";
+          const baseUrl =
+            /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(
+              navigator.userAgent
+            )
+              ? "whatsapp://send"
+              : "https://web.whatsapp.com/send";
           const url = `${baseUrl}?phone=${this.getNumber}&text=${this.chatInput}`;
           window.open(url, "_blank");
         }
@@ -305,7 +374,7 @@ export default {
     },
     async increaseQuantity(studentId, itemId) {
       let url = `/api/session/club-session-cart/increase/student-items/${studentId}/${itemId}`;
-      const userInfo = localStorage.getItem("userInfo");
+      const userInfo = sessionStorage.getItem("userInfo");
       let headers = {};
       if (userInfo) {
         try {
@@ -315,7 +384,7 @@ export default {
             headers["Authorization"] = `Bearer ${token}`;
           }
         } catch (error) {
-          console.error("Error parsing userInfo from localStorage:", error);
+          console.error("Error parsing userInfo from sessionStorage:", error);
         }
       }
       axios
@@ -324,13 +393,13 @@ export default {
           this.fetchCartItems();
           window.location.reload();
         })
-        .catch(error => {
+        .catch((error) => {
           console.error("Error increasing item quantity:", error);
         });
     },
     async decreaseQuantity(studentId, itemId) {
       let url = `/api/session/club-session-cart/decrease/student-items/${studentId}/${itemId}`;
-      const userInfo = localStorage.getItem("userInfo");
+      const userInfo = sessionStorage.getItem("userInfo");
       let headers = {};
       if (userInfo) {
         try {
@@ -340,7 +409,7 @@ export default {
             headers["Authorization"] = `Bearer ${token}`;
           }
         } catch (error) {
-          console.error("Error parsing userInfo from localStorage:", error);
+          console.error("Error parsing userInfo from sessionStorage:", error);
         }
       }
       axios
@@ -349,13 +418,13 @@ export default {
           this.fetchCartItems();
           window.location.reload();
         })
-        .catch(error => {
+        .catch((error) => {
           console.error("Error decreasing item quantity:", error);
         });
     },
     async removeItem(itemId) {
       let url = `/api/session/club-session-cart/remove/student-items/${itemId}`;
-      const userInfo = localStorage.getItem("userInfo");
+      const userInfo = sessionStorage.getItem("userInfo");
       let headers = {};
 
       if (userInfo) {
@@ -367,7 +436,7 @@ export default {
             headers["Authorization"] = `Bearer ${token}`;
           }
         } catch (error) {
-          console.error("Error parsing userInfo from localStorage:", error);
+          console.error("Error parsing userInfo from sessionStorage:", error);
           return;
         }
       }
@@ -383,24 +452,24 @@ export default {
         if (userInfo) {
           const parsedUserInfo = JSON.parse(userInfo);
 
-          updatedUserInfo = parsedUserInfo.map(student => {
+          updatedUserInfo = parsedUserInfo.map((student) => {
             const studentCode = student.code;
 
             const studentCartItems = updatedCartItems.filter(
-              item => item.student_code === studentCode
+              (item) => item.student_code === studentCode
             );
 
             return {
               ...student,
-              session_group_data: studentCartItems.map(cartItem => ({
+              session_group_data: studentCartItems.map((cartItem) => ({
                 session_group_id: cartItem.session_group_id,
-                quantity: cartItem.quantity
-              }))
+                quantity: cartItem.quantity,
+              })),
             };
           });
 
           console.log("Updated userInfo:", updatedUserInfo);
-          localStorage.setItem("userInfo", JSON.stringify(updatedUserInfo));
+          sessionStorage.setItem("userInfo", JSON.stringify(updatedUserInfo));
         }
       } catch (error) {
         this.errorMessage = "Error removing item.";
@@ -416,11 +485,11 @@ export default {
         return;
       }
       try {
-        let url = localStorage.getItem("userInfo")
+        let url = sessionStorage.getItem("userInfo")
           ? "/api/user/cart/apply-coupon"
           : "/api/session/cart/apply-coupon";
 
-        const userInfo = localStorage.getItem("userInfo");
+        const userInfo = sessionStorage.getItem("userInfo");
         let headers = {};
         if (userInfo) {
           try {
@@ -431,7 +500,7 @@ export default {
               headers["Authorization"] = `Bearer ${token}`;
             }
           } catch (error) {
-            console.error("Error parsing userInfo from localStorage:", error);
+            console.error("Error parsing userInfo from sessionStorage:", error);
           }
         }
         const response = await axios.post(
@@ -454,10 +523,10 @@ export default {
       this.successMessage = "";
       this.errorMessage = "";
       try {
-        let url = localStorage.getItem("userInfo")
+        let url = sessionStorage.getItem("userInfo")
           ? "/api/user/cart/remove-coupon"
           : "/api/session/cart/remove-coupon";
-        const userInfo = localStorage.getItem("userInfo");
+        const userInfo = sessionStorage.getItem("userInfo");
         let headers = {};
         if (userInfo) {
           try {
@@ -468,7 +537,7 @@ export default {
               headers["Authorization"] = `Bearer ${token}`;
             }
           } catch (error) {
-            console.error("Error parsing userInfo from localStorage:", error);
+            console.error("Error parsing userInfo from sessionStorage:", error);
           }
         }
         const response = await axios.post(url, {}, { headers });
@@ -487,11 +556,12 @@ export default {
     goToCourses() {
       this.$router.push("/");
     },
-    goToCheckout() {
+    async goToCheckout() {
       let url = "/api/session/club-session-checkout";
-      const userInfo = localStorage.getItem("userInfo");
+      const userInfo = sessionStorage.getItem("userInfo");
       let headers = {};
       let formData = {};
+
       if (userInfo) {
         try {
           const parsedUserInfo = JSON.parse(userInfo);
@@ -501,47 +571,54 @@ export default {
             headers["Authorization"] = `Bearer ${token}`;
           }
         } catch (error) {
-          console.error("Error parsing userInfo from localStorage:", error);
+          console.error("Error parsing userInfo from sessionStorage:", error);
         }
       }
-      if (Object.keys(this.errors).length === 0) {
-        axios
-          .post(url, formData, { headers })
-          .then(response => {
-            console.log("Order checkout successfully:", response.data);
-            if (response.data.success) {
-              localStorage.clear();
 
-              document.cookie.split(";").forEach(cookie => {
-                const [name] = cookie.split("=");
-                document.cookie = `${name}=;expire=Thu, 01 Jan 2001 00:00:00 UTC;path/`;
-              });
-              window.location.href = response.data.data.stripeUrl;
-            } else {
-              console.error("Error:", response.data.message);
-            }
-          })
-          .catch(error => {
-            console.error("Error submitting form:", error.response.data);
-            this.validationErrorMessage =
-              error.response.data.data.error ||
-              "حدث خطأ أثناء إرسال النموذج. حاول مرة أخرى.";
-            if (error.response.data.message.includes("User Exists")) {
-              this.link = true;
-            }
+      // If there are items in the cart, remove them
+      try {
+
+        // Proceed to checkout after removing all items
+        const response = await axios.post(url, formData, { headers });
+
+        console.log("Order checkout successfully:", response.data);
+
+        if (response.data.success) {
+          // Clear session storage and cookies
+          sessionStorage.clear();
+          document.cookie.split(";").forEach((cookie) => {
+            const [name] = cookie.split("=");
+            document.cookie = `${name}=; expires=Thu, 01 Jan 2001 00:00:00 UTC; path=/;`;
           });
+
+          // Redirect to Stripe URL
+          window.location.href = response.data.data.stripeUrl;
+        }
+      } catch (error) {
+        console.error("Error during checkout process:", error);
+        this.validationErrorMessage =
+          error.response?.data?.data?.error ||
+          "حدث خطأ أثناء إرسال النموذج. حاول مرة أخرى.";
+
+        if (error.response?.data?.message?.includes("User Exists")) {
+          this.link = true;
+        }
       }
     },
     showAuthModal() {
+      this.isTermsModalVisible = true;
+    },
+    handleModalClose() {
+      this.isTermsModalVisible = false;
       this.goToCheckout();
-    }
+    },
   },
   mounted() {
     this.fetchCartItems();
   },
   beforeMount() {
     this.fetchCartItems();
-  }
+  },
 };
 </script>
 

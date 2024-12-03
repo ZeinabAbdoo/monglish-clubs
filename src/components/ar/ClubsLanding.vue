@@ -19,7 +19,7 @@ export default {
     HeroSection,
     AccreditationsSection,
     ClubsSection,
-    SessionSection,
+    SessionSection
   },
   methods: {
     scrollToClubs() {
@@ -27,10 +27,10 @@ export default {
       if (clubsSection) {
         clubsSection.scrollIntoView({
           behavior: "smooth",
-          block: "start",
+          block: "start"
         });
       }
-    },
-  },
+    }
+  }
 };
 </script>

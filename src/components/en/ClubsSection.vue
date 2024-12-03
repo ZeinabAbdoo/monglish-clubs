@@ -457,7 +457,7 @@
         </div>
       </div>
     </div>
-    <!-- Conditionally render the StudentPopup if showPopup is true -->
+
     <StudentPopup
       v-if="showPopup"
       @close="closePopup"
@@ -499,11 +499,15 @@ export default {
     this.fetchClubsPrices();
     this.fetchCartItems();
   },
+  beforeMount() {
+    this.fetchClubsPrices();
+    this.fetchCartItems();
+  },
   methods: {
     async fetchCartItems() {
       let url = "/api/session/club-session-cart";
       let totalCartItems = 0;
-      const userInfo = localStorage.getItem("userInfo");
+      const userInfo = sessionStorage.getItem("userInfo");
       console.log("userInfo", userInfo);
       let headers = {};
       if (userInfo) {
@@ -515,7 +519,7 @@ export default {
             headers["Authorization"] = `Bearer ${token}`;
           }
         } catch (error) {
-          console.error("Error parsing userInfo from localStorage:", error);
+          console.error("Error parsing userInfo from sessionStorage:", error);
         }
       }
 
@@ -562,7 +566,7 @@ export default {
         });
     },
     addToCart(sessionGroupId) {
-      let userInfo = JSON.parse(localStorage.getItem("userInfo")) || [];
+      let userInfo = JSON.parse(sessionStorage.getItem("userInfo")) || [];
       let totalCartItems = 0;
 
       if (userInfo.length === 0) {
@@ -591,21 +595,19 @@ export default {
           }
         });
 
-        // Save updated userInfo to localStorage
-        localStorage.setItem("userInfo", JSON.stringify(userInfo));
+        // Save updated userInfo to sessionStorage
+        sessionStorage.setItem("userInfo", JSON.stringify(userInfo));
         this.showPopup = false;
       }
 
       console.log(
-        "Updated userInfo saved to localStorage:",
-        localStorage.getItem("userInfo")
+        "Updated userInfo saved to sessionStorage:",
+        sessionStorage.getItem("userInfo")
       );
-
-      const textElement1 = document.getElementById("totalCount1");
 
       // Handle popup closure
       if (!this.showPopup) {
-        userInfo = JSON.parse(localStorage.getItem("userInfo")) || [];
+        userInfo = JSON.parse(sessionStorage.getItem("userInfo")) || [];
         let payload;
 
         if (userInfo.length === 0) {
@@ -640,8 +642,10 @@ export default {
             console.log("Cart updated successfully:", response.data);
 
             totalCartItems = response.data.data.total_items_count;
+            const textElement1 = document.getElementById("totalCount1");
             textElement1.textContent = totalCartItems > 0 ? totalCartItems : 0;
 
+            this.fetchCartItems();
             this.$router.push({ path: "/en/cart/", name: "CartEn" });
           })
           .catch(error => {
@@ -654,11 +658,12 @@ export default {
 
       this.selectedSessionGroupId = sessionGroupId;
     },
+
     closePopup() {
       this.showPopup = false;
 
       // Check and proceed with the POST request if conditions are met
-      let userInfo = JSON.parse(localStorage.getItem("userInfo")) || [];
+      let userInfo = JSON.parse(sessionStorage.getItem("userInfo")) || [];
       if (userInfo.length !== 0) {
         const lastStudent = userInfo[userInfo.length - 1];
         const payload = {

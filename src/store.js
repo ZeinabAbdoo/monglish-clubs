@@ -3,7 +3,7 @@ import { createStore } from 'vuex';
 
 // Function to retrieve and parse user information from session storage
 function getUserInfoFromSessionStorage() {
-    const storedData = localStorage.getItem('userInfo');
+    const storedData = sessionStorage.getItem('userInfo');
     try {
       return storedData ? JSON.parse(storedData) : null;
     } catch (error) {
