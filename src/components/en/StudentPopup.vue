@@ -64,10 +64,7 @@
           sessionStorage.setItem("userInfo", JSON.stringify(userInfo));
           this.resetForm();
           this.closePopup();
-          this.$router.push({ path: "/en/cart/", name: "CartEn" }).then(() => {
-              // Reload the page after the redirect
-              location.reload();
-            });
+          this.$router.push({ path: "/en/cart/", name: "CartEn" });
         } else {
           console.log("Please fill in all fields.");
         }
