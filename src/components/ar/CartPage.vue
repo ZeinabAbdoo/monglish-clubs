@@ -88,7 +88,7 @@
                       @click="increaseQuantity(item.student_id, item.id)"
                     >+</button>
                   </td>
-                  <td class="price">{{ item.single_price}}</td>
+                  <td class="price">{{ item.price }} {{ cartSummary.currency_ar }}</td>
                   <td>
                     <button class="remove-button" @click="removeItem(item.id)">
                       <i class="fa-regular fa-trash-can"></i>
@@ -207,12 +207,6 @@ export default {
       link: false
     };
   },
-  mounted() {
-    this.fetchCartItems();
-  },
-  beforeMount() {
-    this.fetchCartItems();
-  },
   methods: {
     async fetchCartItems() {
       let url = "/api/session/club-session-cart";
@@ -328,7 +322,7 @@ export default {
         .get(url, { headers })
         .then(() => {
           this.fetchCartItems();
-          // window.location.reload();
+          window.location.reload();
         })
         .catch(error => {
           console.error("Error increasing item quantity:", error);
@@ -541,7 +535,13 @@ export default {
     showAuthModal() {
       this.goToCheckout();
     }
-  }
+  },
+  mounted() {
+    this.fetchCartItems();
+  },
+  beforeMount() {
+    this.fetchCartItems();
+  },
 };
 </script>
 
