@@ -68,7 +68,7 @@
             async fetchCartItems() {
                 let url = '/api/session/cart';
                 let totalCartItems = 0;
-                const userInfo = localStorage.getItem('userInfo');
+                const userInfo = sessionStorage.getItem('userInfo');
                 let headers = {};
                 if (userInfo) {
                     try {
@@ -79,7 +79,7 @@
                             headers['Authorization'] = `Bearer ${token}`;
                         }
                     } catch (error) {
-                        console.error('Error parsing userInfo from localStorage:', error);
+                        console.error('Error parsing userInfo from sessionStorage:', error);
                     }
                 }
 
