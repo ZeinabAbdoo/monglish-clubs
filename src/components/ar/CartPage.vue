@@ -447,9 +447,11 @@ export default {
         await this.fetchCartItems();
 
         const updatedCartItems = this.cartItems;
-        let updatedUserInfo = [];
-
-        if (userInfo) {
+        
+        if (updatedCartItems.length === 1) {
+          sessionStorage.removeItem("userInfo");
+        } else if(userInfo){
+          let updatedUserInfo = [];
           const parsedUserInfo = JSON.parse(userInfo);
 
           updatedUserInfo = parsedUserInfo.map((student) => {
