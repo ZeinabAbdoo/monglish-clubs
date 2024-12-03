@@ -2,9 +2,12 @@
   <!-- Modal Wrapper -->
   <div v-if="isVisible" class="modal-overlay">
     <div class="modal-terms">
-      <h2>
-        To ensure your full rights in contracting with the academy, please carefully read the following terms and conditions and agree to them:
-      </h2>
+      <div class="modal-title">
+        <h2>
+          To ensure your full rights in contracting with the academy, please carefully read the following terms and conditions and agree to them:
+        </h2>
+        <button class="close-btn" @click="closeModal('close')">&times;</button>
+      </div>
       <div class="terms-container">
         <div class="terms-content" ref="termsContent">
           <ol>
@@ -68,7 +71,7 @@
         type="submit"
         class="checkout-button"
         :disabled="!isChecked"
-        @click="closeModal"
+        @click="closeModal('submit')"
       >I agree and wish to proceed with the order</button>
     </div>
   </div>
@@ -99,8 +102,8 @@ export default {
     }
   },
   methods: {
-    closeModal() {
-      this.$emit('close');
+    closeModal(action) {
+      this.$emit('close', action);
       this.isVisible = false;
       document.body.style.overflow = "auto";
     },
@@ -151,6 +154,10 @@ export default {
   font-family: "DIN Next LT Arabic";
   font-weight: 500;
   margin-bottom: 1rem;
+}
+
+.modal-title{
+  display: flex;
 }
 
 .checkbox {
@@ -228,5 +235,27 @@ export default {
 
 .terms-content li strong {
   font-weight: bold;
+}
+
+.close-btn {
+  display: flex;
+  font-size: 30px;
+  color: #333;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  width: 8%;
+}
+
+.close-btn:hover {
+  color: #ff9442;
+}
+
+@media (max-width: 768px) {
+  .close-btn {
+    font-size: 25px;
+    top: 5px;
+    right: 5px;
+  }
 }
 </style>
