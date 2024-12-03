@@ -31,7 +31,7 @@
                 </svg>
             </a>
 
-            <button @click="switchToEnglish">Ar</button>
+            <button @click="switchToArabic">Ar</button>
         </div>
     </div>
 </template>
@@ -60,10 +60,10 @@
             };
         },
         methods: {
-            switchToEnglish() {
+            switchToArabic() {
                 const currentPath = router.currentRoute.value.path;
-                const englishPath = routeMappings[currentPath] || '/';
-                router.push(englishPath);
+                const arabicPath = routeMappings[currentPath] || '/';
+                router.push(arabicPath);
             },
             async fetchCartItems() {
                 let url = '/api/session/cart';
@@ -104,6 +104,9 @@
             }
         },
         mounted() {
+            this.fetchCartItems();
+        },
+        beforeMount() {
             this.fetchCartItems();
         }
     }

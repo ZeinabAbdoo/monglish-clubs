@@ -105,6 +105,9 @@
         },
         mounted() {
             this.fetchCartItems();
+        },
+        beforeMount() {
+            this.fetchCartItems();
         }
     }
 </script>

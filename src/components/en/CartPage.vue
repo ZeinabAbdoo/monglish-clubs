@@ -225,21 +225,18 @@ export default {
           console.error("Error parsing userInfo from localStorage:", error);
         }
       }
-
       const textElement1 = document.getElementById("totalCount1");
-
       axios
         .get(url, { headers })
         .then(response => {
           console.log("Fetched cart items:", response.data);
           totalCartItems = response.data.data.total_items_count;
-
           textElement1.textContent = totalCartItems > 0 ? totalCartItems : 0;
-
           this.cartItems = response.data.data.items || [];
           this.orderUpdated = false;
           this.cartSummary = response.data.data;
           console.log("Cart Summary:", this.cartSummary);
+          window.location.reload();
           if (this.cartSummary.coupon_code) {
             this.couponCode = this.cartSummary.coupon_code["code"];
             console.log("Coupon code:", this.couponCode);
@@ -259,26 +256,22 @@ export default {
         });
     },
     openModal() {
-      // Retrieve userInfo from localStorage
       const storedUserInfo = localStorage.getItem("userInfo");
       this.userInfo = storedUserInfo ? JSON.parse(storedUserInfo) : [];
-      this.showModal = true; // Show the modal
+      this.showModal = true;
     },
     closeModal() {
-      this.showModal = false; // Close the modal
-      this.resetForm(); // Reset the form inputs
+      this.showModal = false;
+      this.resetForm();
     },
     addStudent() {
-      // Add the new student to the userInfo array
       this.userInfo.push({ ...this.newStudent });
-      // Save the updated userInfo to localStorage
       localStorage.setItem("userInfo", JSON.stringify(this.userInfo));
-      // Close the modal and reset the form
       this.closeModal();
       this.$router.push({ path: "/en/", name: "HomeEn" });
     },
     resetForm() {
-      this.newStudent = { name: "", code: "" }; // Reset form fields
+      this.newStudent = { name: "", code: "" };
     },
     isSameStudentCode(studentCode) {
       return (
@@ -312,15 +305,12 @@ export default {
     },
     async increaseQuantity(studentId, itemId) {
       let url = `/api/session/club-session-cart/increase/student-items/${studentId}/${itemId}`;
-
-      // replace with your storage (zeinab!!!)
       const userInfo = localStorage.getItem("userInfo");
       let headers = {};
       if (userInfo) {
         try {
           const parsedUserInfo = JSON.parse(userInfo);
           const token = parsedUserInfo.token;
-
           if (token) {
             headers["Authorization"] = `Bearer ${token}`;
           }
@@ -328,28 +318,24 @@ export default {
           console.error("Error parsing userInfo from localStorage:", error);
         }
       }
-
       axios
         .get(url, { headers })
         .then(() => {
           this.fetchCartItems();
           window.location.reload();
-        }) // Refresh cart items
+        })
         .catch(error => {
           console.error("Error increasing item quantity:", error);
         });
     },
     async decreaseQuantity(studentId, itemId) {
       let url = `/api/session/club-session-cart/decrease/student-items/${studentId}/${itemId}`;
-
-      // replace with your storage (zeinab!!!)
       const userInfo = localStorage.getItem("userInfo");
       let headers = {};
       if (userInfo) {
         try {
           const parsedUserInfo = JSON.parse(userInfo);
           const token = parsedUserInfo.token;
-
           if (token) {
             headers["Authorization"] = `Bearer ${token}`;
           }
@@ -357,13 +343,12 @@ export default {
           console.error("Error parsing userInfo from localStorage:", error);
         }
       }
-
       axios
         .get(url, { headers })
         .then(() => {
           this.fetchCartItems();
           window.location.reload();
-        }) // Refresh cart items
+        })
         .catch(error => {
           console.error("Error decreasing item quantity:", error);
         });
@@ -423,7 +408,6 @@ export default {
       }
     },
     async applyCoupon() {
-      // Reset messages
       this.successMessage = "";
       this.errorMessage = "";
 
@@ -450,13 +434,11 @@ export default {
             console.error("Error parsing userInfo from localStorage:", error);
           }
         }
-
         const response = await axios.post(
           url,
           { coupon_code: this.couponCode },
           { headers }
         );
-
         if (response.data.success) {
           this.cartSummary = response.data.data.cartSummary;
           this.successMessage = response.data.message;
@@ -469,15 +451,12 @@ export default {
       }
     },
     async removeCoupon() {
-      // Reset messages
       this.successMessage = "";
       this.errorMessage = "";
-
       try {
         let url = localStorage.getItem("userInfo")
           ? "/api/user/cart/remove-coupon"
           : "/api/session/cart/remove-coupon";
-
         const userInfo = localStorage.getItem("userInfo");
         let headers = {};
         if (userInfo) {
@@ -492,7 +471,6 @@ export default {
             console.error("Error parsing userInfo from localStorage:", error);
           }
         }
-
         const response = await axios.post(url, {}, { headers });
         console.log(response.data);
         if (response.data.success) {
@@ -511,8 +489,6 @@ export default {
     },
     goToCheckout() {
       let url = "/api/session/club-session-checkout";
-
-      // replace with your storage (zeinab!!!)
       const userInfo = localStorage.getItem("userInfo");
       let headers = {};
       let formData = {};
@@ -528,16 +504,12 @@ export default {
           console.error("Error parsing userInfo from localStorage:", error);
         }
       }
-
-      // If there are no errors, submit the form
       if (Object.keys(this.errors).length === 0) {
         axios
           .post(url, formData, { headers })
           .then(response => {
-            // Handle successful form submission
             console.log("Order checkout successfully:", response.data);
             if (response.data.success) {
-              // Redirect to the URL in the response data
               localStorage.clear();
 
               document.cookie.split(";").forEach(cookie => {
@@ -547,11 +519,9 @@ export default {
               window.location.href = response.data.data.stripeUrl;
             } else {
               console.error("Error:", response.data.message);
-              // Optionally, display an error message to the user
             }
           })
           .catch(error => {
-            // Handle errors
             console.error("Error submitting form:", error.response.data);
             this.validationErrorMessage =
               error.response.data.data.error ||
@@ -568,11 +538,9 @@ export default {
   },
   mounted() {
     this.fetchCartItems();
-    // const today = new Date();
-    // const options = { year: "numeric", month: "long", day: "numeric" };
-    // document.getElementById(
-    //   "currentDate"
-    // ).textContent = today.toLocaleDateString("ar-EG", options);
+  },
+  beforeMount() {
+    this.fetchCartItems();
   }
 };
 </script>
