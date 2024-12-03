@@ -574,16 +574,8 @@ export default {
         }
       }
 
-      // Check if there are no errors
-      if (Object.keys(this.errors).length === 0) {
-        // Fetch cart items (ensure you have this.cartItems available)
-        const cartItems = this.cartItems || []; // Replace with actual cart items logic
-
         // If there are items in the cart, remove them
         try {
-          for (let item of cartItems) {
-            await this.removeItem(item.id); // Ensure the removeItem function is async
-          }
 
           // Proceed to checkout after removing all items
           const response = await axios.post(url, formData, { headers });
@@ -609,7 +601,6 @@ export default {
 
           if (error.response?.data?.message?.includes("User Exists")) {
             this.link = true;
-          }
         }
       }
     },

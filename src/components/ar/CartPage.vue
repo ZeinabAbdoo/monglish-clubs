@@ -575,42 +575,33 @@ export default {
         }
       }
 
-      // Check if there are no errors
-      if (Object.keys(this.errors).length === 0) {
-        // Fetch cart items (ensure you have this.cartItems available)
-        const cartItems = this.cartItems || []; // Replace with actual cart items logic
+      // If there are items in the cart, remove them
+      try {
 
-        // If there are items in the cart, remove them
-        try {
-          for (let item of cartItems) {
-            await this.removeItem(item.id); // Ensure the removeItem function is async
-          }
+        // Proceed to checkout after removing all items
+        const response = await axios.post(url, formData, { headers });
 
-          // Proceed to checkout after removing all items
-          const response = await axios.post(url, formData, { headers });
+        console.log("Order checkout successfully:", response.data);
 
-          console.log("Order checkout successfully:", response.data);
+        if (response.data.success) {
+          // Clear session storage and cookies
+          sessionStorage.clear();
+          document.cookie.split(";").forEach((cookie) => {
+            const [name] = cookie.split("=");
+            document.cookie = `${name}=; expires=Thu, 01 Jan 2001 00:00:00 UTC; path=/;`;
+          });
 
-          if (response.data.success) {
-            // Clear session storage and cookies
-            sessionStorage.clear();
-            document.cookie.split(";").forEach((cookie) => {
-              const [name] = cookie.split("=");
-              document.cookie = `${name}=; expires=Thu, 01 Jan 2001 00:00:00 UTC; path=/;`;
-            });
+          // Redirect to Stripe URL
+          window.location.href = response.data.data.stripeUrl;
+        }
+      } catch (error) {
+        console.error("Error during checkout process:", error);
+        this.validationErrorMessage =
+          error.response?.data?.data?.error ||
+          "حدث خطأ أثناء إرسال النموذج. حاول مرة أخرى.";
 
-            // Redirect to Stripe URL
-            window.location.href = response.data.data.stripeUrl;
-          }
-        } catch (error) {
-          console.error("Error during checkout process:", error);
-          this.validationErrorMessage =
-            error.response?.data?.data?.error ||
-            "حدث خطأ أثناء إرسال النموذج. حاول مرة أخرى.";
-
-          if (error.response?.data?.message?.includes("User Exists")) {
-            this.link = true;
-          }
+        if (error.response?.data?.message?.includes("User Exists")) {
+          this.link = true;
         }
       }
     },
