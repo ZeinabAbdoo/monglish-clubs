@@ -617,9 +617,6 @@ export default {
       }
     },
   },
-  mounted() {
-    window.location.reload();
-  },
   beforeMount() {
     this.fetchCartItems();
   },
