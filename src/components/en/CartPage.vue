@@ -618,7 +618,7 @@ export default {
     },
   },
   mounted() {
-    window.location.reload();
+    // window.location.reload();
   },
   beforeMount() {
     this.fetchCartItems();
