@@ -211,7 +211,7 @@ export default {
     async fetchCartItems() {
       let url = "/api/session/club-session-cart";
       let totalCartItems = 0;
-      const userInfo = localStorage.getItem("userInfo");
+      const userInfo = sessionStorage.getItem("userInfo");
       console.log("userInfo", userInfo);
       let headers = {};
       if (userInfo) {
@@ -223,7 +223,7 @@ export default {
             headers["Authorization"] = `Bearer ${token}`;
           }
         } catch (error) {
-          console.error("Error parsing userInfo from localStorage:", error);
+          console.error("Error parsing userInfo from sessionStorage:", error);
         }
       }
       const textElement1 = document.getElementById("totalCount1");
@@ -256,7 +256,7 @@ export default {
         });
     },
     openModal() {
-      const storedUserInfo = localStorage.getItem("userInfo");
+      const storedUserInfo = sessionStorage.getItem("userInfo");
       this.userInfo = storedUserInfo ? JSON.parse(storedUserInfo) : [];
       this.showModal = true;
     },
@@ -266,7 +266,7 @@ export default {
     },
     addStudent() {
       this.userInfo.push({ ...this.newStudent });
-      localStorage.setItem("userInfo", JSON.stringify(this.userInfo));
+      sessionStorage.setItem("userInfo", JSON.stringify(this.userInfo));
       this.closeModal();
       this.$router.push({ path: "/", name: "HomeAr" });
     },
@@ -305,7 +305,7 @@ export default {
     },
     async increaseQuantity(studentId, itemId) {
       let url = `/api/session/club-session-cart/increase/student-items/${studentId}/${itemId}`;
-      const userInfo = localStorage.getItem("userInfo");
+      const userInfo = sessionStorage.getItem("userInfo");
       let headers = {};
       if (userInfo) {
         try {
@@ -315,7 +315,7 @@ export default {
             headers["Authorization"] = `Bearer ${token}`;
           }
         } catch (error) {
-          console.error("Error parsing userInfo from localStorage:", error);
+          console.error("Error parsing userInfo from sessionStorage:", error);
         }
       }
       axios
@@ -330,7 +330,7 @@ export default {
     },
     async decreaseQuantity(studentId, itemId) {
       let url = `/api/session/club-session-cart/decrease/student-items/${studentId}/${itemId}`;
-      const userInfo = localStorage.getItem("userInfo");
+      const userInfo = sessionStorage.getItem("userInfo");
       let headers = {};
       if (userInfo) {
         try {
@@ -340,7 +340,7 @@ export default {
             headers["Authorization"] = `Bearer ${token}`;
           }
         } catch (error) {
-          console.error("Error parsing userInfo from localStorage:", error);
+          console.error("Error parsing userInfo from sessionStorage:", error);
         }
       }
       axios
@@ -355,7 +355,7 @@ export default {
     },
     async removeItem(itemId) {
       let url = `/api/session/club-session-cart/remove/student-items/${itemId}`;
-      const userInfo = localStorage.getItem("userInfo");
+      const userInfo = sessionStorage.getItem("userInfo");
       let headers = {};
 
       if (userInfo) {
@@ -367,7 +367,7 @@ export default {
             headers["Authorization"] = `Bearer ${token}`;
           }
         } catch (error) {
-          console.error("Error parsing userInfo from localStorage:", error);
+          console.error("Error parsing userInfo from sessionStorage:", error);
           return;
         }
       }
@@ -400,7 +400,7 @@ export default {
           });
 
           console.log("Updated userInfo:", updatedUserInfo);
-          localStorage.setItem("userInfo", JSON.stringify(updatedUserInfo));
+          sessionStorage.setItem("userInfo", JSON.stringify(updatedUserInfo));
         }
       } catch (error) {
         this.errorMessage = "Error removing item.";
@@ -416,11 +416,11 @@ export default {
         return;
       }
       try {
-        let url = localStorage.getItem("userInfo")
+        let url = sessionStorage.getItem("userInfo")
           ? "/api/user/cart/apply-coupon"
           : "/api/session/cart/apply-coupon";
 
-        const userInfo = localStorage.getItem("userInfo");
+        const userInfo = sessionStorage.getItem("userInfo");
         let headers = {};
         if (userInfo) {
           try {
@@ -431,7 +431,7 @@ export default {
               headers["Authorization"] = `Bearer ${token}`;
             }
           } catch (error) {
-            console.error("Error parsing userInfo from localStorage:", error);
+            console.error("Error parsing userInfo from sessionStorage:", error);
           }
         }
         const response = await axios.post(
@@ -454,10 +454,10 @@ export default {
       this.successMessage = "";
       this.errorMessage = "";
       try {
-        let url = localStorage.getItem("userInfo")
+        let url = sessionStorage.getItem("userInfo")
           ? "/api/user/cart/remove-coupon"
           : "/api/session/cart/remove-coupon";
-        const userInfo = localStorage.getItem("userInfo");
+        const userInfo = sessionStorage.getItem("userInfo");
         let headers = {};
         if (userInfo) {
           try {
@@ -468,7 +468,7 @@ export default {
               headers["Authorization"] = `Bearer ${token}`;
             }
           } catch (error) {
-            console.error("Error parsing userInfo from localStorage:", error);
+            console.error("Error parsing userInfo from sessionStorage:", error);
           }
         }
         const response = await axios.post(url, {}, { headers });
@@ -489,7 +489,7 @@ export default {
     },
     goToCheckout() {
       let url = "/api/session/club-session-checkout";
-      const userInfo = localStorage.getItem("userInfo");
+      const userInfo = sessionStorage.getItem("userInfo");
       let headers = {};
       let formData = {};
       if (userInfo) {
@@ -501,7 +501,7 @@ export default {
             headers["Authorization"] = `Bearer ${token}`;
           }
         } catch (error) {
-          console.error("Error parsing userInfo from localStorage:", error);
+          console.error("Error parsing userInfo from sessionStorage:", error);
         }
       }
       if (Object.keys(this.errors).length === 0) {
@@ -510,7 +510,7 @@ export default {
           .then(response => {
             console.log("Order checkout successfully:", response.data);
             if (response.data.success) {
-              localStorage.clear();
+              sessionStorage.clear();
 
               document.cookie.split(";").forEach(cookie => {
                 const [name] = cookie.split("=");

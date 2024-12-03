@@ -497,7 +497,7 @@ export default {
     async fetchCartItems() {
       let url = "/api/session/club-session-cart";
       let totalCartItems = 0;
-      const userInfo = localStorage.getItem("userInfo");
+      const userInfo = sessionStorage.getItem("userInfo");
       console.log("userInfo", userInfo);
       let headers = {};
       if (userInfo) {
@@ -509,7 +509,7 @@ export default {
             headers["Authorization"] = `Bearer ${token}`;
           }
         } catch (error) {
-          console.error("Error parsing userInfo from localStorage:", error);
+          console.error("Error parsing userInfo from sessionStorage:", error);
         }
       }
 
@@ -556,7 +556,7 @@ export default {
         });
     },
     addToCart(sessionGroupId) {
-      let userInfo = JSON.parse(localStorage.getItem("userInfo")) || [];
+      let userInfo = JSON.parse(sessionStorage.getItem("userInfo")) || [];
       let totalCartItems = 0;
 
       if (userInfo.length === 0) {
@@ -585,19 +585,19 @@ export default {
           }
         });
 
-        // Save updated userInfo to localStorage
-        localStorage.setItem("userInfo", JSON.stringify(userInfo));
+        // Save updated userInfo to sessionStorage
+        sessionStorage.setItem("userInfo", JSON.stringify(userInfo));
         this.showPopup = false;
       }
 
       console.log(
-        "Updated userInfo saved to localStorage:",
-        localStorage.getItem("userInfo")
+        "Updated userInfo saved to sessionStorage:",
+        sessionStorage.getItem("userInfo")
       );
 
       // Handle popup closure
       if (!this.showPopup) {
-        userInfo = JSON.parse(localStorage.getItem("userInfo")) || [];
+        userInfo = JSON.parse(sessionStorage.getItem("userInfo")) || [];
         let payload;
 
         if (userInfo.length === 0) {
@@ -658,7 +658,7 @@ export default {
       this.showPopup = false;
 
       // Check and proceed with the POST request if conditions are met
-      let userInfo = JSON.parse(localStorage.getItem("userInfo")) || [];
+      let userInfo = JSON.parse(sessionStorage.getItem("userInfo")) || [];
       if (userInfo.length !== 0) {
         const lastStudent = userInfo[userInfo.length - 1];
         const payload = {
