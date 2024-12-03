@@ -1,6 +1,5 @@
 <template>
   <div>
-    <TermsModal />
     <HeroSection @scroll-to-clubs="scrollToClubs" />
     <AccreditationsSection />
     <ClubsSection ref="clubsSection" />
@@ -9,7 +8,6 @@
 </template>
 
 <script>
-import TermsModal from "./TermsModal.vue";
 import HeroSection from "./HeroSection.vue";
 import AccreditationsSection from "./AccreditationsSection.vue";
 import ClubsSection from "./ClubsSection.vue";
@@ -18,7 +16,6 @@ import SessionSection from "./SessionSection.vue";
 export default {
   name: "MonglishClubs",
   components: {
-    TermsModal,
     HeroSection,
     AccreditationsSection,
     ClubsSection,

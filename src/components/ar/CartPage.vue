@@ -37,7 +37,9 @@
                   class="order-item"
                   v-for="(item, index) in cartItems"
                   :key="index"
-                  :class="{'same-code-border': isSameStudentCode(item.student_code)}"
+                  :class="{
+                    'same-code-border': isSameStudentCode(item.student_code),
+                  }"
                 >
                   <td class="code">{{ item.student_code }}</td>
                   <td class="course">
@@ -49,15 +51,21 @@
                     <button
                       class="quantity-button decrease-btn"
                       @click="decreaseQuantity(item.student_id, item.id)"
-                    >-</button>
+                    >
+                      -
+                    </button>
                     <label class="quantity-label">{{ item.quantity }}</label>
                     <input type="hidden" v-model="item.quantity" readonly />
                     <button
                       class="quantity-button increase-btn"
                       @click="increaseQuantity(item.student_id, item.id)"
-                    >+</button>
+                    >
+                      +
+                    </button>
                   </td>
-                  <td class="price">{{ item.price }} {{ cartSummary.currency_ar }}</td>
+                  <td class="price">
+                    {{ item.price }} {{ cartSummary.currency_ar }}
+                  </td>
                   <td>
                     <button class="remove-button" @click="removeItem(item.id)">
                       <i class="fa-regular fa-trash-can"></i>
@@ -67,9 +75,17 @@
               </tbody>
             </table>
 
-            <table class="order-table-mobile" v-for="(item, index) in cartItems" :key="index">
+            <table
+              class="order-table-mobile"
+              v-for="(item, index) in cartItems"
+              :key="index"
+            >
               <tbody>
-                <tr class="order-item" v-for="(item, index) in cartItems" :key="index">
+                <tr
+                  class="order-item"
+                  v-for="(item, index) in cartItems"
+                  :key="index"
+                >
                   <td class="code">{{ item.student_code }}</td>
                   <td class="course">
                     <strong>{{ item.club_name }}</strong>
@@ -80,15 +96,21 @@
                     <button
                       class="quantity-button decrease-btn"
                       @click="decreaseQuantity(item.student_id, item.id)"
-                    >-</button>
+                    >
+                      -
+                    </button>
                     <label class="quantity-label">{{ item.quantity }}</label>
                     <input type="hidden" v-model="item.quantity" readonly />
                     <button
                       class="quantity-button increase-btn"
                       @click="increaseQuantity(item.student_id, item.id)"
-                    >+</button>
+                    >
+                      +
+                    </button>
                   </td>
-                  <td class="price">{{ item.price }} {{ cartSummary.currency_ar }}</td>
+                  <td class="price">
+                    {{ item.price }} {{ cartSummary.currency_ar }}
+                  </td>
                   <td>
                     <button class="remove-button" @click="removeItem(item.id)">
                       <i class="fa-regular fa-trash-can"></i>
@@ -105,59 +127,92 @@
             <!-- Modal for adding new student -->
             <div v-if="showModal" class="student-popup">
               <div class="student-popup-content">
-                <button class="student-close-btn" @click="closeModal">&times;</button>
+                <button class="student-close-btn" @click="closeModal">
+                  &times;
+                </button>
                 <h2>إضافة طالب جديد</h2>
                 <form @submit.prevent="addStudent">
                   <div class="student-form-group">
                     <div class="student-form-item">
                       <label for="student-name">اسم الطالب</label>
-                      <input id="student-name" v-model="newStudent.name" type="text" required />
+                      <input
+                        id="student-name"
+                        v-model="newStudent.name"
+                        type="text"
+                        required
+                      />
                     </div>
                     <div class="student-form-item">
                       <label for="student-code">كود الطالب</label>
-                      <input id="student-code" v-model="newStudent.code" type="text" required />
+                      <input
+                        id="student-code"
+                        v-model="newStudent.code"
+                        type="text"
+                        required
+                      />
                     </div>
                   </div>
                   <button type="submit" class="submit-stud">إضافة</button>
                 </form>
               </div>
             </div>
-            <button class="buy-another-course" @click="goToCourses">→ أضف نادي</button>
-            <div v-if="orderUpdated" class="order-update-message">تم تحديث سلة المشتريات.</div>
+            <button class="buy-another-course" @click="goToCourses">
+              → أضف نادي
+            </button>
+            <div v-if="orderUpdated" class="order-update-message">
+              تم تحديث سلة المشتريات.
+            </div>
           </div>
         </div>
         <div class="cart-container cart-container-2">
-          <div v-if="successMessage" class="success-message">{{ successMessage }}</div>
-          <div v-if="errorMessage" class="error-message">{{ errorMessage }}</div>
+          <div v-if="successMessage" class="success-message">
+            {{ successMessage }}
+          </div>
+          <div v-if="errorMessage" class="error-message">
+            {{ errorMessage }}
+          </div>
           <div class="coupon-section">
             <label for="coupon-code">لديك كود خصم ؟</label>
             <div class="coupon-input">
-              <input type="text" id="coupon-code" placeholder="Coupon code" v-model="couponCode" />
+              <input
+                type="text"
+                id="coupon-code"
+                placeholder="Coupon code"
+                v-model="couponCode"
+              />
               <button
                 v-if="!cartSummary.coupon_code"
                 @click="applyCoupon"
                 class="apply-button"
-              >تطبيق</button>
+              >
+                تطبيق
+              </button>
               <button
                 v-if="cartSummary.coupon_code"
                 @click="removeCoupon"
                 class="remove-coupon-button"
-              >إزالة الكوبون</button>
+              >
+                إزالة الكوبون
+              </button>
             </div>
           </div>
           <table class="price-table">
             <tbody>
               <tr>
-                <td v-if="cartSummary.total_price_discount == 0">اجمالي المبلغ</td>
+                <td v-if="cartSummary.total_price_discount == 0">
+                  اجمالي المبلغ
+                </td>
                 <td v-else>قيمة السلة</td>
-                <td>{{ cartSummary.total_price }} {{ cartSummary.currency_ar }}</td>
+                <td>
+                  {{ cartSummary.total_price }} {{ cartSummary.currency_ar }}
+                </td>
               </tr>
               <tr v-if="cartSummary.coupon_code">
                 <td>الخصم</td>
                 <td>
-                  <div
-                    class="remove-coupon-section"
-                  >- {{ cartSummary.discount }} {{ cartSummary.currency_ar }}</div>
+                  <div class="remove-coupon-section">
+                    - {{ cartSummary.discount }} {{ cartSummary.currency_ar }}
+                  </div>
                 </td>
               </tr>
               <tr v-if="cartSummary.total_price_discount != 0">
@@ -169,27 +224,36 @@
               </tr>
             </tbody>
           </table>
-          <button class="confirm-button" @click="showAuthModal">تأكيد الشراء</button>
+          <button class="confirm-button" @click="showAuthModal">
+            تأكيد الشراء
+          </button>
         </div>
       </div>
     </div>
   </div>
+
+  <TermsModal v-if="isModalVisible" @modal-closed="onModalClosed" />
 </template>
 
 <script>
 import axios from "axios";
+import TermsModal from "./TermsModal.vue";
 
 export default {
+  components: {
+    TermsModal,
+  },
   data() {
     return {
       isChecked: false,
       orderUpdated: false,
+      isModalVisible: false, 
       cartItems: [],
       showModal: false,
       userInfo: [],
       newStudent: {
         name: "",
-        code: ""
+        code: "",
       },
       cartSummary: {
         total_price: 0,
@@ -197,14 +261,14 @@ export default {
         currency_ar: "",
         total_items_count: 0,
         coupon_code: null,
-        discount: 0
+        discount: 0,
       },
       couponCode: "",
       successMessage: "",
       errors: {},
       errorMessage: "",
       validationErrorMessage: "",
-      link: false
+      link: false,
     };
   },
   methods: {
@@ -229,7 +293,7 @@ export default {
       const textElement1 = document.getElementById("totalCount1");
       axios
         .get(url, { headers })
-        .then(response => {
+        .then((response) => {
           console.log("Fetched cart items:", response.data);
           totalCartItems = response.data.data.total_items_count;
           textElement1.textContent = totalCartItems > 0 ? totalCartItems : 0;
@@ -242,7 +306,7 @@ export default {
             console.log("Coupon code:", this.couponCode);
           }
         })
-        .catch(error => {
+        .catch((error) => {
           if (error.response && error.response.status === 404) {
             this.cartItems = [];
             this.cartSummary = {};
@@ -275,7 +339,7 @@ export default {
     },
     isSameStudentCode(studentCode) {
       return (
-        this.cartItems.filter(item => item.student_code === studentCode)
+        this.cartItems.filter((item) => item.student_code === studentCode)
           .length > 1
       );
     },
@@ -291,11 +355,12 @@ export default {
         this.getNumber = data.phone_number;
 
         if (this.chatInput !== "" && this.getNumber) {
-          const baseUrl = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(
-            navigator.userAgent
-          )
-            ? "whatsapp://send"
-            : "https://web.whatsapp.com/send";
+          const baseUrl =
+            /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(
+              navigator.userAgent
+            )
+              ? "whatsapp://send"
+              : "https://web.whatsapp.com/send";
           const url = `${baseUrl}?phone=${this.getNumber}&text=${this.chatInput}`;
           window.open(url, "_blank");
         }
@@ -324,7 +389,7 @@ export default {
           this.fetchCartItems();
           window.location.reload();
         })
-        .catch(error => {
+        .catch((error) => {
           console.error("Error increasing item quantity:", error);
         });
     },
@@ -349,7 +414,7 @@ export default {
           this.fetchCartItems();
           window.location.reload();
         })
-        .catch(error => {
+        .catch((error) => {
           console.error("Error decreasing item quantity:", error);
         });
     },
@@ -383,19 +448,19 @@ export default {
         if (userInfo) {
           const parsedUserInfo = JSON.parse(userInfo);
 
-          updatedUserInfo = parsedUserInfo.map(student => {
+          updatedUserInfo = parsedUserInfo.map((student) => {
             const studentCode = student.code;
 
             const studentCartItems = updatedCartItems.filter(
-              item => item.student_code === studentCode
+              (item) => item.student_code === studentCode
             );
 
             return {
               ...student,
-              session_group_data: studentCartItems.map(cartItem => ({
+              session_group_data: studentCartItems.map((cartItem) => ({
                 session_group_id: cartItem.session_group_id,
-                quantity: cartItem.quantity
-              }))
+                quantity: cartItem.quantity,
+              })),
             };
           });
 
@@ -507,12 +572,12 @@ export default {
       if (Object.keys(this.errors).length === 0) {
         axios
           .post(url, formData, { headers })
-          .then(response => {
+          .then((response) => {
             console.log("Order checkout successfully:", response.data);
             if (response.data.success) {
               sessionStorage.clear();
 
-              document.cookie.split(";").forEach(cookie => {
+              document.cookie.split(";").forEach((cookie) => {
                 const [name] = cookie.split("=");
                 document.cookie = `${name}=;expire=Thu, 01 Jan 2001 00:00:00 UTC;path/`;
               });
@@ -521,7 +586,7 @@ export default {
               console.error("Error:", response.data.message);
             }
           })
-          .catch(error => {
+          .catch((error) => {
             console.error("Error submitting form:", error.response.data);
             this.validationErrorMessage =
               error.response.data.data.error ||
@@ -533,8 +598,9 @@ export default {
       }
     },
     showAuthModal() {
+      this.isModalVisible = true;
       this.goToCheckout();
-    }
+    },
   },
   mounted() {
     this.fetchCartItems();
