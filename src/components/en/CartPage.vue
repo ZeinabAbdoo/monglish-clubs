@@ -449,6 +449,7 @@ export default {
         
         if (updatedCartItems.length === 1) {
           sessionStorage.removeItem("userInfo");
+          window.location.reload();
         } else if(userInfo){
           let updatedUserInfo = [];
           const parsedUserInfo = JSON.parse(userInfo);
@@ -617,7 +618,7 @@ export default {
     },
   },
   mounted() {
-    this.fetchCartItems();
+    window.location.reload();
   },
   beforeMount() {
     this.fetchCartItems();
