@@ -134,6 +134,7 @@ export default {
   },
   methods: {
     closeModal() {
+      this.$emit('close');
       this.isVisible = false;
       document.body.style.overflow = "auto";
     }
