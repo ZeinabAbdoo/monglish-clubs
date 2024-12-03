@@ -16,8 +16,12 @@
       <div v-if="cartItems.length === 0" class="empty-cart">
         <img src="@/assets/images/cart.webp" alt="Empty Cart Image" />
         <h2>لا يوجد لديك شىء في السلة</h2>
-        <p>ابدأ رحلتك التعليمية الآن اشترك في انديتنا واستفد من تجربة تعلم فريدة!</p>
-        <button class="back-to-courses" @click="goToCourses">العودة للأنديه</button>
+        <p>
+          ابدأ رحلتك التعليمية الآن اشترك في انديتنا واستفد من تجربة تعلم فريدة!
+        </p>
+        <button class="back-to-courses" @click="goToCourses">
+          العودة للأنديه
+        </button>
       </div>
       <div v-else class="cart-content">
         <div class="cart-container cart-container-1">
@@ -232,7 +236,7 @@
     </div>
   </div>
 
-    <TermsModal v-if="isTermsModalVisible" @close="handleModalClose" />
+  <TermsModal v-if="isTermsModalVisible" @close="handleModalClose" />
 </template>
 
 <script>
@@ -247,7 +251,7 @@ export default {
     return {
       isChecked: false,
       orderUpdated: false,
-      isTermsModalVisible: false, 
+      isTermsModalVisible: false,
       cartItems: [],
       showModal: false,
       userInfo: [],
@@ -579,11 +583,9 @@ export default {
 
               document.cookie.split(";").forEach((cookie) => {
                 const [name] = cookie.split("=");
-                document.cookie = `${name}=;expire=Thu, 01 Jan 2001 00:00:00 UTC;path/`;
+                document.cookie = `${name}=; expires=Thu, 01 Jan 2001 00:00:00 UTC; path=/;`;
               });
               window.location.href = response.data.data.stripeUrl;
-            } else {
-              console.error("Error:", response.data.message);
             }
           })
           .catch((error) => {
