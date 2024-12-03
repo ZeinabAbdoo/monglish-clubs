@@ -493,6 +493,10 @@ export default {
     this.fetchClubsPrices();
     this.fetchCartItems();
   },
+  beforeMount() {
+    this.fetchClubsPrices();
+    this.fetchCartItems();
+  },
   methods: {
     async fetchCartItems() {
       let url = "/api/session/club-session-cart";
@@ -635,13 +639,9 @@ export default {
             const textElement1 = document.getElementById("totalCount1");
             textElement1.textContent = totalCartItems > 0 ? totalCartItems : 0;
 
-            this.fetchCartItems();
-            window.location.reload();
+            this.fetchCartItems();  
             this.$router.push({ path: "/ar/cart/", name: "CartAr" });
-            
-            this.$nextTick(() => {
-              location.reload(); 
-            });
+          
           })
           .catch(error => {
             console.error(

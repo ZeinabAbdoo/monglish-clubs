@@ -499,6 +499,10 @@ export default {
     this.fetchClubsPrices();
     this.fetchCartItems();
   },
+  beforeMount() {
+    this.fetchClubsPrices();
+    this.fetchCartItems();
+  },
   methods: {
     async fetchCartItems() {
       let url = "/api/session/club-session-cart";
@@ -642,7 +646,6 @@ export default {
             textElement1.textContent = totalCartItems > 0 ? totalCartItems : 0;
 
             this.fetchCartItems();
-            window.location.reload();
             this.$router.push({ path: "/en/cart/", name: "CartEn" });
           })
           .catch(error => {
