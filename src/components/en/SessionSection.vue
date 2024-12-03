@@ -13,7 +13,7 @@
       <button class="cta-btn" @click="scrollToClubs">Sign Up Now</button>
     </div>
     <div class="left-half">
-      <img src="@/assets/images/last.png" alt="Educational Image">
+      <img src="@/assets/images/last.webp" alt="Educational Image">
     </div>
   </section>
 </template>
@@ -32,7 +32,7 @@ export default {
 <style scoped>
 .sessions {
   display: flex;
-  background-image: url('@/assets/images/hero.jpg');
+  background-image: url('@/assets/images/hero.webp');
   background-position: center;
   background-repeat: repeat;
   direction: ltr;

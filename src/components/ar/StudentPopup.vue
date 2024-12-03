@@ -49,7 +49,7 @@
           const sessionGroupId = this.$parent.selectedSessionGroupId;
           const quantity = 1;
 
-          const userInfo = JSON.parse(localStorage.getItem("userInfo")) || [];
+          const userInfo = JSON.parse(sessionStorage.getItem("userInfo")) || [];
           const studentData = {
             name: this.student.name,
             code: this.student.code,
@@ -61,7 +61,7 @@
             ],
           };
           userInfo.push(studentData);
-          localStorage.setItem("userInfo", JSON.stringify(userInfo));
+          sessionStorage.setItem("userInfo", JSON.stringify(userInfo));
           this.resetForm();
           this.closePopup();
           this.$router.push({ name: "CartAr" });

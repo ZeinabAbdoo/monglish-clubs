@@ -66,7 +66,7 @@
                 router.push(englishPath);
             },
             async fetchCartItems() {
-                let url = sessionStorage.getItem('userInfo') ? '/api/user/cart' : '/api/session/cart';
+                let url = '/api/session/cart';
                 let totalCartItems = 0;
                 const userInfo = sessionStorage.getItem('userInfo');
                 let headers = {};
@@ -104,6 +104,9 @@
             }
         },
         mounted() {
+            this.fetchCartItems();
+        },
+        beforeMount() {
             this.fetchCartItems();
         }
     }

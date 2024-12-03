@@ -40,11 +40,11 @@
       <!-- Left Half: Packages Section -->
       <div class="left-half">
         <div class="toggle-btns">
-          <p>اختر النوع :</p>
+          <p>اختر المحاضر :</p>
           <button
-            @click="selectedClub = 'مدرسين اجانب'"
-            :class="{ active: selectedClub === 'مدرسين اجانب' }"
-          >مدرسين اجانب</button>
+            @click="selectedClub = 'مدرسين أجانب'"
+            :class="{ active: selectedClub === 'مدرسين أجانب' }"
+          >مدرسين أجانب</button>
           <button
             @click="selectedClub = 'خبراء اللغة'"
             :class="{ active: selectedClub === 'خبراء اللغة' }"
@@ -53,7 +53,7 @@
 
         <div class="price-border">
           <div class="price-packages">
-            <div v-if="selectedClub === 'مدرسين اجانب'" class="price-items">
+            <div v-if="selectedClub === 'مدرسين أجانب'" class="price-items">
               <!-- Display item at index 0 -->
               <div v-if="prices.length > 0" class="price-item">
                 <h6>
@@ -63,7 +63,7 @@
                   <span>{{ formatPrice(prices[0].price) }}</span>
                   {{ prices[0].currency_ar }}
                 </p>
-                <button @click="addToCart('مدرسين اجانب', prices[0].price , 1)">
+                <button @click="addToCart(1)">
                   <i class="fa-solid fa-plus"></i> أضف
                 </button>
               </div>
@@ -77,7 +77,7 @@
                   <span>{{ formatPrice(prices[1].price) }}</span>
                   {{ prices[1].currency_ar }}
                 </p>
-                <button @click="addToCart('مدرسين اجانب', prices[1].price, 2)">
+                <button @click="addToCart(2)">
                   <i class="fa-solid fa-plus"></i> أضف
                 </button>
               </div>
@@ -91,7 +91,7 @@
                   <span>{{ formatPrice(prices[2].price) }}</span>
                   {{ prices[2].currency_ar }}
                 </p>
-                <button @click="addToCart('مدرسين اجانب', prices[2].price, 3)">
+                <button @click="addToCart(3)">
                   <i class="fa-solid fa-plus"></i> أضف
                 </button>
               </div>
@@ -107,7 +107,7 @@
                   <span>{{ formatPrice(prices[3].price) }}</span>
                   {{ prices[3].currency_ar }}
                 </p>
-                <button @click="addToCart('مدرسين اجانب', prices[3].price, 4)">
+                <button @click="addToCart(4)">
                   <i class="fa-solid fa-plus"></i> أضف
                 </button>
               </div>
@@ -121,7 +121,7 @@
                   <span>{{ formatPrice(prices[4].price) }}</span>
                   {{ prices[4].currency_ar }}
                 </p>
-                <button @click="addToCart('مدرسين اجانب', prices[4].price, 5)">
+                <button @click="addToCart(5)">
                   <i class="fa-solid fa-plus"></i> أضف
                 </button>
               </div>
@@ -135,7 +135,7 @@
                   <span>{{ formatPrice(prices[5].price) }}</span>
                   {{ prices[5].currency_ar }}
                 </p>
-                <button @click="addToCart('مدرسين اجانب', prices[5].price, 6)">
+                <button @click="addToCart(6)">
                   <i class="fa-solid fa-plus"></i> أضف
                 </button>
               </div>
@@ -214,11 +214,11 @@
       <!-- Left Half: Packages Section -->
       <div class="left-half">
         <div class="toggle-btns">
-          <p>اختر النوع :</p>
+          <p>اختر المحاضر :</p>
           <button
-            @click="selectedClub2 = 'مدرسين اجانب'"
-            :class="{ active: selectedClub2 === 'مدرسين اجانب' }"
-          >مدرسين اجانب</button>
+            @click="selectedClub2 = 'مدرسين أجانب'"
+            :class="{ active: selectedClub2 === 'مدرسين أجانب' }"
+          >مدرسين أجانب</button>
           <button
             @click="selectedClub2 = 'خبراء اللغة'"
             :class="{ active: selectedClub2 === 'خبراء اللغة' }"
@@ -227,7 +227,7 @@
 
         <div class="price-border">
           <div class="price-packages">
-            <div v-if="selectedClub2 === 'مدرسين اجانب'" class="price-items">
+            <div v-if="selectedClub2 === 'مدرسين أجانب'" class="price-items">
               <!-- Display item at index 6 -->
               <div v-if="prices.length > 6" class="price-item">
                 <h6>
@@ -237,7 +237,7 @@
                   <span>{{ formatPrice(prices[6].price) }}</span>
                   {{ prices[6].currency_ar }}
                 </p>
-                <button @click="addToCart('مدرسين اجانب', prices[6].price, 7)">
+                <button @click="addToCart(7)">
                   <i class="fa-solid fa-plus"></i> أضف
                 </button>
               </div>
@@ -251,7 +251,7 @@
                   <span>{{ formatPrice(prices[7].price) }}</span>
                   {{ prices[7].currency_ar }}
                 </p>
-                <button @click="addToCart('مدرسين اجانب', prices[7].price, 8)">
+                <button @click="addToCart(8)">
                   <i class="fa-solid fa-plus"></i> أضف
                 </button>
               </div>
@@ -265,7 +265,7 @@
                   <span>{{ formatPrice(prices[8].price) }}</span>
                   {{ prices[8].currency_ar }}
                 </p>
-                <button @click="addToCart('مدرسين اجانب', prices[8].price, 9)">
+                <button @click="addToCart(9)">
                   <i class="fa-solid fa-plus"></i> أضف
                 </button>
               </div>
@@ -281,7 +281,7 @@
                   <span>{{ formatPrice(prices[9].price) }}</span>
                   {{ prices[9].currency_ar }}
                 </p>
-                <button @click="addToCart('مدرسين اجانب', prices[9].price, 10)">
+                <button @click="addToCart(10)">
                   <i class="fa-solid fa-plus"></i> أضف
                 </button>
               </div>
@@ -295,7 +295,7 @@
                   <span>{{ formatPrice(prices[10].price) }}</span>
                   {{ prices[10].currency_ar }}
                 </p>
-                <button @click="addToCart('مدرسين اجانب', prices[10].price, 11)">
+                <button @click="addToCart(11)">
                   <i class="fa-solid fa-plus"></i> أضف
                 </button>
               </div>
@@ -309,7 +309,7 @@
                   <span>{{ formatPrice(prices[11].price) }}</span>
                   {{ prices[11].currency_ar }}
                 </p>
-                <button @click="addToCart('مدرسين اجانب', prices[11].price, 12)">
+                <button @click="addToCart(12)">
                   <i class="fa-solid fa-plus"></i> أضف
                 </button>
               </div>
@@ -409,7 +409,7 @@
                 {{ prices[12].currency_ar }}
               </p>
             </div>
-            <button @click="addToCart('مدرسين اجانب', prices[12].price , 13)">
+            <button @click="addToCart(13)">
               <i class="fa-solid fa-plus"></i> أضف
             </button>
           </div>
@@ -471,8 +471,8 @@ export default {
   },
   data() {
     return {
-      selectedClub: "مدرسين اجانب",
-      selectedClub2: "مدرسين اجانب",
+      selectedClub: "مدرسين أجانب",
+      selectedClub2: "مدرسين أجانب",
       selectedSessionGroupId: null,
       showPopup: false,
       prices: [],
@@ -497,7 +497,7 @@ export default {
     async fetchCartItems() {
       let url = "/api/session/club-session-cart";
       let totalCartItems = 0;
-      const userInfo = localStorage.getItem("userInfo");
+      const userInfo = sessionStorage.getItem("userInfo");
       console.log("userInfo", userInfo);
       let headers = {};
       if (userInfo) {
@@ -509,7 +509,7 @@ export default {
             headers["Authorization"] = `Bearer ${token}`;
           }
         } catch (error) {
-          console.error("Error parsing userInfo from localStorage:", error);
+          console.error("Error parsing userInfo from sessionStorage:", error);
         }
       }
 
@@ -555,8 +555,8 @@ export default {
           console.error("Error fetching session group prices:", error);
         });
     },
-    addToCart(clubType, price, sessionGroupId) {
-      let userInfo = JSON.parse(localStorage.getItem("userInfo")) || [];
+    addToCart(sessionGroupId) {
+      let userInfo = JSON.parse(sessionStorage.getItem("userInfo")) || [];
       let totalCartItems = 0;
 
       if (userInfo.length === 0) {
@@ -585,21 +585,19 @@ export default {
           }
         });
 
-        // Save updated userInfo to localStorage
-        localStorage.setItem("userInfo", JSON.stringify(userInfo));
+        // Save updated userInfo to sessionStorage
+        sessionStorage.setItem("userInfo", JSON.stringify(userInfo));
         this.showPopup = false;
       }
 
       console.log(
-        "Updated userInfo saved to localStorage:",
-        localStorage.getItem("userInfo")
+        "Updated userInfo saved to sessionStorage:",
+        sessionStorage.getItem("userInfo")
       );
-
-      const textElement1 = document.getElementById("totalCount1");
 
       // Handle popup closure
       if (!this.showPopup) {
-        userInfo = JSON.parse(localStorage.getItem("userInfo")) || [];
+        userInfo = JSON.parse(sessionStorage.getItem("userInfo")) || [];
         let payload;
 
         if (userInfo.length === 0) {
@@ -634,9 +632,16 @@ export default {
             console.log("Cart updated successfully:", response.data);
 
             totalCartItems = response.data.data.total_items_count;
+            const textElement1 = document.getElementById("totalCount1");
             textElement1.textContent = totalCartItems > 0 ? totalCartItems : 0;
 
+            this.fetchCartItems();
+            window.location.reload();
             this.$router.push({ path: "/ar/cart/", name: "CartAr" });
+            
+            this.$nextTick(() => {
+              location.reload(); 
+            });
           })
           .catch(error => {
             console.error(
@@ -648,11 +653,12 @@ export default {
 
       this.selectedSessionGroupId = sessionGroupId;
     },
+
     closePopup() {
       this.showPopup = false;
 
       // Check and proceed with the POST request if conditions are met
-      let userInfo = JSON.parse(localStorage.getItem("userInfo")) || [];
+      let userInfo = JSON.parse(sessionStorage.getItem("userInfo")) || [];
       if (userInfo.length !== 0) {
         const lastStudent = userInfo[userInfo.length - 1];
         const payload = {
@@ -695,7 +701,7 @@ export default {
 
 <style scoped>
 .clubs {
-  background-image: url("@/assets/images/b4.png");
+  background-image: url("@/assets/images/b4.webp");
   background-size: cover;
   background-position: center;
   width: 90%;
@@ -728,7 +734,7 @@ h3 {
 }
 
 .price-border {
-  background-image: url("@/assets/images/border.png");
+  background-image: url("@/assets/images/border.webp");
   background-size: cover;
   background-position: center;
 }

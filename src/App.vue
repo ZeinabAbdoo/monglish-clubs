@@ -43,37 +43,36 @@ export default {
 </script>
 
 <style>
-  @font-face {
-    font-family: 'DIN Next LT Arabic';
-    src: url('@/assets/fonts/DINNextLTArabic-Regular-3.ttf') format('truetype');
-  }
-  @font-face {
-    font-family: 'DIN Next LT Arabic-n';
-    src: url('@/assets/fonts/DINNextLTArabic-Heavy.ttf') format('truetype');
-    font-weight: 800;
-  }
-  @font-face {
-    font-family: 'DIN Next LT Arabic-n';
-    src: url('@/assets/fonts/DINNextLTArabic-Regular-3.ttf') format('truetype');
-    font-weight: normal;
-  }
-  @font-face {
-    font-family: 'DIN Next LT Arabic-n';
-    src: url('@/assets/fonts/DINNextLTArabic-Light.ttf') format('truetype');
-    font-weight: 300;
-  }
-  @font-face {
-    font-family: 'DIN Next LT Arabic-n';
-    src: url('@/assets/fonts/DINNextLTArabic-UltraLight.ttf') format('truetype');
-    font-weight: 100;
-  }
+@font-face {
+  font-family: 'DIN Next LT Arabic';
+  src: url('https://monglish.b-cdn.net/fonts/DINNextLTArabic-Regular-3.ttf') format('truetype');
+}
+@font-face {
+  font-family: 'DIN Next LT Arabic-n';
+  src: url('https://monglish.b-cdn.net/fonts/DINNextLTArabic-Heavy.ttf') format('truetype');
+  font-weight: 800;
+}
+@font-face {
+  font-family: 'DIN Next LT Arabic-n';
+  src: url('https://monglish.b-cdn.net/fonts/DINNextLTArabic-Regular-3.ttf') format('truetype');
+  font-weight: normal;
+}
+@font-face {
+  font-family: 'DIN Next LT Arabic-n';
+  src: url('https://monglish.b-cdn.net/fonts/DINNextLTArabic-Light.ttf') format('truetype');
+  font-weight: 300;
+}
+@font-face {
+  font-family: 'DIN Next LT Arabic-n';
+  src: url('https://monglish.b-cdn.net/fonts/DINNextLTArabic-UltraLight.ttf') format('truetype');
+  font-weight: 100;
+}
 #app2 {
     width: 100%;
     height: 115vh; 
-    background-image: url('@/assets/images/hero.jpg');
+    background-image: url('@/assets/images/hero.webp');
     background-size: auto; 
     background-position: center; 
     background-repeat: repeat; 
 }
-
 </style>
