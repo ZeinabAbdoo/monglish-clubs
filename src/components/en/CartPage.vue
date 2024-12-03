@@ -10,10 +10,12 @@
         <img src="@/assets/images/cart.webp" alt="Empty Cart Image" />
         <h2>Your cart is empty</h2>
         <p>
-          Start your educational journey now by enrolling in our clubs and
-          enjoy a unique learning experience!
+          Start your educational journey now by enrolling in our clubs and enjoy
+          a unique learning experience!
         </p>
-        <button class="back-to-courses-en" @click="goToCourses">Back to Clubs</button>
+        <button class="back-to-courses-en" @click="goToCourses">
+          Back to Clubs
+        </button>
       </div>
       <div v-else class="cart-content-en">
         <div class="cart-container-en cart-container-1-en">
@@ -29,7 +31,11 @@
                 </tr>
               </thead>
               <tbody>
-                <tr class="order-item" v-for="(item, index) in cartItems" :key="index">
+                <tr
+                  class="order-item"
+                  v-for="(item, index) in cartItems"
+                  :key="index"
+                >
                   <td class="code">{{ item.student_code }}</td>
                   <td class="course">
                     <strong>{{ item.club_name }}</strong>
@@ -40,15 +46,21 @@
                     <button
                       class="quantity-button decrease-btn"
                       @click="decreaseQuantity(item.student_id, item.id)"
-                    >-</button>
+                    >
+                      -
+                    </button>
                     <label class="quantity-label">{{ item.quantity }}</label>
                     <input type="hidden" v-model="item.quantity" readonly />
                     <button
                       class="quantity-button increase-btn"
                       @click="increaseQuantity(item.student_id, item.id)"
-                    >+</button>
+                    >
+                      +
+                    </button>
                   </td>
-                  <td class="price">{{ item.price }} {{ cartSummary.currency_en }}</td>
+                  <td class="price">
+                    {{ item.price }} {{ cartSummary.currency_en }}
+                  </td>
                   <td>
                     <button
                       class="remove-button"
@@ -61,9 +73,17 @@
                 </tr>
               </tbody>
             </table>
-            <table class="order-table-mobile-en" v-for="(item, index) in cartItems" :key="index">
+            <table
+              class="order-table-mobile-en"
+              v-for="(item, index) in cartItems"
+              :key="index"
+            >
               <tbody>
-                <tr class="order-item" v-for="(item, index) in cartItems" :key="index">
+                <tr
+                  class="order-item"
+                  v-for="(item, index) in cartItems"
+                  :key="index"
+                >
                   <td class="code">{{ item.student_code }}</td>
                   <td class="course">
                     <strong>{{ item.club_name }}</strong>
@@ -74,15 +94,21 @@
                     <button
                       class="quantity-button decrease-btn"
                       @click="decreaseQuantity(item.student_id, item.id)"
-                    >-</button>
+                    >
+                      -
+                    </button>
                     <label class="quantity-label">{{ item.quantity }}</label>
                     <input type="hidden" v-model="item.quantity" readonly />
                     <button
                       class="quantity-button increase-btn"
                       @click="increaseQuantity(item.student_id, item.id)"
-                    >+</button>
+                    >
+                      +
+                    </button>
                   </td>
-                  <td class="price">{{ item.price }} {{ cartSummary.currency_en }}</td>
+                  <td class="price">
+                    {{ item.price }} {{ cartSummary.currency_en }}
+                  </td>
                   <td>
                     <button
                       class="remove-button"
@@ -103,17 +129,29 @@
             <!-- Modal for adding a new student -->
             <div v-if="showModal" class="student-popup">
               <div class="student-popup-content">
-                <button class="student-close-btn" @click="closeModal">&times;</button>
+                <button class="student-close-btn" @click="closeModal">
+                  &times;
+                </button>
                 <h2>Add New Student</h2>
                 <form @submit.prevent="addStudent">
                   <div class="student-form-group">
                     <div class="student-form-item">
                       <label for="student-name">Student Name</label>
-                      <input id="student-name" v-model="newStudent.name" type="text" required />
+                      <input
+                        id="student-name"
+                        v-model="newStudent.name"
+                        type="text"
+                        required
+                      />
                     </div>
                     <div class="student-form-item">
                       <label for="student-code">Student Code</label>
-                      <input id="student-code" v-model="newStudent.code" type="text" required />
+                      <input
+                        id="student-code"
+                        v-model="newStudent.code"
+                        type="text"
+                        required
+                      />
                     </div>
                   </div>
                   <button type="submit" class="submit-stud">Add</button>
@@ -121,42 +159,63 @@
               </div>
             </div>
 
-            <button class="buy-another-course-en" @click="goToCourses">← Add Club</button>
-            <div v-if="orderUpdated" class="order-update-message-en">Cart updated.</div>
+            <button class="buy-another-course-en" @click="goToCourses">
+              ← Add Club
+            </button>
+            <div v-if="orderUpdated" class="order-update-message-en">
+              Cart updated.
+            </div>
           </div>
         </div>
         <div class="cart-container-en cart-container-2-en">
-          <div v-if="successMessage" class="success-message">{{ successMessage }}</div>
-          <div v-if="errorMessage" class="error-message">{{ errorMessage }}</div>
+          <div v-if="successMessage" class="success-message">
+            {{ successMessage }}
+          </div>
+          <div v-if="errorMessage" class="error-message">
+            {{ errorMessage }}
+          </div>
           <div class="coupon-section-en">
             <label for="coupon-code-en">Have a discount code?</label>
             <div class="coupon-input-en">
-              <input type="text" id="coupon-code-en" placeholder="Coupon code" v-model="couponCode" />
+              <input
+                type="text"
+                id="coupon-code-en"
+                placeholder="Coupon code"
+                v-model="couponCode"
+              />
               <button
                 v-if="!cartSummary.coupon_code"
                 @click="applyCoupon"
                 class="apply-button-en"
-              >Apply</button>
+              >
+                Apply
+              </button>
               <button
                 v-if="cartSummary.coupon_code"
                 @click="removeCoupon"
                 class="remove-coupon-button"
-              >Remove Coupon</button>
+              >
+                Remove Coupon
+              </button>
             </div>
           </div>
           <table class="price-table-en">
             <tbody>
               <tr>
-                <td v-if="cartSummary.total_price_discount == 0">Final Price</td>
+                <td v-if="cartSummary.total_price_discount == 0">
+                  Final Price
+                </td>
                 <td v-else>Initial Price</td>
-                <td>{{ cartSummary.total_price }} {{ cartSummary.currency_en }}</td>
+                <td>
+                  {{ cartSummary.total_price }} {{ cartSummary.currency_en }}
+                </td>
               </tr>
               <tr v-if="cartSummary.coupon_code">
                 <td>Discount</td>
                 <td>
-                  <div
-                    class="remove-coupon-section"
-                  >- {{ cartSummary.discount }} {{ cartSummary.currency_en }}</div>
+                  <div class="remove-coupon-section">
+                    - {{ cartSummary.discount }} {{ cartSummary.currency_en }}
+                  </div>
                 </td>
               </tr>
               <tr v-if="cartSummary.total_price_discount != 0">
@@ -168,27 +227,36 @@
               </tr>
             </tbody>
           </table>
-          <button class="confirm-button-en" @click="showAuthModal">Confirm Order</button>
+          <button class="confirm-button-en" @click="showAuthModal">
+            Confirm Order
+          </button>
         </div>
       </div>
     </div>
   </div>
+
+  <TermsModal v-if="isModalVisible" @modal-closed="onModalClosed" />
 </template>
 
 <script>
 import axios from "axios";
+import TermsModal from "./TermsModal.vue";
 
 export default {
+  components: {
+    TermsModal,
+  },
   data() {
     return {
       isChecked: false,
       orderUpdated: false,
+      isModalVisible: false, 
       cartItems: [],
       showModal: false,
       userInfo: [],
       newStudent: {
         name: "",
-        code: ""
+        code: "",
       },
       cartSummary: {
         total_price: 0,
@@ -196,14 +264,14 @@ export default {
         currency_ar: "",
         total_items_count: 0,
         coupon_code: null,
-        discount: 0
+        discount: 0,
       },
       couponCode: "",
       successMessage: "",
       errors: {},
       errorMessage: "",
       validationErrorMessage: "",
-      link: false
+      link: false,
     };
   },
   methods: {
@@ -228,7 +296,7 @@ export default {
       const textElement1 = document.getElementById("totalCount1");
       axios
         .get(url, { headers })
-        .then(response => {
+        .then((response) => {
           console.log("Fetched cart items:", response.data);
           totalCartItems = response.data.data.total_items_count;
           textElement1.textContent = totalCartItems > 0 ? totalCartItems : 0;
@@ -241,7 +309,7 @@ export default {
             console.log("Coupon code:", this.couponCode);
           }
         })
-        .catch(error => {
+        .catch((error) => {
           if (error.response && error.response.status === 404) {
             this.cartItems = [];
             this.cartSummary = {};
@@ -274,7 +342,7 @@ export default {
     },
     isSameStudentCode(studentCode) {
       return (
-        this.cartItems.filter(item => item.student_code === studentCode)
+        this.cartItems.filter((item) => item.student_code === studentCode)
           .length > 1
       );
     },
@@ -290,11 +358,12 @@ export default {
         this.getNumber = data.phone_number;
 
         if (this.chatInput !== "" && this.getNumber) {
-          const baseUrl = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(
-            navigator.userAgent
-          )
-            ? "whatsapp://send"
-            : "https://web.whatsapp.com/send";
+          const baseUrl =
+            /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(
+              navigator.userAgent
+            )
+              ? "whatsapp://send"
+              : "https://web.whatsapp.com/send";
           const url = `${baseUrl}?phone=${this.getNumber}&text=${this.chatInput}`;
           window.open(url, "_blank");
         }
@@ -323,7 +392,7 @@ export default {
           this.fetchCartItems();
           window.location.reload();
         })
-        .catch(error => {
+        .catch((error) => {
           console.error("Error increasing item quantity:", error);
         });
     },
@@ -348,7 +417,7 @@ export default {
           this.fetchCartItems();
           window.location.reload();
         })
-        .catch(error => {
+        .catch((error) => {
           console.error("Error decreasing item quantity:", error);
         });
     },
@@ -382,19 +451,19 @@ export default {
         if (userInfo) {
           const parsedUserInfo = JSON.parse(userInfo);
 
-          updatedUserInfo = parsedUserInfo.map(student => {
+          updatedUserInfo = parsedUserInfo.map((student) => {
             const studentCode = student.code;
 
             const studentCartItems = updatedCartItems.filter(
-              item => item.student_code === studentCode
+              (item) => item.student_code === studentCode
             );
 
             return {
               ...student,
-              session_group_data: studentCartItems.map(cartItem => ({
+              session_group_data: studentCartItems.map((cartItem) => ({
                 session_group_id: cartItem.session_group_id,
-                quantity: cartItem.quantity
-              }))
+                quantity: cartItem.quantity,
+              })),
             };
           });
 
@@ -506,12 +575,12 @@ export default {
       if (Object.keys(this.errors).length === 0) {
         axios
           .post(url, formData, { headers })
-          .then(response => {
+          .then((response) => {
             console.log("Order checkout successfully:", response.data);
             if (response.data.success) {
               sessionStorage.clear();
 
-              document.cookie.split(";").forEach(cookie => {
+              document.cookie.split(";").forEach((cookie) => {
                 const [name] = cookie.split("=");
                 document.cookie = `${name}=;expire=Thu, 01 Jan 2001 00:00:00 UTC;path/`;
               });
@@ -520,7 +589,7 @@ export default {
               console.error("Error:", response.data.message);
             }
           })
-          .catch(error => {
+          .catch((error) => {
             console.error("Error submitting form:", error.response.data);
             this.validationErrorMessage =
               error.response.data.data.error ||
@@ -532,8 +601,9 @@ export default {
       }
     },
     showAuthModal() {
+      this.isModalVisible = true;
       this.goToCheckout();
-    }
+    },
   },
   mounted() {
     this.fetchCartItems();
