@@ -608,9 +608,11 @@ export default {
     showAuthModal() {
       this.isTermsModalVisible = true;
     },
-    handleModalClose() {
+    handleModalClose(action) {
       this.isTermsModalVisible = false;
-      this.goToCheckout();
+      if(action === "submit"){
+        this.goToCheckout();
+      }
     },
   },
   mounted() {

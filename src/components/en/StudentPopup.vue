@@ -62,12 +62,12 @@
           };
           userInfo.push(studentData);
           sessionStorage.setItem("userInfo", JSON.stringify(userInfo));
-          console.log(
-            `Student added successfully! Name: ${this.student.name}, Code: ${this.student.code}`
-          );
           this.resetForm();
           this.closePopup();
-          this.$router.push({ name: "CartEn" });
+          this.$router.push({ path: "/en/cart/", name: "CartEn" }).then(() => {
+              // Reload the page after the redirect
+              location.reload();
+            });
         } else {
           console.log("Please fill in all fields.");
         }

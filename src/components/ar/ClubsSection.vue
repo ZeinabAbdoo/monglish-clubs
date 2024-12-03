@@ -640,8 +640,11 @@ export default {
             textElement1.textContent = totalCartItems > 0 ? totalCartItems : 0;
 
             this.fetchCartItems();  
-            this.$router.push({ path: "/ar/cart/", name: "CartAr" });
-          
+            this.$router.push({ path: "/ar/cart/", name: "CartAr" })
+            .then(() => {
+              // Reload the page after the redirect
+              location.reload();
+            });
           })
           .catch(error => {
             console.error(
