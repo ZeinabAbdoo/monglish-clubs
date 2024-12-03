@@ -7,7 +7,7 @@
         التالية بعناية والموافقة عليها:
       </h2>
       <div class="terms-container">
-        <div class="terms-content">
+        <div class="terms-content" ref="termsContent">
           <ol>
             <li>
               <strong>سياسات الأكاديمية:</strong>
@@ -128,16 +128,37 @@ export default {
   },
   mounted() {
     document.body.style.overflow = "hidden";
+    const termsContent = this.$refs.termsContent;
+    if (termsContent) {
+      termsContent.addEventListener("scroll", this.handleScroll);
+    }
   },
   beforeUnmount() {
     document.body.style.overflow = "auto";
+  },
+  unmounted() {
+    const termsContent = this.$refs.termsContent;
+    if (termsContent) {
+      termsContent.removeEventListener("scroll", this.handleScroll);
+    }
   },
   methods: {
     closeModal() {
       this.$emit('close');
       this.isVisible = false;
       document.body.style.overflow = "auto";
-    }
+    },
+    handleScroll(event) {
+      const { scrollTop, scrollHeight, clientHeight } = event.target;
+
+      const tolerance = 2; // Adjust tolerance as needed
+      if (scrollTop + clientHeight >= scrollHeight - tolerance) {
+        this.isChecked = true;
+      } else {
+        // If the user scrolls back up, uncheck the checkbox
+        this.isChecked = false;
+      }
+    },
   }
 };
 </script>
