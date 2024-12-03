@@ -235,7 +235,7 @@
     </div>
   </div>
 
-  <TermsModal v-if="isModalVisible" @modal-closed="onModalClosed" />
+    <TermsModal v-if="isTermsModalVisible" @close="handleModalClose" />
 </template>
 
 <script>
@@ -250,7 +250,7 @@ export default {
     return {
       isChecked: false,
       orderUpdated: false,
-      isModalVisible: false, 
+      isTermsModalVisible: false, 
       cartItems: [],
       showModal: false,
       userInfo: [],
@@ -601,7 +601,10 @@ export default {
       }
     },
     showAuthModal() {
-      this.isModalVisible = true;
+      this.isTermsModalVisible = true;
+    },
+    handleModalClose() {
+      this.isTermsModalVisible = false;
       this.goToCheckout();
     },
   },
