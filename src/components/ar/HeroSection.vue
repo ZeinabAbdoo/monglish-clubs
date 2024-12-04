@@ -58,7 +58,7 @@ export default {
 
 <style scoped>
 .hero {
-  background-image: url("@/assets/images/b.webp");
+  background-image: url("@/assets/images/b.png");
   background-size: cover;
   background-position: center;
   min-height: 100vh;
@@ -171,6 +171,7 @@ p {
     font-size: 20px;
     padding: 8px 18px;
   }
+
   .social-links a {
     margin: 5px;
   }
@@ -179,12 +180,10 @@ p {
 /* Mobile responsive styles */
 @media (max-width: 768px) {
   .hero {
-    background-image: linear-gradient(
-        to bottom,
+    background-image: linear-gradient(to bottom,
         transparent,
-        rgba(255, 255, 255, 0.5)
-      ),
-       url("@/assets/images/b2.webp");
+        rgba(255, 255, 255, 0.5)),
+      url("@/assets/images/b2.webp");
     background-size: cover;
     background-position: center;
     overflow-x: hidden;

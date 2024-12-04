@@ -67,12 +67,12 @@ export default {
   src: url('https://monglish.b-cdn.net/fonts/DINNextLTArabic-UltraLight.ttf') format('truetype');
   font-weight: 100;
 }
+
 #app2 {
-    width: 100%;
-    height: 115vh; 
-    background-image: url('@/assets/images/hero.webp');
-    background-size: auto; 
-    background-position: center; 
-    background-repeat: repeat; 
+  width: 100%;
+  height: 110vh; 
+  background-image: url('@/assets/images/hero.webp');
+  background-size: cover; 
+  background-repeat: no-repeat; 
 }
 </style>

@@ -15,7 +15,8 @@
       <h3>New Monglish Clubs</h3>
       <h1>Achieve Your Language Goals Easily!</h1>
       <p>
-        "Enhance your reading, speaking, and overall language skills with personalized support for the best results in a creative and engaging learning environment.
+        "Enhance your reading, speaking, and overall language skills with personalized support for the best results in a
+        creative and engaging learning environment.
       </p>
       <div class="one-line from-row-to-column">
         <Button class="cta-btn" @click="scrollToClubs">Join Us Now</Button>
@@ -40,7 +41,7 @@ export default {
 
 <style scoped>
 .hero {
-  background-image: url('@/assets/images/b.webp');
+  background-image: url('@/assets/images/b.png');
   background-size: cover;
   background-position: center;
   min-height: 100vh;
@@ -50,15 +51,19 @@ export default {
   color: #fff;
   font-family: 'DIN Next LT Arabic', sans-serif;
   overflow-x: hidden;
-  transform: scaleX(-1); /* Mirror the background image */
-  direction: ltr; /* Change direction to LTR */
+  transform: scaleX(-1);
+  /* Mirror the background image */
+  direction: ltr;
+  /* Change direction to LTR */
 }
 
 .hero-content {
-  text-align: left; /* Align text to the left */
+  text-align: left;
+  /* Align text to the left */
   padding-left: 30%;
   max-width: 550px;
-  transform: scaleX(-1); /* Mirror the background image */
+  transform: scaleX(-1);
+  /* Mirror the background image */
 }
 
 h3 {
@@ -105,7 +110,8 @@ p {
 }
 
 .social-links {
-  margin-right: 5%; /* Adjust the position */
+  margin-right: 5%;
+  /* Adjust the position */
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -155,7 +161,7 @@ p {
     font-size: 20px;
     padding: 8px 18px;
   }
-  
+
   .social-links a {
     margin: 5px;
   }
@@ -164,12 +170,10 @@ p {
 /* Mobile responsive styles */
 @media (max-width: 768px) {
   .hero {
-    background-image: linear-gradient(
-        to bottom,
+    background-image: linear-gradient(to bottom,
         transparent,
-        rgba(255, 255, 255, 0.5)
-      ),
-       url("@/assets/images/b2.webp");
+        rgba(255, 255, 255, 0.5)),
+      url("@/assets/images/b2.webp");
     background-size: cover;
     background-position: center;
     overflow-x: hidden;
