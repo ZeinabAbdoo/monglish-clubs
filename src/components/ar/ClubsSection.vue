@@ -677,7 +677,12 @@ export default {
               "Content-Type": "application/json"
             }
           })
-          .then(() => {
+          .then(response => {
+            console.log(
+              "Cart updated successfully after popup close:",
+              response.data
+            );
+            
             this.fetchCartItems();
             // this.$router.push({ path: "/ar/cart/", name: "CartAr" });
           })
