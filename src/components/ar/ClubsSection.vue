@@ -629,29 +629,33 @@ export default {
 
         console.log("Payload for POST request:", payload);
 
-        // Make POST request
-        axios
-          .post("/api/session/club-session-cart", payload)
-          .then(response => {
-            console.log("Cart updated successfully:", response.data);
+      // Make POST request
+      axios
+        .post("/api/session/club-session-cart", payload)
+        .then(response => {
+          console.log("Cart updated successfully:", response.data);
 
-            totalCartItems = response.data.data.total_items_count;
-            const textElement1 = document.getElementById("totalCount1");
-            textElement1.textContent = totalCartItems > 0 ? totalCartItems : 0;
-
-            this.fetchCartItems();  
-            this.$router.push({ path: "/ar/cart/", name: "CartAr" })
-            .then(() => {
-              // Reload the page after the redirect
-              location.reload();
-            });
-          })
-          .catch(error => {
-            console.error(
-              "Error updating cart:",
-              error.response?.data || error.message
-            );
+          totalCartItems = response.data.data.total_items_count;
+          const textElement1 = document.getElementById("totalCount1");
+          textElement1.textContent = totalCartItems > 0 ? totalCartItems : 0;
+          console.log('added item');
+          this.fetchCartItems();
+          console.log('before redirect');
+          
+          this.$router.push({ path: "/ar/cart/", name: "CartAr" })
+          .then(() => {
+            // Reload the page after the redirect
+            location.reload();
           });
+
+          console.log('redirected');
+        })
+        .catch(error => {
+          console.error(
+            "Error updating cart:",
+            error.response?.data || error.message
+          );
+        });
       }
 
       this.selectedSessionGroupId = sessionGroupId;
@@ -683,6 +687,9 @@ export default {
               "Cart updated successfully after popup close:",
               response.data
             );
+            
+            this.fetchCartItems();
+            this.$router.push({ path: "/ar/cart/", name: "CartAr" });
           })
           .catch(error => {
             console.error(

@@ -688,6 +688,11 @@ export default {
               "Cart updated successfully after popup close:",
               response.data
             );
+            
+            this.fetchCartItems();            
+            this.$router.push({ path: "/ar/cart/", name: "CartAr" });
+
+            
           })
           .catch(error => {
             console.error(
