@@ -714,12 +714,23 @@ export default {
   background-image: url("@/assets/images/b4.webp");
   background-size: cover;
   background-position: center;
-  width: 90%;
+  width: 95%;
   margin: 0 auto;
   color: #fff;
   font-family: "DIN Next LT Arabic", sans-serif;
   direction: rtl;
   padding: 3em 2em;
+}
+
+@media (min-width: 1250px) {
+  .clubs {
+    background-image: url("@/assets/images/b5.png");
+  }
+}
+@media (max-width: 1250px) {
+  .clubs {
+    background-image: url("@/assets/images/b4.webp");
+  }
 }
 
 h3 {
