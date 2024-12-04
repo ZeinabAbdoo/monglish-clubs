@@ -675,7 +675,7 @@ export default {
           session_group_data: lastStudent.session_group_data
         };
 
-        console.log("Payload for POST request (after popup close):", payload);
+        // console.log("Payload for POST request (after popup close):", payload);
 
         axios
           .post("/api/session/club-session-cart", payload, {
@@ -684,15 +684,8 @@ export default {
             }
           })
           .then(response => {
-            console.log(
-              "Cart updated successfully after popup close:",
-              response.data
-            );
-            
             this.fetchCartItems();            
-            this.$router.push({ path: "/ar/cart/", name: "CartAr" });
-
-            
+            // this.$router.push({ path: "/ar/cart/", name: "CartAr" });
           })
           .catch(error => {
             console.error(
