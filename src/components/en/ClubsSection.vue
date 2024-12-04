@@ -683,7 +683,7 @@ export default {
               "Content-Type": "application/json"
             }
           })
-          .then(response => {
+          .then(() => {
             this.fetchCartItems();            
             // this.$router.push({ path: "/ar/cart/", name: "CartAr" });
           })
