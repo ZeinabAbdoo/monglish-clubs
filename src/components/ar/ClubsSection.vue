@@ -638,14 +638,17 @@ export default {
           totalCartItems = response.data.data.total_items_count;
           const textElement1 = document.getElementById("totalCount1");
           textElement1.textContent = totalCartItems > 0 ? totalCartItems : 0;
-          
+          console.log('added item');
           this.fetchCartItems();
+          console.log('before redirect');
           
           this.$router.push({ path: "/ar/cart/", name: "CartAr" })
           .then(() => {
             // Reload the page after the redirect
             location.reload();
           });
+
+          console.log('redirected');
         })
         .catch(error => {
           console.error(
@@ -670,6 +673,8 @@ export default {
           code: lastStudent.code,
           session_group_data: lastStudent.session_group_data
         };
+
+        console.log("Payload for POST request (after popup close):", payload);
 
         axios
           .post("/api/session/club-session-cart", payload, {
