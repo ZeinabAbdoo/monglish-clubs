@@ -64,7 +64,7 @@
           sessionStorage.setItem("userInfo", JSON.stringify(userInfo));
           this.resetForm();
           this.closePopup();
-          this.$router.push({ path: "/en/cart/", name: "CartEn" });
+          // this.$router.push({ path: "/en/cart/", name: "CartEn" });
         } else {
           console.log("Please fill in all fields.");
         }
