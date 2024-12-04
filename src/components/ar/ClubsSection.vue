@@ -689,7 +689,7 @@ export default {
             );
             
             this.fetchCartItems();
-            this.$router.push({ path: "/ar/cart/", name: "CartAr" });
+            // this.$router.push({ path: "/ar/cart/", name: "CartAr" });
           })
           .catch(error => {
             console.error(
