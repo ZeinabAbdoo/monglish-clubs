@@ -726,6 +726,17 @@ export default {
   padding: 3em 2em;
 }
 
+@media (min-width: 1250px) {
+  .clubs {
+    background-image: url("@/assets/images/b5.png");
+  }
+}
+@media (max-width: 1250px) {
+  .clubs {
+    background-image: url("@/assets/images/b4.webp");
+  }
+}
+
 h3 {
   margin: 3em 2em 0 0;
   font-size: 1.7rem;
