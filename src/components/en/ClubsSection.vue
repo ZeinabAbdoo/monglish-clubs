@@ -616,6 +616,7 @@ export default {
           payload = {
             name: lastStudent.name || "Guest",
             code: lastStudent.code || "N/A",
+            school: lastStudent.school || "N/A",
             session_group_data: lastStudent.session_group_data || []
           };
         } else {
@@ -624,6 +625,7 @@ export default {
           payload = {
             name: lastStudent.name,
             code: lastStudent.code,
+            school: lastStudent.school,
             session_group_data: [
               {
                 session_group_id: sessionGroupId,
@@ -672,6 +674,7 @@ export default {
         const payload = {
           name: lastStudent.name,
           code: lastStudent.code,
+          school: lastStudent.school,
           session_group_data: lastStudent.session_group_data
         };
 
