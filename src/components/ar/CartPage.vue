@@ -155,6 +155,8 @@
                         required
                       />
                     </div>
+                  </div>
+                  <div class="student-form-group">
                     <div class="student-form-item">
                       <label for="student-school">المدرسة</label>
                       <select id="student-school" v-model="newStudent.school" required>
@@ -1477,7 +1479,7 @@ export default {
 }
 
 .student-form-item {
-  width: 45%;
+  width: 40%;
 }
 
 .student-popup label {
@@ -1489,7 +1491,8 @@ export default {
   font-weight: 500;
 }
 
-.student-popup input {
+.student-popup input, 
+.student-popup select {
   width: 95%;
   padding: 10px;
   font-size: 14px;
