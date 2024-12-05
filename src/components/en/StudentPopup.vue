@@ -26,6 +26,19 @@
             />
           </div>
         </div>
+        <div class="form-group">
+          <div class="form-item">
+            <label for="student-school">School</label>
+            <select id="student-school" v-model="student.school" required>
+              <option value="LG Kids">LG Kids</option>
+              <option value="LG Kids Plus">LG Kids Plus</option>
+              <option value="UG Kids">UG Kids</option>
+              <option value="Teens">Teens</option>
+              <option value="Adults">Adults</option>
+              <option value="IELTS">IELTS</option>
+            </select>
+          </div>
+        </div>
         <button type="submit">Add</button>
       </form>
     </div>
@@ -40,6 +53,7 @@
         student: {
           code: "",
           name: "",
+          school: ""
         },
       };
     },
@@ -53,6 +67,7 @@
           const studentData = {
             name: this.student.name,
             code: this.student.code,
+            school: this.student.school,
             session_group_data: [
               {
                 session_group_id: sessionGroupId,
@@ -70,7 +85,7 @@
         }
       },
       resetForm() {
-        this.student = { code: "", name: "" };
+        this.student = { code: "", name: "", school: "" };
       },
       closePopup() {
         this.$emit("close");
@@ -120,6 +135,7 @@
   }
 
   .form-item {
+    width: 40%;
     flex: 1; 
   }
 
@@ -132,7 +148,7 @@
     font-weight: 500;
   }
 
-  input {
+  input, select {
     width: 90%; 
     padding: 10px;
     font-size: 14px;

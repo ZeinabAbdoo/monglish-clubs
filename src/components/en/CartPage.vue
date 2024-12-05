@@ -154,6 +154,19 @@
                       />
                     </div>
                   </div>
+                  <div class="student-form-group">
+                    <div class="student-form-item">
+                      <label for="student-school">School</label>
+                      <select id="student-school" v-model="newStudent.school" required>
+                        <option value="LG Kids">LG Kids</option>
+                        <option value="LG Kids Plus">LG Kids Plus</option>
+                        <option value="UG Kids">UG Kids</option>
+                        <option value="Teens">Teens</option>
+                        <option value="Adults">Adults</option>
+                        <option value="IELTS">IELTS</option>
+                      </select>
+                    </div>
+                  </div>
                   <button type="submit" class="submit-stud">Add</button>
                 </form>
               </div>
@@ -257,6 +270,7 @@ export default {
       newStudent: {
         name: "",
         code: "",
+        school: ""
       },
       cartSummary: {
         total_price: 0,
@@ -338,7 +352,7 @@ export default {
       this.$router.push({ path: "/en/", name: "HomeEn" });
     },
     resetForm() {
-      this.newStudent = { name: "", code: "" };
+      this.newStudent = { name: "", code: "", school: "" };
     },
     isSameStudentCode(studentCode) {
       return (
@@ -1447,7 +1461,7 @@ export default {
 }
 
 .student-form-item {
-  width: 45%;
+  width: 40%;
 }
 
 .student-popup label {
@@ -1459,7 +1473,8 @@ export default {
   font-weight: 500;
 }
 
-.student-popup input {
+.student-popup input,
+.student-popup select {
   width: 95%;
   padding: 10px;
   font-size: 14px;
