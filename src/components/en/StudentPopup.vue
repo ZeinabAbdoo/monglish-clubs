@@ -25,9 +25,11 @@
               required
             />
           </div>
+        </div>
+        <div class="form-group">
           <div class="form-item">
-            <label for="school">School</label>
-            <select id="school" v-model="student.school">
+            <label for="student-school">School</label>
+            <select id="student-school" v-model="student.school" required>
               <option value="LG Kids">LG Kids</option>
               <option value="LG Kids Plus">LG Kids Plus</option>
               <option value="UG Kids">UG Kids</option>
@@ -133,6 +135,7 @@
   }
 
   .form-item {
+    width: 40%;
     flex: 1; 
   }
 
@@ -145,7 +148,7 @@
     font-weight: 500;
   }
 
-  input {
+  input, select {
     width: 90%; 
     padding: 10px;
     font-size: 14px;

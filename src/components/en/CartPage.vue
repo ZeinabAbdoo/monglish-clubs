@@ -155,7 +155,7 @@
                     </div>
                     <div class="student-form-item">
                       <label for="student-school">المدرسة</label>
-                      <select id="student-school" v-model="newStudent.school">
+                      <select id="student-school" v-model="newStudent.school" required>
                         <option value="LG Kids">LG Kids</option>
                         <option value="LG Kids Plus">LG Kids Plus</option>
                         <option value="UG Kids">UG Kids</option>
