@@ -155,6 +155,17 @@
                         required
                       />
                     </div>
+                    <div class="student-form-item">
+                      <label for="student-school">المدرسة</label>
+                      <select id="student-school" v-model="newStudent.school">
+                        <option value="LG Kids">LG Kids</option>
+                        <option value="LG Kids Plus">LG Kids Plus</option>
+                        <option value="UG Kids">UG Kids</option>
+                        <option value="Teens">Teens</option>
+                        <option value="Adults">Adults</option>
+                        <option value="IELTS">IELTS</option>
+                      </select>
+                    </div>
                   </div>
                   <button type="submit" class="submit-stud">إضافة</button>
                 </form>
@@ -258,6 +269,7 @@ export default {
       newStudent: {
         name: "",
         code: "",
+        school: ""
       },
       cartSummary: {
         total_price: 0,
@@ -339,7 +351,7 @@ export default {
       this.$router.push({ path: "/", name: "HomeAr" });
     },
     resetForm() {
-      this.newStudent = { name: "", code: "" };
+      this.newStudent = { name: "", code: "", school: "" };
     },
     isSameStudentCode(studentCode) {
       return (
