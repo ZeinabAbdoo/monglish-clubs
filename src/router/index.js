@@ -4,6 +4,7 @@ import HomeEn from '../components/en/ClubsLanding.vue';
 import HomeAr from '../components/ar/ClubsLanding.vue';
 import CartEn from '../components/en/CartPage.vue';
 import CartAr from '../components/ar/CartPage.vue';
+import SuccessPage from '../components/SuccessPage.vue';
 
 const englishRoutes = [
   { path: '/en/', name: 'HomeEn', component: HomeEn  , meta: {
@@ -26,6 +27,7 @@ const arabicRoutes = [
 const routes = [
   ...englishRoutes,
   ...arabicRoutes,
+  { path: '/success', name: 'Success', component: SuccessPage },
 ];
 
 const router = createRouter({
