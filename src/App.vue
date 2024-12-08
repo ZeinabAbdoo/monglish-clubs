@@ -38,7 +38,15 @@ export default {
     MonglishFooterAr,
     MonglishFooterEn,
     MonglishNavbarEn
+  },
+  methods: {
+  printReceipt() {
+    document.body.classList.add('hide-footer');
+    window.print();
+    document.body.classList.remove('hide-footer');  
   }
+}
+
 }
 </script>
 
@@ -74,5 +82,16 @@ export default {
   background-image: url('@/assets/images/hero.webp');
   background-size: cover; 
   background-repeat: no-repeat; 
+}
+
+@media print {
+  .footer, .footer-box, 
+  #app2 > .payment-success ~ .footer {
+    display: none !important;
+  }
+
+  #app2 {
+    height: auto !important;
+  }
 }
 </style>
