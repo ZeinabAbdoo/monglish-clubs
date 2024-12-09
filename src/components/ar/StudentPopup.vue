@@ -27,7 +27,7 @@
           </div>
         </div>
         <div class="form-group">
-            <label for="student-school">الفصل</label>
+            <label for="student-className">الفصل</label>
             <input 
               type="text" 
               id="student-className" 
