@@ -27,16 +27,14 @@
           </div>
         </div>
         <div class="form-group">
-          
-            <label for="student-school">المدرسة</label>
-            <select id="student-school" v-model="student.school" required>
-              <option value="LG Kids">LG Kids</option>
-              <option value="LG Kids Plus">LG Kids Plus</option>
-              <option value="UG Kids">UG Kids</option>
-              <option value="Teens">Teens</option>
-              <option value="Adults">Adults</option>
-              <option value="IELTS">IELTS</option>
-            </select>
+            <label for="student-className">الفصل</label>
+            <input 
+              type="text" 
+              id="student-className" 
+              v-model="student.className" 
+              placeholder="أدخل اسم الفصل"
+              required 
+            />
         </div>
         <button type="submit">إضافة</button>
       </form>
@@ -52,7 +50,7 @@
         student: {
           code: "",
           name: "",
-          school: ""
+          className: ""
         },
       };
     },
@@ -66,7 +64,7 @@
           const studentData = {
             name: this.student.name,
             code: this.student.code,
-            school: this.student.school,
+            className: this.student.className,
             session_group_data: [
               {
                 session_group_id: sessionGroupId,
@@ -84,7 +82,7 @@
         }
       },
       resetForm() {
-        this.student = { code: "", name: "", school: "" };
+        this.student = { code: "", name: "", className: "" };
       },
       closePopup() {
         this.$emit("close");
