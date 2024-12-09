@@ -27,8 +27,7 @@
           </div>
         </div>
         <div class="form-group">
-          
-            <label for="student-school">المدرسة</label>
+            <label for="student-school">الفصل</label>
             <input 
               type="text" 
               id="student-className" 
@@ -36,7 +35,6 @@
               placeholder="أدخل اسم الفصل"
               required 
             />
-              
         </div>
         <button type="submit">إضافة</button>
       </form>
