@@ -138,33 +138,34 @@
                     <div class="student-form-item">
                       <label for="student-name">Student Name</label>
                       <input
+                        type="text"
                         id="student-name"
                         v-model="newStudent.name"
-                        type="text"
+                        placeholder="Enter student name"
                         required
                       />
                     </div>
                     <div class="student-form-item">
                       <label for="student-code">Student Code</label>
                       <input
+                        type="text"
                         id="student-code"
                         v-model="newStudent.code"
-                        type="text"
+                        placeholder="Enter student code"
                         required
                       />
                     </div>
                   </div>
                   <div class="student-form-group">
                     <div class="student-form-item">
-                      <label for="student-school">School</label>
-                      <select id="student-school" v-model="newStudent.school" required>
-                        <option value="LG Kids">LG Kids</option>
-                        <option value="LG Kids Plus">LG Kids Plus</option>
-                        <option value="UG Kids">UG Kids</option>
-                        <option value="Teens">Teens</option>
-                        <option value="Adults">Adults</option>
-                        <option value="IELTS">IELTS</option>
-                      </select>
+                      <label for="student-className">Class</label>
+                      <input 
+                        type="text" 
+                        id="student-className" 
+                        v-model="student.className" 
+                        placeholder="Enter student class"
+                        required 
+                      />
                     </div>
                   </div>
                   <button type="submit" class="submit-stud">Add</button>
@@ -270,7 +271,7 @@ export default {
       newStudent: {
         name: "",
         code: "",
-        school: ""
+        className: ""
       },
       cartSummary: {
         total_price: 0,
@@ -352,7 +353,7 @@ export default {
       this.$router.push({ path: "/en/", name: "HomeEn" });
     },
     resetForm() {
-      this.newStudent = { name: "", code: "", school: "" };
+      this.newStudent = { name: "", code: "", className: "" };
     },
     isSameStudentCode(studentCode) {
       return (
