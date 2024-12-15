@@ -162,7 +162,7 @@
                       <input 
                         type="text" 
                         id="student-className" 
-                        v-model="student.className" 
+                        v-model="newStudent.className" 
                         placeholder="Enter student class"
                         required 
                       />
